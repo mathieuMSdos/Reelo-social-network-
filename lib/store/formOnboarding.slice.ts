@@ -5,23 +5,23 @@ import { StateCreator } from "zustand";
 // ------------Typage de la slice ------------
 export interface StepFormSlice {
   step: number;
+  username: string;
   setNextStep: () => void;
   setPreviousStep: () => void;
 }
 
-// state pour gérer les étapes d'avancement du formulaire
+// STATE pour stocker les étapes d'avancement du formulaire
 
-export const createFormSlice: StateCreator<StepFormSlice> = (set) => ({
+export const createFormOnBoardingSlice: StateCreator<StepFormSlice> = (
+  set
+) => ({
+  // Gestion des étapes
   step: 1,
   setNextStep: () => set((state) => ({ step: state.step + 1 })),
   setPreviousStep: () =>
     set((state) => ({ step: Math.max(0, state.step - 1) })),
+
+  // Gestion de la data venant de form
+  username: "",
+  setUsername: (data: string) => set((state) => ({ username: data })),
 });
-
-// state pour stocker les réponses à chaque étapes
-
-// export const formDataSlice = (set) => ({
-//   newUsername: "",
-//   newDisplayName:"",
-//   setFormData: ()=> set((state) =>)
-// })

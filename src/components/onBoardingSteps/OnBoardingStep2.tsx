@@ -3,7 +3,13 @@
 import { useStore } from "@/lib/store/index.store";
 import { useState } from "react";
 
-const OnBoardingStep2 = () => {
+// TYPE
+interface OnBoardingStep2Props {
+  actualDisplayName:string
+}
+
+const OnBoardingStep2 = ({actualDisplayName}:OnBoardingStep2Props) => {
+
   // zustand state
   const setPreviousStep = useStore((state) => state.setPreviousStep);
 
@@ -16,11 +22,12 @@ const OnBoardingStep2 = () => {
   };
   return (
     <div>
-      <h1>step 2</h1>
+      <h1>STEP 2: your actual display name is : {actualDisplayName} would you like to change it ?</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={inputValue}
+          placeholder={actualDisplayName}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setInputValue(e.target.value);
           }}
