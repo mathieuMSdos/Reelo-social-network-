@@ -3,12 +3,12 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import {
   createFormOnBoardingSlice,
-  StepFormSlice,
+  FormOnBoardingSlice,
 } from "./formOnboarding.slice";
 
 // ------------ TYPAGE ------------
 // Combinaison des slices
-type Store = StepFormSlice; // Ajoute d'autres slices ici si besoin
+type Store = FormOnBoardingSlice; // Ajoute d'autres slices ici si besoin
 
 export const useStore = create<Store>()(
   devtools(

@@ -2,7 +2,7 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import { userNameGenerator } from "./lib/utils/usernameGenerator";
+import { userNameGenerator } from "./lib/utils/scriptJS/usernameGenerator";
 import { prisma } from "./prisma";
 import { userSchema,  } from "./lib/schema/user.schema";
 

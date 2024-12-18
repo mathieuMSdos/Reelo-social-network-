@@ -3,16 +3,20 @@
 import { StateCreator } from "zustand";
 
 // ------------Typage de la slice ------------
-export interface StepFormSlice {
+export interface FormOnBoardingSlice {
   step: number;
-  username: string;
+  newUserName: string;
+  newDisplayName: string;
+
   setNextStep: () => void;
   setPreviousStep: () => void;
+  setNewUsername: (data: string) => void;
+  setNewDisplayName: (data: string) => void;
 }
 
 // STATE pour stocker les étapes d'avancement du formulaire
 
-export const createFormOnBoardingSlice: StateCreator<StepFormSlice> = (
+export const createFormOnBoardingSlice: StateCreator<FormOnBoardingSlice> = (
   set
 ) => ({
   // Gestion des étapes
@@ -22,6 +26,8 @@ export const createFormOnBoardingSlice: StateCreator<StepFormSlice> = (
     set((state) => ({ step: Math.max(0, state.step - 1) })),
 
   // Gestion de la data venant de form
-  username: "",
-  setUsername: (data: string) => set((state) => ({ username: data })),
+  newUserName: "",
+  newDisplayName: "",
+  setNewUsername: (data: string) => set(() => ({ newUserName: data })),
+  setNewDisplayName: (data: string) => set(() => ({ newDisplayName: data })),
 });
