@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
 import GenericIcon from "../design/lordIcons/GenericIcon";
 import BasicAlertRules from "./BasicAlertRules";
+import loadingIconLord from "@/src/assets/icons/system-solid-18-autorenew-hover-autorenew.json";
 
 // ---------- TYPE ----------
 
@@ -53,7 +54,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
     } else if (actualUsername) {
       setInputValue(actualUsername);
     }
-  }, [actualUsername]);
+  }, [actualUsername, newUserNameStored]);
 
   // vérifie en temps réél si inputValue est conforme aux critères
   useEffect(() => {
@@ -137,7 +138,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
           </div>
         )}
       </div>
-      <GenericIcon />
+      <GenericIcon icon={loadingIconLord} />
 
       <button
         onClick={handleSubmit}

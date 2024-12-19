@@ -4,13 +4,19 @@ import { Player } from "@lordicon/react";
 import { useEffect, useRef } from "react";
 
 interface GenericIconProps {
-  iconName: string;
+  icon: string;
   size?: number;
   colorize?: string;
-  loop?: boolean
+  loop?: boolean;
 }
 
-const GenericIcon = ({ iconName, size, colorize,loop=false }:GenericIconProps) => {
+const GenericIcon = ({
+  icon: ICON,
+  size,
+  colorize,
+  loop = false,
+}: GenericIconProps) => {
+
   const playerRef = useRef<Player>(null);
 
   useEffect(() => {
@@ -20,10 +26,12 @@ const GenericIcon = ({ iconName, size, colorize,loop=false }:GenericIconProps) =
     <div>
       <Player
         ref={playerRef}
-        icon={`../../../assets/icons/${iconName}`}
+        icon={ICON}
         size={size}
         colorize={colorize}
-        onComplete={loop ? (() => playerRef.current?.playFromBeginning()): undefined} // pour jouer en boucle
+        onComplete={
+          loop ? () => playerRef.current?.playFromBeginning() : undefined
+        } // pour jouer en boucle
       />
     </div>
   );
