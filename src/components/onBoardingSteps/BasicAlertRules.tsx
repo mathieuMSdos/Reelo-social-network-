@@ -4,14 +4,15 @@ import { CircleCheck, CircleX } from "lucide-react";
 
 interface BasicAlertRulesProps {
   isValidate: boolean;
-  text: string;
+  textForValidation: string
+  textForInvalidation : string
 }
 
-const BasicAlertRules = ({ isValidate, text }: BasicAlertRulesProps) => {
+const BasicAlertRules = ({ isValidate, textForValidation,textForInvalidation }: BasicAlertRulesProps) => {
   return (
     <div className="flex gap-1">
       {isValidate ? <CircleCheck /> : <CircleX />}
-      <p>{text}</p>
+      <p>{isValidate ? textForValidation : textForInvalidation}</p>
     </div>
   );
 };
