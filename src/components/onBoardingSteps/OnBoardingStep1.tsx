@@ -5,9 +5,7 @@ import { useStore } from "@/lib/store/index.store";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
-import GenericIcon from "../design/lordIcons/GenericIcon";
 import BasicAlertRules from "./BasicAlertRules";
-import loadingIconLord from "@/src/assets/icons/system-solid-18-autorenew-hover-autorenew.json";
 
 // ---------- TYPE ----------
 
@@ -34,7 +32,9 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
 
   // contrôle du champ input
   const inputControl = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    const noSpaceValue = e.target.value.replace(/\s+/g, "_");
+
+    setInputValue(noSpaceValue);
   };
 
   const handleSubmit = () => {
@@ -75,7 +75,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
   // --------  TANSTACK --------
 
   // Debouncing pattern : on vérifie en direct si l'username choisi existe déjà mais on met un système de debounce pour pas surcharger le server en requête + on utilise tanstack aussi pour limiter les requêtes BDD.
-  const [debouncedValue] = useDebounce(inputValue, 300);
+  const [debouncedValue] = useDebounce(inputValue, 500);
 
   const { data, isPending, isError, error } = useQuery({
     queryKey: ["username", debouncedValue],
@@ -85,12 +85,20 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
 
   // -------- UseMemo --------
   const isChosenUsernameValid = useMemo(() => {
-    if (data) {
-      // si le nom d'utilisateur tapé n'existe pas dans la BDD c'est un username valide, si l'username est = à actual username il est donc déjà en BDD mais c'est valide puisque c'est lui même sinon c'est pas valide il doit changer de username
+    // si le nom d'utilisateur tapé n'existe pas dans la BDD c'est un username valide, si l'username est = à actual username il est donc déjà en BDD mais c'est valide puisque c'est lui même sinon c'est pas valide il doit changer de username
 
+    // Design pattern Optimistic Update, on part du principe que le username ne serapas déjà pris. LE fait qu'il ne soit pas déjà pris est la règle et le cas qu'il soit déjà pris c'est l'exception.
+
+    // Objectif éviter le saut visuel d'un icon à l'autr ele temps que data est undefined pendant la requête prisma
+    if (isPending && rules.isMinAndMaxLength) {
+      return true;
+    }
+
+    if (data) {
       return !data.isExist || data.username === actualUsername;
     }
-  }, [data, actualUsername]);
+     return rules.isMinAndMaxLength
+  }, [data, actualUsername, isPending, rules.isMinAndMaxLength]);
 
   return (
     <div>
@@ -100,6 +108,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
         type="text"
         value={inputValue}
         placeholder={actualUsername}
+        maxLength={20}
         autoFocus
         aria-label="username"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,14 +140,13 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
             />
 
             <BasicAlertRules
-              isValidate={data && isChosenUsernameValid}
+              isValidate={isChosenUsernameValid}
               textForValidation={"Username is available !"}
               textForInvalidation={"Change username"}
             />
           </div>
         )}
       </div>
-      <GenericIcon icon={loadingIconLord} />
 
       <button
         onClick={handleSubmit}
