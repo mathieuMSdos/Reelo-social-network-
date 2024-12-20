@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
 import BasicAlertRules from "./BasicAlertRules";
+import GenericIcon from "../design/lordIcons/GenericIcon";
+import loadingIconLord from '@/src/assets/icons/system-solid-18-autorenew-hover-autorenew.json';
 
 // ---------- TYPE ----------
 
@@ -143,6 +145,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
               isValidate={isChosenUsernameValid}
               textForValidation={"Username is available !"}
               textForInvalidation={"Change username"}
+              isPending = {isPending} 
             />
           </div>
         )}
