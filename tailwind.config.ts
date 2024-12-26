@@ -13,6 +13,8 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        purpleBtn: "#8952E0",
+        darkPurpleBtn: "#6D28D9"
       },
     },
   },

@@ -1,0 +1,9 @@
+.primary_button {
+  box-shadow: inset 1px 1px 1px rgba(192, 159, 243, 0.82),
+    inset 0px -1px 1.2px #5c21ba;
+  filter: drop-shadow(6px 35px 10px rgba(113, 46, 218, 0.01))
+    drop-shadow(4px 23px 9px rgba(113, 46, 218, 0.04))
+    drop-shadow(2px 13px 8px rgba(113, 46, 218, 0.15))
+    drop-shadow(1px 6px 6px rgba(113, 46, 218, 0.26))
+    drop-shadow(0px 1px 3px rgba(113, 46, 218, 0.29));
+}

@@ -8,7 +8,8 @@ interface BasicAlertRulesProps {
   isValidate: boolean;
   textForValidation: string;
   textForInvalidation: string;
-  isPending: boolean;
+  isPending?: boolean;
+  isError?: boolean
 }
 
 const BasicAlertRules = ({
@@ -16,12 +17,15 @@ const BasicAlertRules = ({
   textForValidation,
   textForInvalidation,
   isPending=false,
+  isError=false,
 }: BasicAlertRulesProps) => {
+
   return (
     <div className="flex gap-1">
-      {isPending ? (
+      {isPending ? 
+      (
         <GenericIcon icon={loadingIconLord} size={27} loop={true} />
-      ) : isValidate ? (
+      ) : isError ? "Error, please try again" : isValidate ? (
         <CircleCheck />
       ) : (
         <CircleX />
