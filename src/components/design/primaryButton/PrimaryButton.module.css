@@ -12,7 +12,7 @@
     transition:  filter 0.2s ease-in-out;
   }
 
-.primary_button:hover {
+.primary_button:hover:not(:disabled) {
   box-shadow: inset 1px 1px 1px rgba(192, 159, 243, 0.82),
     inset 0px -1px 1.2px #5c21ba;
   filter: brightness(110%) drop-shadow(6px 35px 10px rgba(113, 46, 218, 0.01))
@@ -23,7 +23,7 @@
 
 }
 
-.primary_button:active{
+.primary_button:active:not(:disabled){
   transform: scale(0.98);
 
 }

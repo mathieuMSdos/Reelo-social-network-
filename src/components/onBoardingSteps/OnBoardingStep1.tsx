@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
 import PrimaryButton from "../design/primaryButton/PrimaryButton";
 import BasicAlertRules from "./BasicAlertRules";
+import InputGeneric from "../design/primaryButton/inputGeneric/InputGeneric";
 
 // ---------- TYPE ----------
 
@@ -105,7 +106,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
     <div>
       <h1>step 1</h1>
       <h2>STEP 1: Confirm your username</h2>
-      <input
+      <InputGeneric
         type="text"
         value={inputValue}
         placeholder={actualUsername}
@@ -117,7 +118,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
           setDisplayRules(true);
         }}
       />
-      {/* check info container */}
+      {/* info container */}
       <div>
         {/* Indication en temps réel */}
         {displayRules && inputValue.length < 6 ? (
@@ -127,6 +128,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
         ) : (
           ""
         )}
+     
         {/* Contraintes à respecter pour username */}
         {displayRules && (
           <div>
@@ -139,6 +141,11 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
                 "Choose a username between 6 and 20 characters"
               }
             />
+            <BasicAlertRules
+              isValidate={rules.isFirstAt}
+              textForInvalidation='Your username must start with "@"'
+              textForValidation='Your username must start with "@"'
+            />
 
             <BasicAlertRules
               isValidate={isChosenUsernameValid}
@@ -147,7 +154,6 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
               isFetching={isFetching}
               isError={isError}
             />
-            <button onClick={() => console.log(isFetching)}>hellooooo</button>
           </div>
         )}
       </div>

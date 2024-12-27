@@ -16,20 +16,31 @@ const OnBoardingStep2 = ({actualDisplayName}:OnBoardingStep2Props) => {
   // const state local
   const [inputValue, setInputValue] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // créer un server action qui va les envoyé à la BDD via prisma
+// ---------- FUNCTIONS ----------
+
+  // contrôle du champ input
+  const inputControl = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const noSpaceValue = e.target.value.replace(/\s+/g, "_");
+
+    setInputValue(noSpaceValue);
+  };
+
+  const handleSubmit = () => {
+    // setNextStep();
+    // setNewUsername(inputValue);
   };
   return (
     <div>
-      <h1>STEP 2: your actual display name is : {actualDisplayName} would you like to change it ?</h1>
+      <h1>STEP 2: Choose your display Name</h1>
+      <h3>This is how others will see you. You can change it anytime.</h3>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={inputValue}
           placeholder={actualDisplayName}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setInputValue(e.target.value);
+            inputControl(e);
+            // setDisplayRules(true);
           }}
           required
         />
