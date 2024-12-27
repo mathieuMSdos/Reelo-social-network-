@@ -5,10 +5,8 @@ import { useStore } from "@/lib/store/index.store";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
-import BasicAlertRules from "./BasicAlertRules";
-import GenericIcon from "../design/lordIcons/GenericIcon";
-import loadingIconLord from '@/src/assets/icons/system-solid-18-autorenew-hover-autorenew.json';
 import PrimaryButton from "../design/primaryButton/PrimaryButton";
+import BasicAlertRules from "./BasicAlertRules";
 
 // ---------- TYPE ----------
 
@@ -80,7 +78,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
   // Debouncing pattern : on vérifie en direct si l'username choisi existe déjà mais on met un système de debounce pour pas surcharger le server en requête + on utilise tanstack aussi pour limiter les requêtes BDD.
   const [debouncedValue] = useDebounce(inputValue, 500);
 
-  const { data, isPending, isError, error } = useQuery({
+  const { data, isFetching, isError, error } = useQuery({
     queryKey: ["username", debouncedValue],
     queryFn: () => isUsernameAlreadyExist(debouncedValue),
     enabled: rules.isMinAndMaxLength === true,
@@ -93,15 +91,15 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
     // Design pattern Optimistic Update, on part du principe que le username ne serapas déjà pris. LE fait qu'il ne soit pas déjà pris est la règle et le cas qu'il soit déjà pris c'est l'exception.
 
     // Objectif éviter le saut visuel d'un icon à l'autr ele temps que data est undefined pendant la requête prisma
-    if (isPending && rules.isMinAndMaxLength) {
+    if (isFetching && rules.isMinAndMaxLength) {
       return true;
     }
 
     if (data) {
       return !data.isExist || data.username === actualUsername;
     }
-     return rules.isMinAndMaxLength
-  }, [data, actualUsername, isPending, rules.isMinAndMaxLength]);
+    return rules.isMinAndMaxLength;
+  }, [data, actualUsername, isFetching, rules.isMinAndMaxLength]);
 
   return (
     <div>
@@ -146,14 +144,15 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
               isValidate={isChosenUsernameValid}
               textForValidation={"Username is available !"}
               textForInvalidation={"Change username"}
-              isPending = {isPending} 
-              isError = {isError}
+              isFetching={isFetching}
+              isError={isError}
             />
+            <button onClick={() => console.log(isFetching)}>hellooooo</button>
           </div>
         )}
       </div>
 
-      <button
+      {/* <button
         onClick={handleSubmit}
         disabled={
           !rules.isFirstAt ||
@@ -163,8 +162,17 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
         }
       >
         Continue
-      </button>
-      <PrimaryButton/>
+      </button> */}
+      <PrimaryButton
+        text="Continue"
+        onClick={handleSubmit}
+        disabled={
+          !rules.isFirstAt ||
+          !rules.isMinAndMaxLength ||
+          !isChosenUsernameValid ||
+          isFetching
+        }
+      />
     </div>
   );
 };
