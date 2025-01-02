@@ -4,6 +4,7 @@ import { updateUserAction } from "@/app/actions/onBoardingActions";
 import { useStore } from "@/lib/store/index.store";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 import InputGeneric from "../design/inputGeneric/InputGeneric";
 import PrimaryButton from "../design/primaryButton/PrimaryButton";
 import TertiaryButton from "../design/tertiaryButton/TertiaryButton";
@@ -67,11 +68,8 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
   };
 
   // TANSTACK MUTATION
-  const {
-    mutate: updateUserMutation,
-    error
-  } = useMutation({
-    mutationFn: (data:UpdateUserData) => updateUserAction(data),
+  const { mutate: updateUserMutation, error } = useMutation({
+    mutationFn: (data: UpdateUserData) => updateUserAction(data),
   });
 
   const handleSubmit = () => {
@@ -84,8 +82,8 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
         hasCompletedOnboarding: true,
       });
     }
-    if(error) {
-      console.log(error)
+    if (error) {
+      console.log(error);
     }
   };
 
@@ -116,6 +114,7 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
           disabled={!displayNameChosenIsValidated}
         />
       </div>
+      <button onClick={() => toast.success("coucou")}>test</button>
     </div>
   );
 };
