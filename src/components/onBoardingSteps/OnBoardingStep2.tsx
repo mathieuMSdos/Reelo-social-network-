@@ -3,6 +3,8 @@
 import { updateUserAction } from "@/app/actions/onBoardingActions";
 import { useStore } from "@/lib/store/index.store";
 import { useMutation } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import InputGeneric from "../design/inputGeneric/InputGeneric";
@@ -38,6 +40,10 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
     isMin4Max30: false,
   });
 
+  // ROUTER
+  const router = useRouter();
+  const { update } = useSession();
+
   // ---------- UseMemo ----------
   // UseMémo pour effectuer l'opération de vérification : est ce que le contenu de l'input peut être envoyé à la BDD pour enregistrement + actvation du bouton Continue
   const displayNameChosenIsValidated = useMemo(() => {
@@ -70,6 +76,23 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
   // TANSTACK MUTATION
   const { mutate: updateUserMutation, error } = useMutation({
     mutationFn: (data: UpdateUserData) => updateUserAction(data),
+    onMutate: () => {
+      toast.dismiss();
+      toast.loading("Saving...");
+    },
+    onSuccess: async () => {
+      toast.dismiss();
+      toast.success("Saved");
+      // On déclenche la mise à jour de la session pour récupérer les nouvelles infos qui viennent d'être mis à jour
+      await update();
+      // on refresh hard pour que les composants et l'app se mettent à jour avec les nouvelles données de session. Sans ça certain composant ne se mettrait pas à jour avec les nouvelles données
+      router.refresh();
+      router.push("/protected/dashboard");
+    },
+    onError: () => {
+      toast.dismiss();
+      toast.error("Failed");
+    },
   });
 
   const handleSubmit = () => {
@@ -114,7 +137,6 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
           disabled={!displayNameChosenIsValidated}
         />
       </div>
-      <button onClick={() => toast.success("coucou")}>test</button>
     </div>
   );
 };

@@ -14,7 +14,6 @@ const {data} = useSession()
 const actualUsername = data?.user?.username
 const userId = data?.user?.id
 
-console.log(userId)
 
   return (
     

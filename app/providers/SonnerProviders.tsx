@@ -12,7 +12,9 @@ export function ToastProvider({ children }: ToastProviderProps) {
       <Toaster 
         position="bottom-right"
         expand={false}
-        richColors={true}
+        toastOptions={{
+          className: "text-purpleBtn"
+        }}
  
       />
       {children}
