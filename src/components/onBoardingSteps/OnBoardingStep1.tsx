@@ -5,9 +5,9 @@ import { useStore } from "@/lib/store/index.store";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
+import InputGeneric from "../design/inputGeneric/InputGeneric";
 import PrimaryButton from "../design/primaryButton/PrimaryButton";
 import BasicAlertRules from "./BasicAlertRules";
-import InputGeneric from "../design/primaryButton/inputGeneric/InputGeneric";
 
 // ---------- TYPE ----------
 
@@ -83,6 +83,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
     queryKey: ["username", debouncedValue],
     queryFn: () => isUsernameAlreadyExist(debouncedValue),
     enabled: rules.isMinAndMaxLength === true,
+    refetchOnWindowFocus: false,
   });
 
   // -------- UseMemo --------
@@ -128,7 +129,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
         ) : (
           ""
         )}
-     
+
         {/* Contraintes à respecter pour username */}
         {displayRules && (
           <div>
@@ -158,17 +159,6 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
         )}
       </div>
 
-      {/* <button
-        onClick={handleSubmit}
-        disabled={
-          !rules.isFirstAt ||
-          !rules.isMinAndMaxLength ||
-          !isChosenUsernameValid ||
-          isPending
-        }
-      >
-        Continue
-      </button> */}
       <PrimaryButton
         text="Continue"
         onClick={handleSubmit}

@@ -5,8 +5,8 @@ interface InputGenericProps {
   placeholder?: string;
   minLength?: number;
   maxLength?: number;
-  autoFocus: boolean;
-  "aria-label": string;
+  autoFocus?: boolean;
+  "aria-label"?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -21,7 +21,7 @@ const InputGeneric = ({
   onChange,
 }: InputGenericProps) => {
   return (
-    <input
+    <input className="bg-greyPurple w-1/2 py-2 px-3 rounded-3xl focus:outline-none "
       type={type}
       value={value}
       placeholder={placeholder}

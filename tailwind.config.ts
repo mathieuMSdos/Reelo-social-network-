@@ -14,7 +14,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         purpleBtn: "#8952E0",
-        darkPurpleBtn: "#6D28D9"
+        darkPurpleBtn: "#6D28D9",
+        greySecondaryBtn: "#EFEFF3",
+        greyPurple: "#EDECF6",
       },
     },
   },
