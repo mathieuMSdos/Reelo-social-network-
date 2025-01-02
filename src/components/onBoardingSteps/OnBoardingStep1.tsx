@@ -1,6 +1,6 @@
 "use client";
 
-import { isUsernameAlreadyExist } from "@/app/actions/onBoardingActions";
+import { isUsernameAlreadyExistAction } from "@/app/actions/onBoardingActions";
 import { useStore } from "@/lib/store/index.store";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
@@ -81,7 +81,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
 
   const { data, isFetching, isError, error } = useQuery({
     queryKey: ["username", debouncedValue],
-    queryFn: () => isUsernameAlreadyExist(debouncedValue),
+    queryFn: () => isUsernameAlreadyExistAction(debouncedValue),
     enabled: rules.isMinAndMaxLength === true,
     refetchOnWindowFocus: false,
   });

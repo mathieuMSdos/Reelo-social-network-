@@ -1,6 +1,8 @@
 "use client";
 
+import { updateUserAction } from "@/app/actions/onBoardingActions";
 import { useStore } from "@/lib/store/index.store";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import InputGeneric from "../design/inputGeneric/InputGeneric";
 import PrimaryButton from "../design/primaryButton/PrimaryButton";
@@ -9,11 +11,21 @@ import BasicAlertRules from "./BasicAlertRules";
 
 // TYPE
 interface OnBoardingStep2Props {
-  actualDisplayName: string;
+  userId: string;
 }
 
-const OnBoardingStep2 = ({ actualDisplayName }: OnBoardingStep2Props) => {
+interface UpdateUserData {
+  userId: string;
+  username: string;
+  displayName: string;
+  hasCompletedOnboarding: boolean;
+}
+
+// ---------------------COMPOSANT
+
+const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
   // zustand state
+  const newUserName = useStore((state) => state.newUserName);
   const newDisplayName = useStore((state) => state.newDisplayName);
   const setNewDisplayName = useStore((state) => state.setNewDisplayName);
   const setPreviousStep = useStore((state) => state.setPreviousStep);
@@ -25,6 +37,12 @@ const OnBoardingStep2 = ({ actualDisplayName }: OnBoardingStep2Props) => {
     isMin4Max30: false,
   });
 
+  // ---------- UseMemo ----------
+  // UseMémo pour effectuer l'opération de vérification : est ce que le contenu de l'input peut être envoyé à la BDD pour enregistrement + actvation du bouton Continue
+  const displayNameChosenIsValidated = useMemo(() => {
+    return rules.isNoEmpty && rules.isMin4Max30;
+  }, [rules]);
+
   // ---------- UseEffect ----------
   // Vérification en temps réél : est ce que le contenu de l'input est conforme au exigence minimal ?
   useEffect(() => {
@@ -34,11 +52,10 @@ const OnBoardingStep2 = ({ actualDisplayName }: OnBoardingStep2Props) => {
     });
   }, [inputValue]);
 
-  // ---------- UseMemo ----------
-  // UseMémo pour effectuer l'opération de vérification : est ce que le contenu de l'input peut être envoyé à la BDD pour enregistrement + actvation du bouton Continue
-  const displayNameChosenIsValidated = useMemo(() => {
-    return rules.isNoEmpty && rules.isMin4Max30;
-  }, [rules]);
+  // Mise à jour du store zustand en fonction de ce qui est tapé
+  useEffect(() => {
+    setNewDisplayName(inputValue);
+  }, [inputValue]);
 
   // ---------- FUNCTIONS ----------
 
@@ -49,11 +66,29 @@ const OnBoardingStep2 = ({ actualDisplayName }: OnBoardingStep2Props) => {
     setInputValue(noSpaceValue);
   };
 
+  // TANSTACK MUTATION
+  const {
+    mutate: updateUserMutation,
+    error
+  } = useMutation({
+    mutationFn: (data:UpdateUserData) => updateUserAction(data),
+  });
+
   const handleSubmit = () => {
-    // sécurité suplémentaire on laisse pas submit si displayname ne répond pas aux éxigences
+    // sécurité suplémentaire on bloque le submit si displayname ne répond pas aux éxigences
     if (displayNameChosenIsValidated) {
+      updateUserMutation({
+        userId: userId,
+        username: newUserName,
+        displayName: newDisplayName,
+        hasCompletedOnboarding: true,
+      });
+    }
+    if(error) {
+      console.log(error)
     }
   };
+
   return (
     <div>
       <h1>STEP 2: Choose your display Name</h1>
@@ -66,7 +101,6 @@ const OnBoardingStep2 = ({ actualDisplayName }: OnBoardingStep2Props) => {
         autoFocus={true}
         onChange={(e) => {
           inputControl(e);
-          setNewDisplayName(inputValue);
         }}
       />
       <BasicAlertRules

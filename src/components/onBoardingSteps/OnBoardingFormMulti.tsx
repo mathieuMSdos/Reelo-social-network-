@@ -12,14 +12,15 @@ const step = useStore((state) => state.step)
 // On récupère la session pour avoir username et display name actuel
 const {data} = useSession()
 const actualUsername = data?.user?.username
-const actualDisplayName = data?.user?.displayName
+const userId = data?.user?.id
 
+console.log(userId)
 
   return (
     
     <div>
             {step === 1 && <OnBoardingStep1 actualUsername={actualUsername} />}
-            {step === 2 && <OnBoardingStep2 actualDisplayName={actualDisplayName}  />}
+            {step === 2 && <OnBoardingStep2 userId={userId}/>}
     </div>
   );
 };
