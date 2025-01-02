@@ -1,9 +1,11 @@
 import WelcomePageNavBar from "@/src/components/welcomePageNavBar/WelcomePageNavBar";
 
-export default function Home() {
+const layout = () => {
   return (
     <div>
       <WelcomePageNavBar />
     </div>
   );
-}
+};
+
+export default layout;

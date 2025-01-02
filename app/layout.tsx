@@ -30,12 +30,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`px-6 py-4 ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ToastProvider>
         <TanstackProvider>
           <SessionProvider>
-            <SignOutButton />
             {children}
           </SessionProvider>
         </TanstackProvider>
