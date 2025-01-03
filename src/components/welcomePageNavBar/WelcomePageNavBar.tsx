@@ -23,7 +23,7 @@ const WelcomePageNavBar = () => {
       <motion.nav
         className={`absolute inset-0  flex w-full justify-between items-start py-3 px-4 z-40 backdrop-blur-md border border-darkLine rounded-2xl`}
         initial={{height: "4rem"}}
-        animate={{ height: isOpen ? "70vh" : "4rem",
+        animate={{ height: isOpen ? "20rem" : "4rem",
          }}
         transition={{
           duration: 0.9,
