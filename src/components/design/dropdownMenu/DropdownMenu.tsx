@@ -1,3 +1,4 @@
+"use client"
 import { motion, AnimatePresence } from "framer-motion";
 import { useStore } from "@/lib/store/index.store";
 import Link from "next/link";
