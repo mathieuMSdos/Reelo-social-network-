@@ -1,12 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useStore } from "@/lib/store/index.store";
 
-const BurgerBlock = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const BurgerMenuIcon = () => {
+  const isOpen = useStore((state) => state.isOpen);
+  const toggleMenu = useStore((state) => state.toggleMenu);
   return (
     <button
       className="relative w-10 h-10 focus:outline-none p-1"
-      onClick={() => setIsOpen(!isOpen)}
+      onClick={toggleMenu}
     >
       <div className="absolute inset-0 flex flex-col justify-center items-center space-y-2">
         {/* Trait du haut */}
@@ -32,4 +33,4 @@ const BurgerBlock = () => {
   );
 };
 
-export default BurgerBlock;
+export default BurgerMenuIcon;

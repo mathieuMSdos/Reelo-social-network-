@@ -3,7 +3,7 @@
 import { StateCreator } from "zustand";
 
 // ------------Typage de la slice ------------
-export interface FormOnBoardingSlice {
+export interface FormOnBoardingSliceType {
   step: number;
   newUserName: string;
   newDisplayName: string;
@@ -14,11 +14,11 @@ export interface FormOnBoardingSlice {
   setNewDisplayName: (data: string) => void;
 }
 
-// STATE pour stocker les étapes d'avancement du formulaire
+// STATE pour stocker les éléments nécessaire au multi steps form
 
-export const createFormOnBoardingSlice: StateCreator<FormOnBoardingSlice> = (
-  set
-) => ({
+export const createFormOnBoardingSlice: StateCreator<
+  FormOnBoardingSliceType
+> = (set) => ({
   // Gestion des étapes
   step: 1,
   setNextStep: () => set((state) => ({ step: state.step + 1 })),
