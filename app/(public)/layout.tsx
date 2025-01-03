@@ -1,9 +1,14 @@
 import WelcomePageNavBar from "@/src/components/welcomePageNavBar/WelcomePageNavBar";
 
-const layout = () => {
+interface layoutProps {
+  children: React.ReactNode;
+}
+
+const layout = ({ children }: layoutProps) => {
   return (
     <div>
       <WelcomePageNavBar />
+      {children}
     </div>
   );
 };

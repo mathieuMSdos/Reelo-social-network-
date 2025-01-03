@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import BackGround from "./src/components/design/BackGround";
 
 export default {
   content: [
@@ -13,6 +14,8 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        backGroundDark: "#151219",
+        purpleLight:"#9E6CEE",
         purpleBtn: "#8952E0",
         darkPurpleBtn: "#6D28D9",
         greySecondaryBtn: "#EFEFF3",

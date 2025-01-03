@@ -1,10 +1,9 @@
-import SignOutButton from "@/src/components/SignOutButton";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import localFont from "next/font/local";
 import "./globals.css";
-import TanstackProvider from "./providers/TanStackProvider";
 import { ToastProvider } from "./providers/SonnerProviders";
+import TanstackProvider from "./providers/TanStackProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,14 +29,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`px-6 py-4 ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`bg-backGroundDark  text-slate-100 px-6 py-4 ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ToastProvider>
-        <TanstackProvider>
-          <SessionProvider>
-            {children}
-          </SessionProvider>
-        </TanstackProvider>
+          <TanstackProvider>
+            <SessionProvider>{children}</SessionProvider>
+          </TanstackProvider>
         </ToastProvider>
       </body>
     </html>
