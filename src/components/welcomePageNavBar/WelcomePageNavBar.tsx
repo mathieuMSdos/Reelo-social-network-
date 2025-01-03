@@ -3,6 +3,7 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import PrimaryButton from "../design/primaryButton/PrimaryButton";
+import BurgerBlock from "../design/burgerMenu/BurgerBlock";
 
 const WelcomePageNavBar = () => {
   const navItems = [
@@ -41,7 +42,9 @@ const WelcomePageNavBar = () => {
           />
         </div>
         {/* burger menu */}
-        
+        <div className="w-10 h-10">
+          <BurgerBlock/>
+        </div>
       </nav>
     </header>
   );
