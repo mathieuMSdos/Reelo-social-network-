@@ -12,7 +12,7 @@ const TertiaryButton = ({ text, onClick, disabled }: TertiaryButtonProps) => {
     <button
       onClick={onClick}
       disabled={disabled}
-      className={"inline-block px-7 py-1 rounded-lg text-purpleBtn font-semibold hover:brightness-110 transition-all duration-200 ease-in-out	 "}
+      className={"inline-block px-4 py-1 rounded-lg text-purpleBtn font-semibold hover:brightness-110 transition-all duration-200 ease-in-out	 "}
     >
       <p className="drop-shadow-sm">{text}</p>
     </button>

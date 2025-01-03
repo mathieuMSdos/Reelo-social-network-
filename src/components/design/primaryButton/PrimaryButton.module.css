@@ -9,7 +9,7 @@
 
     transform: scale(1);
 
-    transition:  filter 0.2s ease-in-out;
+    transition:  0.1s ease-in-out;
   }
 
 .primary_button:hover:not(:disabled) {
