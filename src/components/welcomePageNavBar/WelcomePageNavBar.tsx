@@ -19,17 +19,26 @@ const WelcomePageNavBar = () => {
   ];
 
   return (
-    <header className="relative flex justify-center items-center  ">
+    <header className="relative flex justify-center items-center px-2  ">
       <motion.nav
-        className={`absolute inset-0  flex w-full justify-between items-start py-3 px-4 z-40 backdrop-blur-md border border-darkLine rounded-2xl`}
-        initial={{height: "4rem"}}
-        animate={{ height: isOpen ? "20rem" : "4rem",
-         }}
-        transition={{
-          duration: 0.9,
-          type: "spring",
-          stiffness: 100
-        }}
+        className={`fixed top-2 left-2 right-2 flex w-auto justify-between items-start py-1 px-4 z-40 backdrop-blur-xl border border-darkLine rounded-2xl overflow-hidden bg-gradient-to-b from-backGroundDark/80 to-backGroundDark/40`}
+        initial={{ height: "3rem" }}
+        animate={{ height: isOpen ? "25rem" : "3rem" }}
+        transition={
+          isOpen
+            ? {
+                type: "spring",
+                stiffness: 400,
+                damping: 20,
+                mass: 1,
+              }
+            : {
+                type: "spring",
+                stiffness: 400,
+                damping: 30,
+                mass: 0.8,
+              }
+        }
       >
         <Link href="/">
           <Image
