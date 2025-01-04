@@ -26,20 +26,47 @@ const WelcomePageNavBar = () => {
   useEffect(() => {
     const closeDropDownFunction = () => {
       const currentWidth = window.innerWidth;
-      console.log(currentWidth)
+      console.log(currentWidth);
       if (currentWidth > 768) {
         setIsOpen(false);
       }
-    }
-      window.addEventListener("resize", closeDropDownFunction);
-      return () =>
-        window.removeEventListener("resize", closeDropDownFunction);
-    
+    };
+    window.addEventListener("resize", closeDropDownFunction);
+    return () => window.removeEventListener("resize", closeDropDownFunction);
   }, []);
+
+  // FRAMER MOTION
+  const menuVariants = {
+    open: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+    closed: {
+      opacity: 0,
+    },
+  };
+
+  const itemVariants = {
+    open: {
+      opacity: 1,
+      y: 10,
+      transition: {
+        type: "spring",
+        duration: 0.1,
+        ease: "linear",
+      },
+    },
+    closed: {
+      opacity: 0,
+      y: 0,
+    },
+  };
 
   return (
     <header className="relative flex justify-center items-center px-2  ">
-      {/* TRICKS GRAPHIQUE cette div ne sert qu'à faire le contour animé qui s'agrandit quand on ouvre le menu mais ne contient rien */}
+      {/* TRICKS DESIGN cette div ne sert qu'à faire le contour animé qui s'agrandit quand on ouvre le menu mais ne contient rien */}
       <motion.div
         className="fixed top-2 left-2 right-2 flex w-auto justify-between py-1 px-4 h-12  backdrop-blur-md border border-darkLine rounded-2xl overflow-hidden bg-gradient-to-b from-backGroundDark/80 to-backGroundDark/50"
         initial={{ height: "3rem" }}
@@ -61,7 +88,7 @@ const WelcomePageNavBar = () => {
         }
       ></motion.div>
       <motion.nav
-        className={`z-40 fixed top-2 left-2 right-2 flex w-auto justify-between items-center py-1 px-4 rounded-2xl overflow-hidden ${
+        className={` z-40 fixed top-2 left-2 right-2 flex w-auto justify-between items-center py-1 px-4 rounded-2xl overflow-hidden ${
           isOpen ? "overflow-visible" : ""
         } `}
       >
@@ -73,6 +100,29 @@ const WelcomePageNavBar = () => {
             alt="logo"
           />
         </Link>
+
+        {/* Mobile menu items */}
+        <motion.ul
+          className="md:hidden absolute px-4 flex flex-col -translate-x-4 w-full top-14 gap-5"
+          variants={menuVariants}
+          initial="closed"
+          animate={isOpen ? "open" : "closed"}
+        >
+          {navItems.map((item) => (
+            <Link key={item.name} href={item.href}>
+              <motion.li
+                className="relative py-4 hover:text-purpleLight transition-all duration-500 group border-b border-slate-100/10"
+                variants={itemVariants}
+              >
+                {item.name}
+                {/* trait animé */}
+                <span className="absolute bottom-0 left-0 w-0 h-[0.1px] bg-purpleBtn transition-all duration-300 group-hover:w-full" />
+              </motion.li>
+            </Link>
+          ))}
+        </motion.ul>
+
+        {/* desktop menu items */}
         <ul className="hidden md:flex gap-5  ">
           {navItems.map((item) => (
             <Link key={item.name} href={item.href}>
@@ -85,6 +135,7 @@ const WelcomePageNavBar = () => {
             </Link>
           ))}
         </ul>
+
         <div className="flex items-center gap-3 md:gap-6">
           <SecondaryButton
             text="Login"
