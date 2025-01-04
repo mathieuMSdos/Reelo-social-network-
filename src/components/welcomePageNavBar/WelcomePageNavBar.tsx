@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 import BurgerMenuIcon from "../design/BurgerMenuIcon/BurgerMenuIcon";
 import PrimaryButton from "../design/primaryButton/PrimaryButton";
 import SecondaryButton from "../design/secondaryButton/SecondaryButton";
@@ -11,18 +12,36 @@ import SecondaryButton from "../design/secondaryButton/SecondaryButton";
 const WelcomePageNavBar = () => {
   // ZUSTAND
   const isOpen = useStore((state) => state.isOpen);
+  const setIsOpen = useStore((state) => state.setIsOpen);
 
+  // Menu items
   const navItems = [
     { name: "Pricing", href: "/pricing" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
 
+  //USE EFFECT
+  // Fermer le menu dropdown automatiquement si la fenêtre s'alargie au delà de md
+  useEffect(() => {
+    const closeDropDownFunction = () => {
+      const currentWidth = window.innerWidth;
+      console.log(currentWidth)
+      if (currentWidth > 768) {
+        setIsOpen(false);
+      }
+    }
+      window.addEventListener("resize", closeDropDownFunction);
+      return () =>
+        window.removeEventListener("resize", closeDropDownFunction);
+    
+  }, []);
+
   return (
     <header className="relative flex justify-center items-center px-2  ">
       {/* TRICKS GRAPHIQUE cette div ne sert qu'à faire le contour animé qui s'agrandit quand on ouvre le menu mais ne contient rien */}
       <motion.div
-        className="fixed top-2 left-2 right-2 flex w-auto justify-between py-1 px-4 h-12  backdrop-blur-xl border border-darkLine rounded-2xl overflow-hidden bg-gradient-to-b from-backGroundDark/80 to-backGroundDark/70"
+        className="fixed top-2 left-2 right-2 flex w-auto justify-between py-1 px-4 h-12  backdrop-blur-md border border-darkLine rounded-2xl overflow-hidden bg-gradient-to-b from-backGroundDark/80 to-backGroundDark/50"
         initial={{ height: "3rem" }}
         animate={{ height: isOpen ? "25rem" : "3rem" }}
         transition={
@@ -42,7 +61,9 @@ const WelcomePageNavBar = () => {
         }
       ></motion.div>
       <motion.nav
-        className={`z-40 fixed top-2 left-2 right-2 flex w-auto justify-between items-center py-1 px-4 rounded-2xl overflow-hidden ${isOpen ? "overflow-visible":""} `}
+        className={`z-40 fixed top-2 left-2 right-2 flex w-auto justify-between items-center py-1 px-4 rounded-2xl overflow-hidden ${
+          isOpen ? "overflow-visible" : ""
+        } `}
       >
         <Link href="/">
           <Image
@@ -79,8 +100,6 @@ const WelcomePageNavBar = () => {
           </div>
         </div>
       </motion.nav>
-
-      {/* <DropdownMenu navItems={navItems} /> */}
     </header>
   );
 };

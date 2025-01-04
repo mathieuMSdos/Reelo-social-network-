@@ -1,6 +1,6 @@
-"use client"
-import { motion, AnimatePresence } from "framer-motion";
+"use client";
 import { useStore } from "@/lib/store/index.store";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 
 interface DropdownMenuProps {
@@ -12,11 +12,11 @@ interface DropdownMenuProps {
 
 const DropdownMenu = ({ navItems }: DropdownMenuProps) => {
   const isOpen = useStore((state) => state.isOpen);
-  const toggleMenu = useStore((state) => state.toggleMenu);
+  const toggleMenu = useStore((state) => state.setIsOpen);
 
   const containerVariants = {
     hidden: { height: 0 },
-    visible: { 
+    visible: {
       height: "calc(70vh - 4rem)",
       transition: {
         type: "spring",
@@ -24,9 +24,9 @@ const DropdownMenu = ({ navItems }: DropdownMenuProps) => {
         damping: 21,
         mass: 0.7,
         staggerChildren: 0.1,
-      }
+      },
     },
-    exit: { 
+    exit: {
       height: 0,
       transition: {
         type: "tween",
@@ -34,29 +34,29 @@ const DropdownMenu = ({ navItems }: DropdownMenuProps) => {
         ease: "easeInOut",
         staggerChildren: 0.05,
         staggerDirection: -1,
-      }
-    }
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
+    visible: {
+      y: 0,
       opacity: 1,
       transition: {
         type: "tween",
         duration: 0.2,
         ease: "easeOut",
-      }
+      },
     },
-    exit: { 
-      y: -20, 
+    exit: {
+      y: -20,
       opacity: 0,
       transition: {
         duration: 0.15,
-        ease: "easeInOut"
-      }
-    }
+        ease: "easeInOut",
+      },
+    },
   };
 
   return (

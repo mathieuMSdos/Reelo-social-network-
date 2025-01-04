@@ -1,12 +1,13 @@
 import { StateCreator } from "zustand";
+import { boolean } from 'zod';
 
 export interface BurgerMenuSliceType {
   isOpen: boolean;
-  toggleMenu: () => void;
+  setIsOpen: (boolean:boolean) => void;
 }
 
 export const burgerMenuSlice: StateCreator<BurgerMenuSliceType> = (set) => ({
   // Gérer l'ouverture/fermeture de menu burger
   isOpen: false,
-  toggleMenu: () => set((state) => ({ isOpen: !state.isOpen })),
+  setIsOpen: (boolean) => set((state) => ({ isOpen: boolean })),
 });

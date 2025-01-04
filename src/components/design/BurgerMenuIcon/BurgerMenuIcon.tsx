@@ -3,11 +3,11 @@ import { useStore } from "@/lib/store/index.store";
 
 const BurgerMenuIcon = () => {
   const isOpen = useStore((state) => state.isOpen);
-  const toggleMenu = useStore((state) => state.toggleMenu);
+  const setIsOpen = useStore((state) => state.setIsOpen);
   return (
     <button
       className="relative w-8 h-8 focus:outline-none p-1 z-50"
-      onClick={toggleMenu}
+      onClick={() => setIsOpen(!isOpen)}
     >
       <div className="absolute inset-0 flex flex-col justify-center items-center space-y-1">
         {/* Trait du haut */}
