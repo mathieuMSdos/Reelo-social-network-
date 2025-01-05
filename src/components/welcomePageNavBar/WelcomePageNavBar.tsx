@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import BurgerMenuIcon from "../design/BurgerMenuIcon/BurgerMenuIcon";
 import PrimaryButton from "../design/primaryButton/PrimaryButton";
+import PrimaryButtonSpecial from "../design/primaryButton/PrimaryButtonSpecial";
 import SecondaryButton from "../design/secondaryButton/SecondaryButton";
 
 const WelcomePageNavBar = () => {
@@ -26,7 +27,6 @@ const WelcomePageNavBar = () => {
   useEffect(() => {
     const closeDropDownFunction = () => {
       const currentWidth = window.innerWidth;
-      console.log(currentWidth);
       if (currentWidth > 768) {
         setIsOpen(false);
       }
@@ -53,12 +53,8 @@ const WelcomePageNavBar = () => {
       opacity: 1,
       y: 5,
       transition: {
-        opacity: {duration: 0.3},
-        y: {
-          type: "tween",
-          duration: 0.1,
-          ease: "linear",
-        },
+        duration: 0.1,
+        ease: "easeOut",
       },
     },
     closed: {
@@ -118,7 +114,6 @@ const WelcomePageNavBar = () => {
                 variants={itemVariants}
               >
                 {item.name}
-           
               </motion.li>
             </Link>
           ))}
@@ -138,12 +133,16 @@ const WelcomePageNavBar = () => {
           ))}
         </ul>
 
-        <div className="flex items-center gap-3 md:gap-6">
+        <div className="flex items-center gap-3 md:gap-4">
           <SecondaryButton
             text="Login"
             onClick={async () => await signIn("google")}
           />
-          <PrimaryButton
+          {/* <PrimaryButton
+            text="Sign up"
+            onClick={async () => await signIn("google")}
+          /> */}
+          <PrimaryButtonSpecial
             text="Sign up"
             onClick={async () => await signIn("google")}
           />
