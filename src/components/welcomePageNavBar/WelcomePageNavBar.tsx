@@ -51,11 +51,14 @@ const WelcomePageNavBar = () => {
   const itemVariants = {
     open: {
       opacity: 1,
-      y: 10,
+      y: 5,
       transition: {
-        type: "spring",
-        duration: 0.1,
-        ease: "linear",
+        opacity: {duration: 0.3},
+        y: {
+          type: "tween",
+          duration: 0.1,
+          ease: "linear",
+        },
       },
     },
     closed: {
@@ -68,7 +71,7 @@ const WelcomePageNavBar = () => {
     <header className="relative flex justify-center items-center px-2  ">
       {/* TRICKS DESIGN cette div ne sert qu'à faire le contour animé qui s'agrandit quand on ouvre le menu mais ne contient rien */}
       <motion.div
-        className="fixed top-2 left-2 right-2 flex w-auto justify-between py-1 px-4 h-12  backdrop-blur-md border border-darkLine rounded-2xl overflow-hidden bg-gradient-to-b from-backGroundDark/80 to-backGroundDark/50"
+        className="fixed top-2 left-2 right-2 flex w-auto justify-between py-1 px-4 h-12  backdrop-blur-xl border border-darkLine rounded-2xl overflow-hidden bg-gradient-to-b from-backGroundDark/100 to-backGroundDark/70"
         initial={{ height: "3rem" }}
         animate={{ height: isOpen ? "25rem" : "3rem" }}
         transition={
@@ -111,12 +114,11 @@ const WelcomePageNavBar = () => {
           {navItems.map((item) => (
             <Link key={item.name} href={item.href}>
               <motion.li
-                className="relative py-4 hover:text-purpleLight transition-all duration-500 group border-b border-slate-100/10"
+                className="relative py-4  transition-all duration-500 border-b border-slate-100/10  "
                 variants={itemVariants}
               >
                 {item.name}
-                {/* trait animé */}
-                <span className="absolute bottom-0 left-0 w-0 h-[0.1px] bg-purpleBtn transition-all duration-300 group-hover:w-full" />
+           
               </motion.li>
             </Link>
           ))}
@@ -127,7 +129,7 @@ const WelcomePageNavBar = () => {
           {navItems.map((item) => (
             <Link key={item.name} href={item.href}>
               <li
-                className="hover:text-purpleLight transition-all duration-500"
+                className="hover:text-purpleLight transition-all duration-300 group"
                 key={item.name}
               >
                 {item.name}
