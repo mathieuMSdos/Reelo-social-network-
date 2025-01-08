@@ -14,7 +14,7 @@ const SecondaryButton = ({ text, onClick, disabled }: SecondaryButtonProps) => {
       disabled={disabled}
       className={`${styles.primary_button} ${
         disabled ? "opacity-60" : "cursor-pointer"
-      }  flex justify-center items-center text-sm max-h-8 px-3 py-2 rounded-lg bg-greySecondaryBtn text-purpleBtn weith font-semibold `}
+      }  flex justify-center items-center text-sm max-h-8 px-3 py-2 rounded-lg bg-greySecondaryBtn text-purpleBtn weith font-medium `}
     >
       <p className="">{text}</p>
     </button>

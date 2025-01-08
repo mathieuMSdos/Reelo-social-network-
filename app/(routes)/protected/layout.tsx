@@ -2,7 +2,6 @@
 
 import BackGround from "@/src/components/design/BackGround";
 import ProtectedHeader from "@/src/components/protectedHeader/ProtectedHeader";
-import SignOutButton from "@/src/components/SignOutButton";
 
 const layoutProtected = ({
   children,
@@ -13,7 +12,6 @@ const layoutProtected = ({
     <main className=" relative min-h-screen w-full text-textBlack">
       <BackGround/>
       <ProtectedHeader/>
-      <SignOutButton/>
       <h1>Protected layout</h1>
       <div>{children}</div>
     </main>
