@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import BurgerMenuIcon from "../design/BurgerMenuIcon/BurgerMenuIcon";
-import PrimaryButton from "../design/primaryButton/PrimaryButton";
 import PrimaryButtonSpecial from "../design/primaryButton/PrimaryButtonSpecial";
 import SecondaryButton from "../design/secondaryButton/SecondaryButton";
 
@@ -138,10 +137,7 @@ const WelcomePageNavBar = () => {
             text="Login"
             onClick={async () => await signIn("google")}
           />
-          {/* <PrimaryButton
-            text="Sign up"
-            onClick={async () => await signIn("google")}
-          /> */}
+
           <PrimaryButtonSpecial
             text="Sign up"
             onClick={async () => await signIn("google")}

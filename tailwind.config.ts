@@ -20,6 +20,7 @@ export default {
         darkLine: "#261F30",
         greySecondaryBtn: "#EFEFF3",
         greyPurple: "#EDECF6",
+        textBlack: "#10091A",
       },
     },
   },

@@ -12,28 +12,5 @@ export default {
   pages: {
     signIn: "/",
   },
-  // callbacks: {
-  //   authorized({ auth, request: { nextUrl } }) {
-  //     const isLoggedIn = !!auth?.user;
-  //     const isOnProtected = nextUrl.pathname.startsWith("/protected");
-  //     const isAuthRoute = nextUrl.pathname.startsWith("/api/auth");
-
-  //     // Toujours autoriser les routes d'authentification
-  //     if (isAuthRoute) {
-  //       return true;
-  //     }
-
-  //     // Pour les routes protégées
-  //     if (isOnProtected) {
-  //       if (isLoggedIn) {
-  //         return true; // Utilisateur connecté -> accès autorisé
-  //       } else {
-  //         return Response.redirect(new URL("/", nextUrl)); // Non connecté -> redirection vers l'accueil
-  //       }
-  //     }
-
-  //     // Routes publiques -> accès autorisé pour tous
-  //     return true;
-  //   },
-  // },
+  
 } satisfies NextAuthConfig;
