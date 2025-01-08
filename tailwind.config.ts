@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+const {KadawaFont} = require
 
 export default {
   content: [
@@ -24,6 +25,9 @@ export default {
         textGrey: "#767676"
       },
     },
+    fontFamily:{
+      inter: ['var(--font-inter)']
+    }
   },
   plugins: [],
 } satisfies Config;

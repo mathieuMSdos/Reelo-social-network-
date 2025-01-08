@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Container from "../container/Container";
 import SignOutButton from "../design/signOutButton/SignOutButton";
+import SecondaryButtonInApp from "../design/secondaryButtonInApp/SecondaryButtonInApp";
 
 // TYPAGE
 interface ProfilInfos {
@@ -51,7 +52,8 @@ const ProtectedHeader = async () => {
               </div>
             </div>
             <div className="">
-              <SignOutButton />
+              {/* <SignOutButton /> */}
+              <SecondaryButtonInApp/>
             </div>
           </Container>
         )}
