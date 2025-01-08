@@ -1,0 +1,7 @@
+.container_shadow {
+  background: #ffffff;
+  box-shadow: 22px 54px 23px rgba(0, 0, 0, 0.01),
+    12px 31px 20px rgba(0, 0, 0, 0.05), 5px 14px 15px rgba(0, 0, 0, 0.09),
+    1px 3px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(35px);
+}

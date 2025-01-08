@@ -1,8 +1,9 @@
 import { auth } from "@/auth";
+import { upperFirstLetterOfAString } from "@/lib/utils/scriptJS/upperCaseFirstLetter";
 import Image from "next/image";
 import Link from "next/link";
 import Container from "../container/Container";
-import SignOutButton from "../design/SignOutButton";
+import SignOutButton from "../design/signOutButton/SignOutButton";
 
 // TYPAGE
 interface ProfilInfos {
@@ -15,13 +16,14 @@ const ProtectedHeader = async () => {
   const session = await auth();
 
   const profilInfos: ProfilInfos = {
-    displayName: session?.user?.displayName,
+    displayName: upperFirstLetterOfAString(session?.user?.displayName),
     username: session?.user?.username,
     image: session?.user?.image,
   };
+
   return (
     <header>
-      <nav className="h-16 flex justify-between border border-slate-900">
+      <nav className="h-16 flex justify-between">
         <Link className="flex" href="/profil">
           <Image
             className="object-contain"
@@ -32,17 +34,20 @@ const ProtectedHeader = async () => {
           />
         </Link>
         {profilInfos && (
-          <Container className="flex w-72 p-4 justify-center items-center gap-2">
-            <div className="flex gap-4 w-2/3 ">
-              <Image className="rounded-full"
+          <Container className="flex w-72 p-4 justify-center items-center gap-1 rounded-xl">
+            <div className="flex gap-3 w-2/3 ">
+              <Image
+                className="rounded-full"
                 src={profilInfos.image || "/default_avatar/default_avatar.png"}
-                width={50}
-                height={50}
+                width={40}
+                height={40}
                 alt="profil-picture"
               />
               <div className="flex justify-center flex-col ">
-                <p className="text-sm font-semibold">{profilInfos.displayName}</p>
-                <p className="text-xs">{profilInfos.username}</p>
+                <p className="text-sm font-semibold">
+                  {profilInfos.displayName}
+                </p>
+                <p className="text-xs text-textGrey">{profilInfos.username}</p>
               </div>
             </div>
             <div className="">
