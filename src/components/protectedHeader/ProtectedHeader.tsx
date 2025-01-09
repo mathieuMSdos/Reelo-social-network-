@@ -2,7 +2,7 @@ import { auth } from "@/auth";
 import { upperFirstLetterOfAString } from "@/lib/utils/scriptJS/upperCaseFirstLetter";
 import Image from "next/image";
 import Link from "next/link";
-import Container from "../container/Container";
+import BentoContainer from "../bentoContainer/BentoContainer";
 import SignOutButtonWrapper from "../Wrapper/SignOutWrapper";
 
 // TYPAGE
@@ -24,7 +24,7 @@ const ProtectedHeader = async () => {
   return (
     <header>
       <nav className="h-16 flex justify-between">
-        <Link className="flex" href="/profil">
+        <Link className="flex" href="/protected/profil">
           <Image
             className="object-contain"
             src="/logo/logo_white_mode.png"
@@ -34,7 +34,7 @@ const ProtectedHeader = async () => {
           />
         </Link>
         {profilInfos && (
-          <Container className="flex w-72 p-4 justify-center items-center gap-1 rounded-xl">
+          <BentoContainer className="flex w-72 p-4 justify-center items-center gap-1 rounded-xl">
             <div className="flex gap-3 w-2/3 ">
               <Image
                 className="rounded-full"
@@ -54,7 +54,7 @@ const ProtectedHeader = async () => {
               {/* Wrapp container car sinon problème avec la fonction ()=> signOut() qui peut être utilisé que dans un  client component.*/}
               <SignOutButtonWrapper />
             </div>
-          </Container>
+          </BentoContainer>
         )}
       </nav>
     </header>

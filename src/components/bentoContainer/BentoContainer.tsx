@@ -1,18 +1,16 @@
 import React from "react";
 import styles from "./container.module.css";
 
-
-interface ContainerProps {
+interface BentoContainerProps {
   children: React.ReactNode;
   className?: string;
 }
 
-const Container = ({ children, className }: ContainerProps) => {
-
+const BentoContainer = ({ children, className }: BentoContainerProps) => {
   // défini le style par defaut du container
   const defaultStyle = `${styles.container_shadow}`;
 
   return <div className={`${defaultStyle} ${className}`}>{children}</div>;
 };
 
-export default Container;
+export default BentoContainer;
