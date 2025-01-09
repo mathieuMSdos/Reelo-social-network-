@@ -7,9 +7,9 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import InputGeneric from "../design/inputGeneric/InputGeneric";
-import PrimaryButton from "../design/primaryButton/PrimaryButton";
-import TertiaryButton from "../design/tertiaryButton/TertiaryButton";
+import InputGeneric from "../UI/inputGeneric/InputGeneric";
+import PrimaryButton from "../UI/primaryButton/PrimaryButton";
+import TertiaryButton from "../UI/tertiaryButton/TertiaryButton";
 import BasicAlertRules from "./BasicAlertRules";
 
 // TYPE

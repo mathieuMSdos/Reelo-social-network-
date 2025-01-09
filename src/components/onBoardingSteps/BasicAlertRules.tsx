@@ -2,7 +2,7 @@
 
 import loadingIconLord from "@/src/assets/icons/system-solid-18-autorenew-hover-autorenew.json";
 import { CircleCheck, CircleX } from "lucide-react";
-import GenericIcon from "../design/lordIcons/GenericIcon";
+import GenericIcon from "../UI/lordIcons/GenericIcon";
 
 interface BasicAlertRulesProps {
   isValidate: boolean;

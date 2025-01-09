@@ -1,0 +1,11 @@
+.button_shadow {
+  box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.864),
+    inset 0px -1px 1.2px rgba(107, 79, 153, 0.271);
+  filter: 
+    drop-shadow(2px 5px 1px rgba(87, 45, 155, 0.071))
+    drop-shadow(2px 5px 3px rgba(99, 64, 154, 0.064))
+    drop-shadow(1px 6px 5px rgba(79, 53, 121, 0.2))
+    drop-shadow(3px 15px 3px rgba(34, 12, 67, 0.008))
+    drop-shadow(3px 1px 3px rgba(53, 19, 107, 0.29));
+  background: #efeff3;
+}

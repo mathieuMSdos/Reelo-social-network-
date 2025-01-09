@@ -5,9 +5,9 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
-import BurgerMenuIcon from "../design/BurgerMenuIcon/BurgerMenuIcon";
-import PrimaryButtonSpecial from "../design/primaryButton/PrimaryButtonSpecial";
-import SecondaryButton from "../design/secondaryButton/SecondaryButton";
+import BurgerMenuIcon from "../UI/BurgerMenuIcon/BurgerMenuIcon";
+import PrimaryButtonSpecial from "../UI/primaryButton/PrimaryButtonSpecial";
+import SecondaryButton from "../UI/secondaryButton/SecondaryButton";
 
 const WelcomePageNavBar = () => {
   // ZUSTAND

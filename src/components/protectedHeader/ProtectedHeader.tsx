@@ -3,8 +3,7 @@ import { upperFirstLetterOfAString } from "@/lib/utils/scriptJS/upperCaseFirstLe
 import Image from "next/image";
 import Link from "next/link";
 import Container from "../container/Container";
-import SignOutButton from "../design/signOutButton/SignOutButton";
-import SecondaryButtonInApp from "../design/secondaryButtonInApp/SecondaryButtonInApp";
+import SignOutButtonWrapper from "../Wrapper/SignOutWrapper";
 
 // TYPAGE
 interface ProfilInfos {
@@ -29,7 +28,7 @@ const ProtectedHeader = async () => {
           <Image
             className="object-contain"
             src="/logo/logo_white_mode.png"
-            width={140}
+            width={150}
             height={50}
             alt="logo-icon"
           />
@@ -52,8 +51,8 @@ const ProtectedHeader = async () => {
               </div>
             </div>
             <div className="">
-              {/* <SignOutButton /> */}
-              <SecondaryButtonInApp/>
+              {/* Wrapp container car sinon problème avec la fonction ()=> signOut() qui peut être utilisé que dans un  client component.*/}
+              <SignOutButtonWrapper />
             </div>
           </Container>
         )}

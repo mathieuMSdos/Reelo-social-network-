@@ -5,8 +5,8 @@ import { useStore } from "@/lib/store/index.store";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
-import InputGeneric from "../design/inputGeneric/InputGeneric";
-import PrimaryButton from "../design/primaryButton/PrimaryButton";
+import InputGeneric from "../UI/inputGeneric/InputGeneric";
+import PrimaryButton from "../UI/primaryButton/PrimaryButton";
 import BasicAlertRules from "./BasicAlertRules";
 
 // ---------- TYPE ----------

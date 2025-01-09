@@ -1,6 +1,6 @@
 // layoutProtected.tsx
 
-import BackGround from "@/src/components/design/BackGround";
+import BackGround from "@/src/components/UI/BackGround";
 import ProtectedHeader from "@/src/components/protectedHeader/ProtectedHeader";
 
 const layoutProtected = ({
@@ -10,8 +10,8 @@ const layoutProtected = ({
 }>) => {
   return (
     <main className=" relative min-h-screen w-full text-textBlack">
-      <BackGround/>
-      <ProtectedHeader/>
+      <BackGround />
+      <ProtectedHeader />
       <h1>Protected layout</h1>
       <div>{children}</div>
     </main>
