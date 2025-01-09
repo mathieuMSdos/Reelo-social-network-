@@ -1,26 +1,19 @@
-import { auth } from "@/auth";
-import { upperFirstLetterOfAString } from "@/lib/utils/scriptJS/upperCaseFirstLetter";
 import Image from "next/image";
 import Link from "next/link";
 import BentoContainer from "../bentoContainer/BentoContainer";
 import SignOutButtonWrapper from "../Wrapper/SignOutWrapper";
 
-// TYPAGE
-interface ProfilInfos {
-  displayName: string | null | undefined;
-  username: string | null | undefined;
-  image: string | null | undefined;
+interface ProtectedHeaderProps {
+  username: string | null;
+  displayName: string | null;
+  profilImage: string | null;
 }
 
-const ProtectedHeader = async () => {
-  const session = await auth();
-
-  const profilInfos: ProfilInfos = {
-    displayName: upperFirstLetterOfAString(session?.user?.displayName),
-    username: session?.user?.username,
-    image: session?.user?.image,
-  };
-
+const ProtectedHeader = ({
+  username,
+  displayName,
+  profilImage,
+}: ProtectedHeaderProps) => {
   return (
     <header>
       <nav className="h-16 flex justify-between">
@@ -33,29 +26,25 @@ const ProtectedHeader = async () => {
             alt="logo-icon"
           />
         </Link>
-        {profilInfos && (
-          <BentoContainer className="flex w-72 p-4 justify-center items-center gap-1 rounded-xl">
-            <div className="flex gap-3 w-2/3 ">
-              <Image
-                className="rounded-full"
-                src={profilInfos.image || "/default_avatar/default_avatar.png"}
-                width={40}
-                height={40}
-                alt="profil-picture"
-              />
-              <div className="flex justify-center flex-col ">
-                <p className="text-sm font-semibold">
-                  {profilInfos.displayName}
-                </p>
-                <p className="text-xs text-textGrey">{profilInfos.username}</p>
-              </div>
+        <BentoContainer className="flex w-72 p-4 justify-center items-center gap-1 rounded-xl">
+          <div className="flex gap-3 w-2/3 ">
+            <Image
+              className="rounded-full"
+              src={profilImage || "/default_avatar/default_avatar.png"}
+              width={40}
+              height={40}
+              alt="profil-picture"
+            />
+            <div className="flex justify-center flex-col ">
+              <p className="text-sm font-semibold">{displayName}</p>
+              <p className="text-xs text-textGrey">{username}</p>
             </div>
-            <div className="">
-              {/* Wrapp container car sinon problème avec la fonction ()=> signOut() qui peut être utilisé que dans un  client component.*/}
-              <SignOutButtonWrapper />
-            </div>
-          </BentoContainer>
-        )}
+          </div>
+          <div className="">
+            {/* Wrapp container car sinon problème avec la fonction ()=> signOut() qui peut être utilisé que dans un  client component or là nous ne sommes pas dans un client component et c'est dommage de le passer en client alors qu'il est en server.*/}
+            <SignOutButtonWrapper />
+          </div>
+        </BentoContainer>
       </nav>
     </header>
   );

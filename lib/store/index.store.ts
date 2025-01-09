@@ -6,21 +6,28 @@ import {
   createFormOnBoardingSlice,
   FormOnBoardingSliceType,
 } from "./formOnboarding.slice";
+import {
+  profilInfosInAppSlice,
+  ProfilInfosInAppType,
+} from "./profilInfosInApp.slice";
 
 // ------------ TYPAGE ------------
 // Combinaison des slices
-type Store = FormOnBoardingSliceType & BurgerMenuSliceType; // Ajoute d'autres slices ici si besoin
+type Store = FormOnBoardingSliceType &
+  BurgerMenuSliceType &
+  ProfilInfosInAppType; // Ajoute d'autres slices ici si besoin
 
 export const useStore = create<Store>()(
-  devtools(
-    persist(
+  persist(
+    devtools(
       (...args) => ({
         ...createFormOnBoardingSlice(...args),
         ...burgerMenuSlice(...args),
-      }),
-      {
-        name: "main-store",
-      }
-    )
+        ...profilInfosInAppSlice(...args),
+      })
+    ),
+    {
+      name: "main-store",
+    }
   )
 );
