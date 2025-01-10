@@ -10,9 +10,10 @@ const ProfilCard = () => {
   const profilImage = useStore((state) => state.image);
 
   return (
-    <BentoContainer className="relative flex flex-col items-center w-full h-full min-h-16 rounded-xl">
+    <BentoContainer className=" flex flex-col items-center w-full h-full min-h-16 rounded-xl">
       {/* Container de l'image de couverture qui s'adapte */}
-      <div className="relative w-full h-1/3 min-h-16">
+
+      <div className="relative w-full h-16">
         <Image
           className="object-cover rounded-t-xl"
           src="/defaultCoverProfil/grainy_gradient_cover.jpg"
@@ -21,32 +22,36 @@ const ProfilCard = () => {
           priority
         />
       </div>
-
       {/* Avatar qui s'adapte avec des proportions */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-1/5 min-w-10 max-w-16 aspect-square">
+      <div className="absolute top-10 xl:top-9 mx-auto w-1/4 min-w-14 max-w-20 aspect-square ">
         <Image
-          className="rounded-full object-cover"
+          className="rounded-full object-cover z-10"
           src={profilImage || "/default_avatar/default_avatar.png"}
           fill
           alt="profile_image"
         />
       </div>
 
-      {/* Contenu qui s'adapte */}
-      <div className="bg-red-500 w-full flex-1 p-3 sm:p-4">
-        {/* Bouton edit qui s'adapte */}
-        <button className="flex justify-end w-full">
-          <PenLine className="text-textGrey w-5 sm:w-6" />
+      <div className=" relative w-full flex flex-col justify-center items-center pt-9 pb-9 px-2 ">
+        {/* Bouton edit */}
+        <button className="absolute w-fit top-0 right-0 py-1 px-3">
+          <PenLine className="text-textGrey w-4" />
         </button>
 
-        {/* Texte qui s'adapte */}
-        <div className="flex flex-col items-center pt-2">
+        {/* Texte */}
+        <div className=" flex flex-col gap-4 ">
+          {/* identitité */}
+
           <div className="flex flex-col items-center space-y-0.5">
-            <p className="text-sm sm:text-base md:text-lg font-bold truncate max-w-[90%]">
-              {displayName}
-            </p>
-            <p className="text-xs sm:text-sm md:text-base text-textGrey truncate max-w-[90%]">
-              {username}
+            <p className="text-lg font-bold">{displayName}</p>
+            <p className="text-xs text-textGrey ">{username}</p>
+          </div>
+
+          {/* Profil description */}
+
+          <div>
+            <p className="text-xs text-center">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </p>
           </div>
         </div>

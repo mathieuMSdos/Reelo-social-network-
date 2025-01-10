@@ -1,7 +1,7 @@
 export default async function Dashboard() {
   return (
     <div className="flex justify-center ">
-      <div className="w-80 h-auto border p-5">
+      <div className="w- h-auto border p-5">
         <p className="text-center  text-sm">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore fuga
           facere cum, nam voluptatem porro culpa doloremque ut similique. Dolor
