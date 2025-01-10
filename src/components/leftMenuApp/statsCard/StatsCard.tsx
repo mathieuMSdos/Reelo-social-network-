@@ -1,10 +1,19 @@
-import React from 'react';
+import BentoContainer from "../../bentoContainer/BentoContainer";
 
-const StatsCard = () => {
+interface StatsCardProps {
+  className?: string;
+  stats: string;
+  text: string;
+}
+
+const StatsCard = ({ className, stats, text }: StatsCardProps) => {
   return (
-    <div>
-      StatsCard
-    </div>
+    <BentoContainer className="w-full rounded-xl ">
+      <div className={`${className} flex flex-col justify-center items-center `}>
+        <p className="font-bold">{stats}</p>
+        <p className="text-xs text-textGrey">{text}</p>
+      </div>
+    </BentoContainer>
   );
 };
 
