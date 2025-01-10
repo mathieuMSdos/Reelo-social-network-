@@ -16,14 +16,18 @@ const GenericIcon = ({
   colorize,
   loop = false,
 }: GenericIconProps) => {
-
   const playerRef = useRef<Player>(null);
 
   useEffect(() => {
     playerRef.current?.playFromBeginning();
   }, []);
+
+  const handleHover = () => {
+    playerRef.current?.playFromBeginning();
+  };
+
   return (
-    <div>
+    <div onMouseEnter={handleHover}>
       <Player
         ref={playerRef}
         icon={ICON}
@@ -31,7 +35,7 @@ const GenericIcon = ({
         colorize={colorize}
         onComplete={
           loop ? () => playerRef.current?.playFromBeginning() : undefined
-        } // pour jouer en boucle
+        }
       />
     </div>
   );

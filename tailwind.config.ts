@@ -22,7 +22,7 @@ export default {
         greySecondaryBtn: "#EFEFF3",
         greyPurple: "#EDECF6",
         textBlack: "#10091A",
-        textGrey: "#5b5760"
+        textGrey: "#64748B"
       },
     },
     fontFamily:{
