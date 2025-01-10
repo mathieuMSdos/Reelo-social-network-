@@ -19,7 +19,7 @@ const layoutProtected = async ({
   }
 
   return (
-    <main className="flex flex-col gap-11 relative min-h-screen w-full text-textBlack">
+    <main className="relative flex flex-col px-1 md:px-2 lg:px-7 gap-8 min-h-screen w-full text-textBlack ">
       <ProfileInitializer session={session} />
       <BackGround />
       <ProtectedHeaderWrapper />

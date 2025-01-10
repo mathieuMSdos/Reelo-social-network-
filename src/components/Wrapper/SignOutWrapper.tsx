@@ -5,8 +5,8 @@ import SecondaryButtonInApp from "../UI/secondaryButtonInApp/SecondaryButtonInAp
 
 const SignOutButtonWrapper = () => {
   return (
-    <SecondaryButtonInApp text="Sign out" onClick={() => signOut()}>
-      <LogOut size={16} strokeWidth={2.5} color="var(--purpleBtn)" />
+    <SecondaryButtonInApp className="text-xs max-h-8 px-3 py-2" text="Sign out" onClick={() => signOut()}>
+      <LogOut className="text-purpleBtn" size={16} strokeWidth={2.5} />
     </SecondaryButtonInApp>
   );
 };

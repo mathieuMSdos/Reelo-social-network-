@@ -5,7 +5,7 @@ import StatsCard from "./statsCard/StatsCard";
 
 const LeftMenuApp = () => {
   return (
-    <div className="flex flex-col items-center justify-start w-60 border">
+    <div className="flex flex-col items-center justify-start border">
       <ProfilCard />
       <div>
         <StatsCard />

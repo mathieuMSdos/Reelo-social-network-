@@ -5,16 +5,18 @@ interface SecondaryButtonInAppProps {
   text: string;
   children?: React.ReactNode;
   onClick: () => void;
+  className?: string
 }
 
 const SecondaryButtonInApp = ({
   text,
   onClick,
   children,
+  className,
 }: SecondaryButtonInAppProps) => {
   return (
     <button
-      className={`${styles.button_shadow} h-9 w-126 flex gap-1 justify-center items-center px-2 py-2 rounded-lg text-sm whitespace-nowrap font-inter font-semibold overflow-hidden active:scale-95 transition-all duration-100 `}
+      className={`${styles.button_shadow} ${className} flex gap-1 justify-center items-center  rounded-lg  whitespace-nowrap font-inter font-semibold overflow-hidden active:scale-95 transition-all duration-100  `}
       onClick={onClick}
     >
       {children}

@@ -50,7 +50,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`bg-backGroundDark  text-slate-100 px-2 py-4 ${geistSans.variable} ${geistMono.variable} ${interRegular.variable} antialiased`}
+        className={`bg-backGroundDark  text-slate-100 px-2 py-2 ${geistSans.variable} ${geistMono.variable} ${interRegular.variable} antialiased`}
       >
         <ToastProvider>
           <TanstackProvider>

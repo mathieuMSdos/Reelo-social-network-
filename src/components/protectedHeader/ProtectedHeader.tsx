@@ -16,27 +16,29 @@ const ProtectedHeader = ({
 }: ProtectedHeaderProps) => {
   return (
     <header>
-      <nav className="h-16 flex justify-between">
+      <nav className=" h-auto w-full flex justify-between items-center">
+        {/* logo */}
         <Link className="flex" href="/protected/profil">
           <Image
-            className="object-contain"
+            className="object-contain bgblu"
             src="/logo/logo_white_mode.png"
-            width={150}
+            width={130}
             height={50}
             alt="logo-icon"
           />
         </Link>
-        <BentoContainer className="flex w-72 p-4 justify-center items-center gap-1 rounded-xl">
-          <div className="flex gap-3 w-2/3 ">
+        {/* signout */}
+        <BentoContainer className="flex w-auto py-3 px-4 justify-center items-center gap-4 rounded-xl md:gap-6">
+          <div className="flex gap-2 ">
             <Image
               className="rounded-full"
               src={profilImage || "/default_avatar/default_avatar.png"}
-              width={40}
-              height={40}
+              width={38}
+              height={38}
               alt="profil-picture"
             />
-            <div className="flex justify-center flex-col ">
-              <p className="text-sm font-semibold">{displayName}</p>
+            <div className="hidden md:flex justify-center flex-col ">
+              <p className="text-sm font-bold">{displayName}</p>
               <p className="text-xs text-textGrey">{username}</p>
             </div>
           </div>

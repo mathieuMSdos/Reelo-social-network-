@@ -1,12 +1,17 @@
-import Link from "next/link";
-
 export default async function Dashboard() {
-
-
   return (
-    <div>
-      <h1>Bienvenue sur votre tableau de bord</h1>
-      <Link href="/profil"></Link>
+    <div className="flex justify-center ">
+      <div className="w-80 h-auto border p-5">
+        <p className="text-center  text-sm">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore fuga
+          facere cum, nam voluptatem porro culpa doloremque ut similique. Dolor
+          impedit, reprehenderit est fugit laudantium nulla quasi molestiae,
+          esse quae reiciendis odio quisquam, nemo voluptatibus. Nobis in minima
+          vitae dignissimos?
+        </p>
+      </div>
+
+      {/* <Link href="/profil"></Link> */}
     </div>
   );
 }
