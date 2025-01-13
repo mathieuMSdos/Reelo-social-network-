@@ -10,12 +10,12 @@ const ProfilCard = () => {
   const profilImage = useStore((state) => state.image);
 
   return (
-    <BentoContainer className=" flex flex-col items-center w-full h-full min-h-16 rounded-xl">
+    <BentoContainer className=" flex flex-col items-center w-full h-full min-h-16 rounded-lg">
       {/* Container de l'image de couverture qui s'adapte */}
 
       <div className="relative w-full h-16">
         <Image
-          className="object-cover rounded-t-xl"
+          className="object-cover rounded-t-lg"
           src="/defaultCoverProfil/grainy_gradient_cover.jpg"
           fill
           alt="cover_image"

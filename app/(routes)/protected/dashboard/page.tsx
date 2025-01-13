@@ -1,17 +1,13 @@
+import LeftMenuApp from "@/src/components/leftMenuApp/LeftMenuApp";
+
 export default async function Dashboard() {
   return (
-    <div className="flex justify-center ">
-      <div className="w- h-auto border p-5">
-        <p className="text-center  text-sm">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore fuga
-          facere cum, nam voluptatem porro culpa doloremque ut similique. Dolor
-          impedit, reprehenderit est fugit laudantium nulla quasi molestiae,
-          esse quae reiciendis odio quisquam, nemo voluptatibus. Nobis in minima
-          vitae dignissimos?
-        </p>
+    <div className="w-ful flex justify-between gap-3">
+      <div className="h-96 w-1/6 min-w-48 border bg-red-100">
+        <LeftMenuApp />
       </div>
-
-      {/* <Link href="/profil"></Link> */}
+      <div className=" h-96 w-full  border bg-red-100"></div>
+      <div className=" hidden md:flex h-96 w-2/6 min-w-48 border bg-red-100 "></div>
     </div>
   );
 }

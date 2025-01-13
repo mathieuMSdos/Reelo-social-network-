@@ -19,11 +19,12 @@ const layoutProtected = async ({
   }
 
   return (
-    <main className="relative flex flex-col items px-1 md:px-2 lg:px-7 xl:px-20 gap-8 min-h-screen w-full max-w-screen-2xl text-textBlack ">
+    <main className="relative flex flex-col items px-1 md:px-2 lg:px-7 xl:px-20 gap-4 min-h-screen w-full max-w-screen-2xl text-textBlack ">
       <ProfileInitializer session={session} />
       <BackGround />
       <ProtectedHeaderWrapper />
-      <div>{children}</div>
+      {/* contenu */}
+      {children}
     </main>
   );
 };

@@ -28,25 +28,27 @@ const ProtectedHeader = ({
           />
         </Link>
         {/* signout */}
-        <BentoContainer className="flex w-auto py-3 px-4 justify-center items-center gap-4 rounded-xl md:gap-6">
+        {/* <BentoContainer className="flex gap-4 w-auto py-3 px-4 justify-center items-center  rounded-xl md:gap-6"> */}
+        <div className="flex flex w-auto gap-4 md:gap-6 ">
           <div className="flex gap-2 ">
-            <Image
+            {/* <Image
               className="rounded-full"
               src={profilImage || "/default_avatar/default_avatar.png"}
               width={38}
               height={38}
               alt="profil-picture"
-            />
-            <div className="hidden md:flex justify-center flex-col ">
+            /> */}
+            {/* <div className="hidden md:flex justify-center flex-col ">
               <p className="text-sm font-bold">{displayName}</p>
               <p className="text-xs text-textGrey">{username}</p>
-            </div>
+            </div> */}
           </div>
           <div className="">
             {/* Wrapp container car sinon problème avec la fonction ()=> signOut() qui peut être utilisé que dans un  client component or là nous ne sommes pas dans un client component et c'est dommage de le passer en client alors qu'il est en server.*/}
             <SignOutButtonWrapper />
           </div>
-        </BentoContainer>
+          </div>
+        {/* </BentoContainer> */}
       </nav>
     </header>
   );
