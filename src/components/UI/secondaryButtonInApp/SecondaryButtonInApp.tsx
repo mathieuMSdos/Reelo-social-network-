@@ -2,10 +2,10 @@
 import styles from "./secondaryButtonInApp.module.css";
 
 interface SecondaryButtonInAppProps {
-  text: string;
+  text?: string;
   children?: React.ReactNode;
   onClick: () => void;
-  className?: string
+  className?: string;
 }
 
 const SecondaryButtonInApp = ({
@@ -20,7 +20,9 @@ const SecondaryButtonInApp = ({
       onClick={onClick}
     >
       {children}
-      <p className={`${styles.text_inner_shadow} text-purpleBtn`}>{text}</p>
+      {text && (
+        <p className={`${styles.text_inner_shadow} text-purpleBtn`}>{text}</p>
+      )}
     </button>
   );
 };

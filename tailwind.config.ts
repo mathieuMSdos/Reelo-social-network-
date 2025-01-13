@@ -15,6 +15,7 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
         backGroundDark: "#151219",
+        inputLightBG: "#EDECF6",
         purpleLight:"#9E6CEE",
         purpleBtn: "#8952E0",
         darkPurpleBtn: "#6D28D9",
