@@ -1,7 +1,9 @@
 // layoutProtected.tsx
 
 import { auth } from "@/auth";
+import CreatePostModal from "@/src/components/CRUD components/createPostModal/CreatePostModal";
 import BackGround from "@/src/components/UI/BackGround";
+import PortalModal from "@/src/components/portalModal/PortalModal";
 import ProtectedHeaderWrapper from "@/src/components/protectedHeader/ProtectedHeaderWrapper";
 import ProfileInitializer from "@/src/components/welcomePageNavBar/ProfileInitializer/ProfileInitializer";
 import { redirect } from "next/navigation";
@@ -19,13 +21,19 @@ const layoutProtected = async ({
   }
 
   return (
-    <main className=" bg-white flex flex-col  md:px-2 lg:px-7 xl:px-20 gap-4 min-h-screen h-auto w-full max-w-screen-2xl text-textBlack ">
-      <ProfileInitializer session={session} />
-      <BackGround />
-      <ProtectedHeaderWrapper />
-      {/* contenu */}
-      {children}
-    </main>
+    <>
+    
+      <main className="bg-white flex flex-col  md:px-2 lg:px-7 xl:px-20 gap-4 min-h-screen h-auto w-full max-w-screen-2xl text-textBlack ">
+        <ProfileInitializer session={session} />
+        <BackGround />
+        <ProtectedHeaderWrapper />
+        {/* contenu */}
+        {children}
+      </main>
+      {/* Create post modal */}
+        <CreatePostModal />
+
+    </>
   );
 };
 
