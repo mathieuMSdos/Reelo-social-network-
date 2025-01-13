@@ -42,7 +42,7 @@ const ProfilCard = () => {
         <div className=" flex flex-col gap-4 ">
           {/* identitité */}
 
-          <div className="flex flex-col items-center space-y-0.5">
+          <div className="flex flex-col items-center -space-y-1">
             <p className="text-lg font-bold">{displayName}</p>
             <p className="text-xs text-textGrey ">{username}</p>
           </div>
