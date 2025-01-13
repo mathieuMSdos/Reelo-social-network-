@@ -13,7 +13,7 @@ const LeftMenuApp = () => {
         <StatsCard className="w-full py-6" stats="176" text="Following" />
       </div>
       <MenuCard />
-      <PrimaryButton className=" font-semibold w-full px-3 py-2" text="New Post">
+      <PrimaryButton className=" font-semibold w-full px-3 py-3" text="New Post">
         <NotebookPen size={20} strokeWidth={2.5} />
       </PrimaryButton>
     </div>
