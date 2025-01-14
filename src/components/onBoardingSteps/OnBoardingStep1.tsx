@@ -1,6 +1,6 @@
 "use client";
 
-import { isUsernameAlreadyExistAction } from "@/app/actions/onBoardingActions";
+import { isUsernameAlreadyExistAction } from "@/app/actions/onBoarding.actions";
 import { useStore } from "@/lib/store/index.store";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";

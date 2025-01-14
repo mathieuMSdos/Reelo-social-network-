@@ -1,6 +1,6 @@
 "use client";
 
-import { updateUserAction } from "@/app/actions/onBoardingActions";
+import { updateUserAction } from "@/app/actions/onBoarding.actions";
 import { useStore } from "@/lib/store/index.store";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
