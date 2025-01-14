@@ -16,7 +16,7 @@ const SecondaryButtonInApp = ({
 }: SecondaryButtonInAppProps) => {
   return (
     <button
-      className={`${styles.button_shadow}  flex gap-1 justify-center items-center rounded-lg  whitespace-nowrap text-sm font-inter font-semibold overflow-hidden active:scale-95 transition-all duration-100 ${className}  `}
+      className={`${styles.button_shadow}  flex gap-1 justify-center items-center rounded-lg h-auto px-3 py-2 min-w-22 whitespace-nowrap text-sm font-inter font-semibold overflow-hidden active:scale-95 transition-all duration-100 ${className}  `}
       onClick={onClick}
     >
       {children}

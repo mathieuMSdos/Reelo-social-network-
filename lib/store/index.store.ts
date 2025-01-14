@@ -10,12 +10,13 @@ import {
   profilInfosInAppSlice,
   ProfilInfosInAppType,
 } from "./profilInfosInApp.slice";
+import { createPostModalSlice, CreatePostModalSliceType } from "./modal.slice";
 
 // ------------ TYPAGE ------------
 // Combinaison des slices
 type Store = FormOnBoardingSliceType &
   BurgerMenuSliceType &
-  ProfilInfosInAppType; // Ajoute d'autres slices ici si besoin
+  ProfilInfosInAppType & CreatePostModalSliceType ; // Ajoute d'autres slices ici si besoin
 
 export const useStore = create<Store>()(
   persist(
@@ -24,6 +25,7 @@ export const useStore = create<Store>()(
         ...createFormOnBoardingSlice(...args),
         ...burgerMenuSlice(...args),
         ...profilInfosInAppSlice(...args),
+        ...createPostModalSlice(...args),
       })
     ),
     {

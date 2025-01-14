@@ -1,18 +1,54 @@
 "use client";
 
 import { useStore } from "@/lib/store/index.store";
+import { Clock, Image as ImageIcon, NotebookPen } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
+import BadgeButton from "../../UI/badgeButton/BadgeButton";
 import CloseButton from "../../UI/CloseButton/CloseButton";
+import PrimaryButton from "../../UI/primaryButton/PrimaryButton";
 import TextArea from "../../UI/textArea/TextArea";
 
 const CreatePostModal = () => {
+  // STORE ZUSTAND
   const profilImage = useStore((state) => state.image);
+  const setIsCreatePostModalOpen = useStore(
+    (state) => state.setIsCreatePostModalOpen
+  );
+
+  // Permet que au clic en dehors de la modal la modal se ferme
+
+  // useref
+  const modalCard = useRef(null);
+
+  // useEffect
+  useEffect(() => {
+    const handleClick = (e) => {
+      const clickIsInsideModalCard = modalCard.current.contains(e.target);
+
+      if (modalCard.current && !clickIsInsideModalCard) {
+        console.log(clickIsInsideModalCard);
+        setIsCreatePostModalOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    // cleanup function
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  const badgeContent = [
+    { icon: <ImageIcon size={18} />, text: "Image" },
+    { icon: <Clock size={18} />, text: "Schedule" },
+  ];
 
   return (
     // le background gradient etc;; sera à mettre ici
-    <div className="fixed inset-0 w-full min-h-screen flex justify-center items-center bg-white/30 backdrop-blur-sm text-backGroundDark">
+    <div className="fixed inset-0 w-full min-h-screen flex justify-center items-center bg-white/30 backdrop-blur-sm text-textBlack ">
       {/* contour */}
-      <div className=" h-fit  w-2/5  bg-white/20 backdrop-blur-md rounded-md border p-3">
+      <div
+        className=" h-fit w-2/5 bg-white/20 backdrop-blur-md rounded-md border p-3 "
+        ref={modalCard}
+      >
         {/* card */}
         <div className=" h-fit w-full flex flex-col gap-4 items-center px-4 py-4 bg-white border rounded-md ">
           {/* close button */}
@@ -30,10 +66,25 @@ const CreatePostModal = () => {
                 width={50}
                 alt="profile_image"
               />
-              <div className="w-full overflow-auto">
-                  <TextArea />
+              <div className="w-full flex flex-col gap-2 overflow-auto">
+                {/* text area */}
+                <TextArea />
+                {/* badges */}
+
+                <ul className="flex justify-start gap-2">
+                  {badgeContent.map((item) => (
+                    <li key={item.text}>
+                      <BadgeButton text={item.text}>{item.icon}</BadgeButton>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
+          </div>
+          <div className=" h-auto w-full flex items-center justify-end">
+            <PrimaryButton className=" font-semibold" text="Post">
+              <NotebookPen size={15} strokeWidth={2.5} />
+            </PrimaryButton>
           </div>
         </div>
       </div>
