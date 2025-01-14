@@ -16,25 +16,12 @@ const CreatePostModal = () => {
     (state) => state.setIsCreatePostModalOpen
   );
 
-  // Permet que au clic en dehors de la modal la modal se ferme
-
-  // useref
-  const modalCard = useRef(null);
-
-  // useEffect
-  useEffect(() => {
-    const handleClick = (e) => {
-      const clickIsInsideModalCard = modalCard.current.contains(e.target);
-
-      if (modalCard.current && !clickIsInsideModalCard) {
-        console.log(clickIsInsideModalCard);
-        setIsCreatePostModalOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClick);
-    // cleanup function
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
+//  Gérer la fermeture de la modale si on clique à l'extérieur
+const handleBackclick = (e)=> {
+if(e.target === e.currentTarget) {
+  setIsCreatePostModalOpen(false)
+}
+}
 
   const badgeContent = [
     { icon: <ImageIcon size={18} />, text: "Image" },
@@ -43,11 +30,10 @@ const CreatePostModal = () => {
 
   return (
     // le background gradient etc;; sera à mettre ici
-    <div className="fixed inset-0 w-full min-h-screen flex justify-center items-center bg-white/30 backdrop-blur-sm text-textBlack ">
+    <div className="fixed inset-0 w-full min-h-screen flex justify-center items-center bg-white/30 backdrop-blur-sm text-textBlack " onClick={handleBackclick}>
       {/* contour */}
       <div
         className=" h-fit w-2/5 bg-white/20 backdrop-blur-md rounded-md border p-3 "
-        ref={modalCard}
       >
         {/* card */}
         <div className=" h-fit w-full flex flex-col gap-4 items-center px-4 py-4 bg-white border rounded-md ">
