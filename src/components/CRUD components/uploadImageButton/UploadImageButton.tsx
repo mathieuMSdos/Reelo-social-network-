@@ -1,3 +1,4 @@
+import { uploadImageAction } from "@/app/actions/crudPostActions/uploadImage.action";
 import React, { useRef } from "react";
 
 interface UploadImageButtonProps {
@@ -22,8 +23,19 @@ const UploadImageButton = ({
   }
 
   // action à partir de l'upload
-  const handleUpload = ()=>{
-    console.log("hello")
+  const handleUpload = async (e:React.ChangeEvent<HTMLInputElement>)=>{
+    console.log(e.target.files)
+
+    if(e.target.files) {
+
+      const formData = new FormData()
+      formData.append("image", e.target.files[0])
+
+      // on appel le server action pour pousser l'image vers cloudinary
+      const response = await uploadImageAction(formData)
+      console.log(response)
+    }
+
   }
 
   return (
