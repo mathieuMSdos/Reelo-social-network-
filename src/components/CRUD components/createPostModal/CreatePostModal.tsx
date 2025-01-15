@@ -6,12 +6,13 @@ import { useStore } from "@/lib/store/index.store";
 import { useMutation } from "@tanstack/react-query";
 import { Clock, Image as ImageIcon, NotebookPen } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
 import BadgeButton from "../../UI/badgeButton/BadgeButton";
 import CloseButton from "../../UI/CloseButton/CloseButton";
 import PrimaryButton from "../../UI/primaryButton/PrimaryButton";
+import UploadImageButton from "../uploadImageButton/UploadImageButton";
 
 // TYPE
 
@@ -24,10 +25,11 @@ const CreatePostModal = () => {
   );
 
   // state local
-  const [postContent, setPostContent] = useState();
+  const [postContent, setPostContent] = useState("");
+  const [controlRules, setcontrolRules] = useState({ isContent: false });
 
   //  Gérer la fermeture de la modale si on clique à l'extérieur
-  const handleBackclick = (e) => {
+  const handleClickOutsideCloseModal = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       setIsCreatePostModalOpen(false);
     }
@@ -58,21 +60,45 @@ const CreatePostModal = () => {
   });
 
   const handleClickPost = () => {
-    const data = {
-      authorId: `${userId}`,
-      content: `${postContent}`,
-      published: true,
-    };
-    const validateData = PostSchema.parse(data);
+    if (controlRules.isContent) {
+      const data = {
+        authorId: `${userId}`,
+        content: `${postContent}`,
+        published: true,
+      };
+      const validateData = PostSchema.parse(data);
 
-    createPostMutation(validateData);
+      createPostMutation(validateData);
+    }
   };
 
+  // Controle avant le post (post non vide)
+  useEffect(() => {
+    setcontrolRules({
+      isContent: postContent !== "",
+    });
+  }, [postContent]);
+
+  // GESTION DES TOUCHES CLAVIER
+  useEffect(() => {
+    const handleCloseModal = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsCreatePostModalOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleCloseModal);
+
+    return () => {
+      window.removeEventListener("keydown", handleCloseModal);
+    };
+  }, [setIsCreatePostModalOpen]);
+
   return (
-    // le background gradient etc;; sera à mettre ici
+    // le background gradient etc sera à mettre ici
     <div
       className="fixed inset-0 w-full min-h-screen flex justify-center items-center bg-white/30 backdrop-blur-sm text-textBlack "
-      onClick={handleBackclick}
+      onClick={handleClickOutsideCloseModal}
     >
       {/* contour */}
       <div className=" h-fit w-2/5 bg-white/20 backdrop-blur-md rounded-md border p-3 ">
@@ -111,6 +137,13 @@ const CreatePostModal = () => {
                       <BadgeButton text={item.text}>{item.icon}</BadgeButton>
                     </li>
                   ))}
+                  {/* test */}
+                  <UploadImageButton
+                    className="flex items-center justify-center gap-1 border rounded-full border-purpleBtn text-purpleBtn font-semibold px-6 py-1 text-xs"
+                    text="Image"
+                  >
+                    <ImageIcon size={18} />
+                  </UploadImageButton>
                 </ul>
               </div>
             </div>
@@ -119,7 +152,7 @@ const CreatePostModal = () => {
             <PrimaryButton
               className=" font-semibold"
               text="Post"
-              disabled={isPending}
+              disabled={isPending || !controlRules.isContent}
               onClick={() => handleClickPost()}
             >
               <NotebookPen size={15} strokeWidth={2.5} />
