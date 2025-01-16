@@ -30,8 +30,8 @@ export const uploadImageAction = async (formdata: FormData) => {
     );
     return {
       success: true,
-      urlImage: result.secure_url,
-      publicId: result.public_id,
+      imageUrl: result.secure_url,
+      imageId: result.public_id,
     };
   } catch (error) {
     console.error("Erreur d'upload:", error);
@@ -39,4 +39,3 @@ export const uploadImageAction = async (formdata: FormData) => {
   }
 };
 
-// suppression d'image quand on supprime un post

@@ -12,7 +12,8 @@ export const createPost = async (data: PostSchemaZod) => {
       data: {
         authorId: validateData.authorId,
         content: validateData.content,
-        image: validateData.image,
+        imageUrl: validateData.imageUrl,
+        imageId: validateData.imageId,
         published: validateData.published,
       },
     });

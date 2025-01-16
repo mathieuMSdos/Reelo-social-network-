@@ -6,28 +6,33 @@ import {
   createFormOnBoardingSlice,
   FormOnBoardingSliceType,
 } from "./formOnboarding.slice";
+import { createPostModalSlice, CreatePostModalSliceType } from "./modal.slice";
 import {
   profilInfosInAppSlice,
   ProfilInfosInAppType,
 } from "./profilInfosInApp.slice";
-import { createPostModalSlice, CreatePostModalSliceType } from "./modal.slice";
+import {
+  uploadedImageSlice,
+  UploadedImageSliceType,
+} from "./uploadedImage.slice";
 
 // ------------ TYPAGE ------------
 // Combinaison des slices
 type Store = FormOnBoardingSliceType &
   BurgerMenuSliceType &
-  ProfilInfosInAppType & CreatePostModalSliceType ; // Ajoute d'autres slices ici si besoin
+  ProfilInfosInAppType &
+  CreatePostModalSliceType &
+  UploadedImageSliceType; // Ajoute d'autres slices ici si besoin
 
 export const useStore = create<Store>()(
   persist(
-    devtools(
-      (...args) => ({
-        ...createFormOnBoardingSlice(...args),
-        ...burgerMenuSlice(...args),
-        ...profilInfosInAppSlice(...args),
-        ...createPostModalSlice(...args),
-      })
-    ),
+    devtools((...args) => ({
+      ...createFormOnBoardingSlice(...args),
+      ...burgerMenuSlice(...args),
+      ...profilInfosInAppSlice(...args),
+      ...createPostModalSlice(...args),
+      ...uploadedImageSlice(...args),
+    })),
     {
       name: "main-store",
     }

@@ -30,7 +30,8 @@ model User {
 model Post {
   id        String   @id @default(cuid())
   content   String   @db.VarChar(280) // limiter les posts à 280 charactères
-  image     String?
+  imageUrl     String?
+  imageId   String?
   published Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

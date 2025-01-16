@@ -1,6 +1,7 @@
 "use client";
 
 import { createPost } from "@/app/actions/crudPostActions/post.action";
+import { deleteImageOnCloudinary } from "@/app/actions/crudPostActions/uploadImageActions/deleteImageOnCloudinary.action";
 import { PostSchema, PostSchemaZod } from "@/lib/schema/post.schema";
 import { useStore } from "@/lib/store/index.store";
 import { useMutation } from "@tanstack/react-query";
@@ -12,6 +13,7 @@ import { toast } from "sonner";
 import BadgeButton from "../../UI/badgeButton/BadgeButton";
 import CloseButton from "../../UI/CloseButton/CloseButton";
 import PrimaryButton from "../../UI/primaryButton/PrimaryButton";
+import PreviewImageUploaded from "../previewImageUploaded/PreviewImageUploaded";
 import UploadImageButton from "../uploadImageButton/UploadImageButton";
 
 // TYPE
@@ -23,22 +25,25 @@ const CreatePostModal = () => {
   const setIsCreatePostModalOpen = useStore(
     (state) => state.setIsCreatePostModalOpen
   );
+  const imageUrl = useStore((state) => state.imageUrl);
+  const imageId = useStore((state) => state.imageId);
+  const resetUploadedImage = useStore((state) => state.resetUploadedImage);
 
   // state local
   const [postContent, setPostContent] = useState("");
   const [controlRules, setcontrolRules] = useState({ isContent: false });
 
   //  Gérer la fermeture de la modale si on clique à l'extérieur
-  const handleClickOutsideCloseModal = (e: React.MouseEvent) => {
+  const handleClickOutsideCloseModal = async (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
+      //Modif du state zustand pour fermer la modal
       setIsCreatePostModalOpen(false);
+      // suppression de l'image sur cloudinary
+      await deleteImageOnCloudinary(imageId);
+      //suppression de l'image dans le store zustand
+      resetUploadedImage();
     }
   };
-
-  const badgeContent = [
-    { icon: <ImageIcon size={18} />, text: "Image" },
-    { icon: <Clock size={18} />, text: "Schedule" },
-  ];
 
   // TANSTACK gestion du create post
 
@@ -52,6 +57,7 @@ const CreatePostModal = () => {
       toast.dismiss();
       toast.success("Posted successfully !");
       setIsCreatePostModalOpen(false);
+      resetUploadedImage()
     },
     onError: () => {
       toast.dismiss();
@@ -64,6 +70,8 @@ const CreatePostModal = () => {
       const data = {
         authorId: `${userId}`,
         content: `${postContent}`,
+        imageUrl: `${imageUrl}`,
+        imageId: `${imageId}`,
         published: true,
       };
       const validateData = PostSchema.parse(data);
@@ -106,12 +114,12 @@ const CreatePostModal = () => {
         <div className=" h-fit w-full flex flex-col gap-4 items-center px-4 py-4 bg-white border rounded-md ">
           {/* close button */}
           <div className="flex justify-end w-full   ">
-            <CloseButton />
+            <CloseButton onClick={() => setIsCreatePostModalOpen(false)} />
           </div>
-          {/* photo + input */}
+          {/* photo profil + input */}
           <div className="w-full">
-            {/* photo */}
-            <div className="flex h-auto w-full items-start gap-4 ">
+            {/* photo profil */}
+            <div className="flex fleco h-auto w-full items-start gap-4 ">
               <Image
                 className="rounded-full object-cover"
                 src={profilImage || "/default_avatar/default_avatar.png"}
@@ -129,25 +137,36 @@ const CreatePostModal = () => {
                   onChange={(e) => {
                     setPostContent(e.target.value);
                   }}
-                />
+                ></TextareaAutosize>
+
                 {/* badges */}
-                <ul className="flex justify-start gap-2">
-                  {badgeContent.map((item) => (
-                    <li key={item.text}>
-                      <BadgeButton text={item.text}>{item.icon}</BadgeButton>
-                    </li>
-                  ))}
-                  {/* test */}
-                  <UploadImageButton
-                    className="flex items-center justify-center gap-1 border rounded-full border-purpleBtn text-purpleBtn font-semibold px-6 py-1 text-xs"
-                    text="Image"
-                  >
-                    <ImageIcon size={18} />
-                  </UploadImageButton>
+                <ul className="flex justify-start gap-3">
+                  <li>
+                    <BadgeButton text="Schedule">
+                      <Clock size={18} />
+                    </BadgeButton>
+                  </li>
+                  <li>
+                    <UploadImageButton text="Image">
+                      <ImageIcon size={18} />
+                    </UploadImageButton>
+                  </li>
                 </ul>
+                {/* Preview uploaded image */}
+                <div className="w-full flex justify-start items-center">
+                  {imageUrl && imageId ? (
+                    <PreviewImageUploaded
+                      imageUrl={imageUrl}
+                      imageId={imageId}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             </div>
           </div>
+
           <div className=" h-auto w-full flex items-center justify-end">
             <PrimaryButton
               className=" font-semibold"
