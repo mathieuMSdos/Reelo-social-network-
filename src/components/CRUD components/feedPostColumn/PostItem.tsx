@@ -1,10 +1,12 @@
 import BentoContainer from "../../bentoContainer/BentoContainer";
 
-const PostItem = () => {
+const PostItem = ({post}) => {
+
+
   return (
     <BentoContainer className="w-full">
       {/* post header */}
-      <div>Post item</div>
+      <div>{post.content}</div>
     </BentoContainer>
   );
 };
