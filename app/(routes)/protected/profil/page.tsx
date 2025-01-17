@@ -3,14 +3,16 @@ import LeftMenuApp from "@/src/components/leftMenuApp/LeftMenuApp";
 
 const page = () => {
   return (
-    <div className="w-full h-auto flex justify-between gap-3">
-      <div className="h-auto w-1/6 min-w-48">
+    <div className="relative w-full h-auto flex justify-between gap-3">
+      <div className="fixed h-screen w-1/6 min-w-48">
         <LeftMenuApp />
       </div>
-      <div className=" h-auto min-h-screen  w-full  border bg-red-100">
+      {/* Add a placeholder div to maintain space */}
+      <div className="invisible w-2/6 min-w-48" />
+      <div className="h-4/5 w-full">
         <FeedPostColumn />
       </div>
-      <div className=" h-auto  hidden md:flex h-96 w-2/6 min-w-48 border bg-red-100 "></div>
+      <div className="h-auto hidden md:flex w-2/6 min-w-48 bg-red-100" />
     </div>
   );
 };

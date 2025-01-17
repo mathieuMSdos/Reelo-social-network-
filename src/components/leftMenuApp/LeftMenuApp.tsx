@@ -10,8 +10,8 @@ const LeftMenuApp = () => {
     <div className="flex flex-col gap-2 items-center justify-start">
       <ProfilCard />
       <div className="w-full flex justify-center items-center gap-2 ">
-        <StatsCard className="w-full py-6" stats="10,876" text="Followers" />
-        <StatsCard className="w-full py-6" stats="176" text="Following" />
+        <StatsCard className="w-full py-5" stats="10,876" text="Followers" />
+        <StatsCard className="w-full py-5" stats="176" text="Following" />
       </div>
       <MenuCard />
       <WrapperToggleModal>

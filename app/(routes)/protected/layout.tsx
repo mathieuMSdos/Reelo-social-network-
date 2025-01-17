@@ -21,12 +21,14 @@ const layoutProtected = async ({
 
   return (
     <>
-      <main className="bg-white flex flex-col  md:px-2 lg:px-7 xl:px-20 gap-4 min-h-screen h-auto w-full max-w-screen-2xl text-textBlack ">
+      <main className="bg-white flex flex-col  md:px-2 lg:px-7 xl:px-20 gap-4  h-auto w-full max-w-screen-2xl text-textBlack  ">
         <ProfileInitializer session={session} />
         <BackGround />
         <ProtectedHeaderWrapper />
-        {/* contenu */}
-        {children}
+        <div className="py-1">
+          {/* contenu */}
+          {children}
+        </div>
       </main>
       {/* Create post modal */}
       <WrapperShowModal />

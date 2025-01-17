@@ -12,6 +12,9 @@ export const getProfilPosts = async (authorId: string, page: number) => {
       take: limit,
       skip: skip,
       orderBy: { createdAt: "desc" },
+      include:{
+        author: true
+      }
     });
 
     // permet de savoir si il reste des post à charger

@@ -23,7 +23,7 @@ const ProfilCard = () => {
         />
       </div>
       {/* Avatar qui s'adapte avec des proportions */}
-      <div className="absolute top-10 xl:top-9 mx-auto w-1/4 min-w-14 max-w-20 aspect-square ">
+      <div className="absolute top-10 xl:top-9 mx-auto w-1/4 min-w-14 max-w-20 aspect-square  ">
         <Image
           className="rounded-full object-cover z-10"
           src={profilImage || "/default_avatar/default_avatar.png"}
@@ -32,14 +32,14 @@ const ProfilCard = () => {
         />
       </div>
 
-      <div className=" relative w-full flex flex-col justify-center items-center pt-9 pb-9 px-2 ">
+      <div className=" relative w-full flex flex-col justify-center items-center pt-9 pb-5 px-2 ">
         {/* Bouton edit */}
         <button className="absolute w-fit top-0 right-0 py-1 px-3">
           <PenLine className="text-textGrey w-4" />
         </button>
 
         {/* Texte */}
-        <div className=" flex flex-col gap-4 ">
+        <div className=" flex flex-col gap-2 ">
           {/* identitité */}
 
           <div className="flex flex-col items-center -space-y-1">

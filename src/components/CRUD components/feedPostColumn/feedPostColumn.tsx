@@ -3,7 +3,7 @@ import { useStore } from "@/lib/store/index.store";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { getProfilPosts } from "../../../../app/actions/crudPostActions/crudGetPost/getProfilPosts.action";
-import PostItem from "./PostItem";
+import PostProfileItem from "./postProfileItem/PostProfileItem";
 
 const FeedPostColumn = () => {
   // zustand state
@@ -28,12 +28,12 @@ const FeedPostColumn = () => {
     },
   });
 
-  useEffect(() => {
-    if (data) {
-      // const validateData = GetPostSchemaArray.parse(data.pages[0].posts);
-      console.log(data);
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     // const validateData = GetPostSchemaArray.parse(data.pages[0].posts);
+  //     console.log(data);
+  //   }
+  // }, [data]);
 
   return (
     <div className="flex flex-col gap-1 items-center justify-start w-full h-auto min-h-screen ">
@@ -41,13 +41,13 @@ const FeedPostColumn = () => {
       <div className="flex justify-between w-full">
         <h3 className="text-left">Your Post</h3>
       </div>
-      <ul>
+      <ul className="w-full min-h-screen flex flex-col gap-2 ">
         {data &&
           data.pages.map((page, index) => (
             <React.Fragment key={index}>
-              {page.posts.map((post, index) => (
+              {page.posts.map((post) => (
                 <li key={post.id}>
-                  <PostItem post={post} />
+                  <PostProfileItem postData={post} />
                 </li>
               ))}
             </React.Fragment>
