@@ -1,7 +1,8 @@
+import { dateFormat, dateFormatter } from "@/lib/utils/scriptJS/dateFormatter";
 import { upperFirstLetterOfAString } from "@/lib/utils/scriptJS/upperCaseFirstLetter";
 import TertiaryButton from "@/src/components/UI/tertiaryButton/TertiaryButton";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import BentoContainer from "../../../bentoContainer/BentoContainer";
 
 const PostProfileItem = ({ postData }) => {
@@ -11,20 +12,23 @@ const PostProfileItem = ({ postData }) => {
   const { image, displayName, username } = postData.author;
 
   // infos contenu du post
-  const { content, imageUrl } = postData;
+  const { content, imageUrl, createdAt } = postData;
 
   const truncatedContent = useMemo(() => {
     if (content.length > 120) {
-      return content.substring(0, 100).padEnd(103, "...");
+      const truncatedString = content.substring(0, 100).padEnd(103, "...");
+      return upperFirstLetterOfAString(truncatedString);
     } else {
       return null;
     }
     // faire la fonction qui va faire le showmore
   }, [content]);
 
-  useEffect(() => {
-    console.log(showMore);
-  }, [showMore]);
+  // formater la date de création du post
+
+  const dateOfPorst = useMemo(() => {
+    return dateFormat(createdAt)
+  }, [createdAt]);
 
   return (
     <BentoContainer className="w-full h-fit rounded-xl py-8 px-10 ">
@@ -48,7 +52,7 @@ const PostProfileItem = ({ postData }) => {
               </p>
               <p className="text-xs text-textGrey">{username}</p>
             </div>
-            <p className="text-xs text-textGrey">2 hours ago</p>
+            <p className="text-xs text-textGrey">{dateOfPorst}</p>
           </div>
 
           <div>
