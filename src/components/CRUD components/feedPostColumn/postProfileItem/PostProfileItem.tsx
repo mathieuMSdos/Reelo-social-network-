@@ -1,10 +1,11 @@
 import { upperFirstLetterOfAString } from "@/lib/utils/scriptJS/upperCaseFirstLetter";
+import TertiaryButton from "@/src/components/UI/tertiaryButton/TertiaryButton";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import BentoContainer from "../../../bentoContainer/BentoContainer";
 
 const PostProfileItem = ({ postData }) => {
-const [showMore, setShowMore] = useState(false)
+  const [showMore, setShowMore] = useState(false);
 
   // infos sur l'autheur du post
   const { image, displayName, username } = postData.author;
@@ -12,13 +13,18 @@ const [showMore, setShowMore] = useState(false)
   // infos contenu du post
   const { content, imageUrl } = postData;
 
-//  const truncatedContent = useMemo(()=>{
+  const truncatedContent = useMemo(() => {
+    if (content.length > 120) {
+      return content.substring(0, 100).padEnd(103, "...");
+    } else {
+      return null;
+    }
+    // faire la fonction qui va faire le showmore
+  }, [content]);
 
-//   if(content.length >= 150) {
-//     content.
-//   }
-// // faire la fonction qui va faire le showmore
-//  },[content])
+  useEffect(() => {
+    console.log(showMore);
+  }, [showMore]);
 
   return (
     <BentoContainer className="w-full h-fit rounded-xl py-8 px-10 ">
@@ -46,9 +52,29 @@ const [showMore, setShowMore] = useState(false)
           </div>
 
           <div>
-            <div className="h-12 overflow-hidden">
+            <div className="h-auto w-full bgyel">
               {/* texte du post */}
-              <p>{upperFirstLetterOfAString(content)}</p>
+              {showMore ? (
+                <p>{content}</p>
+              ) : (
+                <>
+                  <p>
+                    {truncatedContent
+                      ? upperFirstLetterOfAString(truncatedContent)
+                      : upperFirstLetterOfAString(content)}
+                  </p>
+                  {truncatedContent && (
+                    <TertiaryButton
+                      className="px-0 py-0"
+                      text="Voir plus"
+                      onClick={() => {
+                        setShowMore(true);
+                      }}
+                    ></TertiaryButton>
+                  )}
+                </>
+              )}
+
               {/* image du post */}
             </div>
             {imageUrl && (
