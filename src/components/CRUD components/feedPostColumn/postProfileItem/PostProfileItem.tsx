@@ -1,9 +1,10 @@
-import { dateFormat, dateFormatter } from "@/lib/utils/scriptJS/dateFormatter";
+import { dateFormat } from "@/lib/utils/scriptJS/dateFormatter";
 import { upperFirstLetterOfAString } from "@/lib/utils/scriptJS/upperCaseFirstLetter";
 import TertiaryButton from "@/src/components/UI/tertiaryButton/TertiaryButton";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import BentoContainer from "../../../bentoContainer/BentoContainer";
+import ThreeDots from "@/src/components/UI/threeDot/ThreeDots";
 
 const PostProfileItem = ({ postData }) => {
   const [showMore, setShowMore] = useState(false);
@@ -27,13 +28,13 @@ const PostProfileItem = ({ postData }) => {
   // formater la date de création du post
 
   const dateOfPorst = useMemo(() => {
-    return dateFormat(createdAt)
+    return dateFormat(createdAt);
   }, [createdAt]);
 
   return (
-    <BentoContainer className="w-full h-fit rounded-xl py-8 px-10 ">
+    <BentoContainer className="w-full h-fit rounded-xl py-8 px-10  ">
       {/* post header */}
-      <div className="flex justify-start   gap-2">
+      <div className="flex justify-start gap-2 ">
         <div className=" flex-shrink-0  ">
           <Image
             className=" rounded-full object-cover"
@@ -43,16 +44,19 @@ const PostProfileItem = ({ postData }) => {
             alt="profil-picture"
           />
         </div>
-        {/* contenu du post */}
-        <div className="flex flex-col gap-3 ">
-          <div>
-            <div className="flex justify-start items-center gap-2   ">
-              <p className="text-sm font-bold">
-                {upperFirstLetterOfAString(displayName)}
-              </p>
-              <p className="text-xs text-textGrey">{username}</p>
+        <div className=" h-auto w-full flex flex-col gap-3  ">
+          {/* header du post */}
+          <div className=" h-auto w-full flex justify-between items-start">
+            <div className="h-auto">
+              <div className="flex justify-start items-center gap-2   ">
+                <p className="text-sm font-bold">
+                  {upperFirstLetterOfAString(displayName)}
+                </p>
+                <p className="text-xs text-textGrey">{username}</p>
+              </div>
+              <p className="text-xs text-textGrey">{dateOfPorst}</p>
             </div>
-            <p className="text-xs text-textGrey">{dateOfPorst}</p>
+           <ThreeDots/>
           </div>
 
           <div>

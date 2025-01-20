@@ -1,5 +1,5 @@
-import { uploadImageAction } from "@/app/actions/crudPostActions/uploadImageActions/uploadImage.action";
 import { useStore } from "@/lib/store/index.store";
+import { useMutation } from "@tanstack/react-query";
 import React, { useRef } from "react";
 
 interface UploadImageButtonProps {
@@ -23,19 +23,40 @@ const UploadImageButton = ({
     fileInputRef.current?.click();
   };
 
-  // action à partir de l'upload
-  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const formData = new FormData();
-      formData.append("image", e.target.files[0]);
+  // TANSTACK pour l'upload de l'image
 
-      // on appel le server action pour pousser l'image vers cloudinary
-      const response = await uploadImageAction(formData);
+  const {
+    mutate: uploadImageAction,
+    isPending,
+    error,
+  } = useMutation({
+    mutationFn: async (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files) {
+        const formData = new FormData();
+        formData.append("image", e.target.files[0]);
 
-      // mise à jour du store ZUSTAND pour stocker les infos sur l'image en cours
-      setUploadedImage(response.imageUrl, response.imageId);
-    }
-  };
+        // on appel le server action pour pousser l'image vers cloudinary
+        const response = await uploadImageAction(formData);
+
+        // mise à jour du store ZUSTAND pour stocker les infos sur l'image en cours
+        setUploadedImage(response.imageUrl, response.imageId);
+      }
+    },
+  });
+
+  // // action à partir de l'upload
+  // const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     const formData = new FormData();
+  //     formData.append("image", e.target.files[0]);
+
+  //     // on appel le server action pour pousser l'image vers cloudinary
+  //     const response = await uploadImageAction(formData);
+
+  //     // mise à jour du store ZUSTAND pour stocker les infos sur l'image en cours
+  //     setUploadedImage(response.imageUrl, response.imageId);
+  //   }
+  // };
 
   return (
     <button
@@ -46,7 +67,7 @@ const UploadImageButton = ({
         className="hidden"
         type="file"
         accept=".png,.jpg,.jpeg,.webp"
-        onChange={handleUpload}
+        onChange={uploadImageAction}
         ref={fileInputRef}
       />
       {children}

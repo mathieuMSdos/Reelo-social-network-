@@ -22,7 +22,7 @@ const layoutProtected = async ({
 
   return (
     <>
-    <div className="flex flex-col gap-2 w-full min-h-screen max-w-screen-xl mx-auto pb-6 text-textBlack bg-white">
+    <div className="flex flex-col gap-2 w-full min-h-screen max-w-screen-xl mx-auto pb-6 text-textBlack bg-backgrounfLight">
     <ProtectedHeaderWrapper/>
 
       <div className=" flex gap-20 w-full    ">
@@ -33,10 +33,10 @@ const layoutProtected = async ({
           <LeftMenuApp />
         </aside>
         {/* Contenu dynamique */}
-        <main className="flex-1 min-h-screen ">
+        <div className="flex-1 min-h-screen ">
           <ProfileInitializer session={session} />
           {children}
-        </main>
+        </div>
       </div>
       <WrapperShowModal />
     </div>

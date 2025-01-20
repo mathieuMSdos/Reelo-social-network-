@@ -4,7 +4,7 @@ import { createPost } from "@/app/actions/crudPostActions/post.action";
 import { deleteImageOnCloudinary } from "@/app/actions/crudPostActions/uploadImageActions/deleteImageOnCloudinary.action";
 import { PostSchema, PostSchemaZod } from "@/lib/schema/post.schema";
 import { useStore } from "@/lib/store/index.store";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Clock, Image as ImageIcon, NotebookPen } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
 import BadgeButton from "../../UI/badgeButton/BadgeButton";
 import CloseButton from "../../UI/CloseButton/CloseButton";
+import LoadingUi from "../../UI/loadingUI/LoadingUi";
 import PrimaryButton from "../../UI/primaryButton/PrimaryButton";
 import PreviewImageUploaded from "../previewImageUploaded/PreviewImageUploaded";
 import UploadImageButton from "../uploadImageButton/UploadImageButton";
@@ -32,6 +33,9 @@ const CreatePostModal = () => {
   // state local
   const [postContent, setPostContent] = useState("");
   const [controlRules, setcontrolRules] = useState({ isContent: false });
+
+  // invalider les data post du user pour délenché un refetch et faire apparaître le nouveau post dans son feed grâçe à tanstack
+  const QueryClient = useQueryClient();
 
   //  Gérer la fermeture de la modale si on clique à l'extérieur
   const handleClickOutsideCloseModal = async (e: React.MouseEvent) => {
@@ -57,7 +61,9 @@ const CreatePostModal = () => {
       toast.dismiss();
       toast.success("Posted successfully !");
       setIsCreatePostModalOpen(false);
-      resetUploadedImage()
+      resetUploadedImage();
+      // déclenché un refetch du feed post de l'utilisateur dans sa sectino profil
+      QueryClient.invalidateQueries({ queryKey: ["posts", userId] });
     },
     onError: () => {
       toast.dismiss();
@@ -154,6 +160,12 @@ const CreatePostModal = () => {
                   </li>
                 </ul>
                 {/* Preview uploaded image */}
+                {isPending && (
+                  <div className="h-52 w-52 flex items-center justify-center bg-skeletonGrey animate-pulse ">
+                    <LoadingUi text="Processing..." />
+                  </div>
+                )}
+
                 <div className="w-full flex justify-start items-center">
                   {imageUrl && imageId ? (
                     <PreviewImageUploaded
