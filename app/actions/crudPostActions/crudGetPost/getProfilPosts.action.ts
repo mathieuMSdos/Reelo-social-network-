@@ -1,6 +1,5 @@
 "use server";
 import { prisma } from "../../../../prisma";
-import { GetProfilPostsShema } from '../../../../lib/schema/post.schema';
 
 export const getProfilPosts = async (authorId: string, page: number) => {
   const limit = 10;

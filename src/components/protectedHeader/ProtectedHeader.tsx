@@ -22,7 +22,7 @@ const ProtectedHeader = ({
           <Image
             className="object-contain bgblu"
             src="/logo/logo_white_mode.png"
-            width={130}
+            width={150}
             height={50}
             alt="logo-icon"
           />

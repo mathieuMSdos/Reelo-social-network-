@@ -15,7 +15,7 @@ const BentoContainer = ({
 
   return (
     <div 
-      className={`${defaultStyle} ${className}`}
+      className={`${defaultStyle} ${className} rounded-lg`}
       {...props} // Transmet toutes les autres props au div
     >
       {children}

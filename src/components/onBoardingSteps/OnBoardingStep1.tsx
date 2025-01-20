@@ -62,7 +62,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
   useEffect(() => {
     setRules({
       isMinAndMaxLength: inputValue.length >= 6 && inputValue.length <= 20,
-      isNoEmpty: inputValue !== "",
+      isNoEmpty: inputValue !== "" && inputValue !== "@",
       isFirstAt: inputValue[0] === "@",
     });
   }, [inputValue]);
@@ -90,10 +90,10 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
   const isChosenUsernameValid = useMemo(() => {
     // si le nom d'utilisateur tapé n'existe pas dans la BDD c'est un username valide, si l'username est = à actual username il est donc déjà en BDD mais c'est valide puisque c'est lui même sinon c'est pas valide il doit changer de username
 
-    // Design pattern Optimistic Update, on part du principe que le username ne serapas déjà pris. LE fait qu'il ne soit pas déjà pris est la règle et le cas qu'il soit déjà pris c'est l'exception.
+    // Design pattern Optimistic Update, on part du principe que le username ne sera pas déjà pris. LE fait qu'il ne soit pas déjà pris est la règle et le cas qu'il soit déjà pris c'est l'exception.
 
-    // Objectif éviter le saut visuel d'un icon à l'autr ele temps que data est undefined pendant la requête prisma
-    if (isFetching && rules.isMinAndMaxLength) {
+    // Objectif éviter le saut visuel d'un icon à l'autre le temps que data est undefined pendant la requête prisma
+    if (isFetching && rules.isMinAndMaxLength && rules.isNoEmpty) {
       return true;
     }
 
@@ -104,10 +104,11 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
   }, [data, actualUsername, isFetching, rules.isMinAndMaxLength]);
 
   return (
-    <div>
+    <div className="flex flex-col gap-3 w-2/5 px-6 py-8 border rounded-lg">
       <h1>step 1</h1>
       <h2>STEP 1: Confirm your username</h2>
       <InputGeneric
+      className="w-full"
         type="text"
         value={inputValue}
         placeholder={actualUsername}
@@ -158,17 +159,19 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
           </div>
         )}
       </div>
-
-      <PrimaryButton
-        text="Continue"
-        onClick={handleSubmit}
-        disabled={
-          !rules.isFirstAt ||
-          !rules.isMinAndMaxLength ||
-          !isChosenUsernameValid ||
-          isFetching
-        }
-      />
+      <div className="flex justify-end items-center">
+        <PrimaryButton
+          className="w-24"
+          text="Continue"
+          onClick={handleSubmit}
+          disabled={
+            !rules.isFirstAt ||
+            !rules.isMinAndMaxLength ||
+            !isChosenUsernameValid ||
+            isFetching
+          }
+        />
+      </div>
     </div>
   );
 };

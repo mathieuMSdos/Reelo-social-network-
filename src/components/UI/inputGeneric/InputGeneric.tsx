@@ -1,5 +1,6 @@
 import React from "react";
 interface InputGenericProps {
+  className?: string,
   type: string;
   value: string;
   placeholder?: string;
@@ -19,9 +20,10 @@ const InputGeneric = ({
   autoFocus,
   "aria-label": ariaLabel,
   onChange,
+  className,
 }: InputGenericProps) => {
   return (
-    <input className="bg-greyPurple w-1/2 py-2 px-3 rounded-3xl focus:outline-none "
+    <input className={`bg-greyPurple w-1/2 py-2 px-3 rounded-3xl focus:outline-none ${className}`}
       type={type}
       value={value}
       placeholder={placeholder}

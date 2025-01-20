@@ -137,6 +137,7 @@ const CreatePostModal = () => {
                   onChange={(e) => {
                     setPostContent(e.target.value);
                   }}
+                  placeholder="What's happening?"
                 ></TextareaAutosize>
 
                 {/* badges */}

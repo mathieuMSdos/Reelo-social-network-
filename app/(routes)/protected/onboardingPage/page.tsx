@@ -7,7 +7,6 @@ const unboardingPage = () => {
 
   return (
     <>
-    <h1>onBoarding process page</h1>
     <OnBoardingFormMulti/>
 
     </>

@@ -111,7 +111,7 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-3 w-2/5 px-6 py-8 border rounded-lg">
       <h1>STEP 2: Choose your display Name</h1>
       <h5>This is how others will see you. You can change it anytime.</h5>
       <InputGeneric
@@ -130,12 +130,14 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
         textForInvalidation="Choose a display name between 4 and 30 characters"
       />
       <div className="flex gap-1">
-        <TertiaryButton text="Previous" onClick={setPreviousStep} />
-        <PrimaryButton
-          text="Continue"
-          onClick={handleSubmit}
-          disabled={!displayNameChosenIsValidated}
-        />
+        <div className=" w-full flex justify-end items-center">
+          <TertiaryButton text="Previous" onClick={setPreviousStep} />
+          <PrimaryButton
+            text="Continue"
+            onClick={handleSubmit}
+            disabled={!displayNameChosenIsValidated}
+          />
+        </div>
       </div>
     </div>
   );

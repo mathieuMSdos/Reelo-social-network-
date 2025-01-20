@@ -17,7 +17,7 @@ const userId = data?.user?.id
 
   return (
     
-    <div>
+    <div className="min-h-screen flex justify-center items-center">
             {step === 1 && <OnBoardingStep1 actualUsername={actualUsername} />}
             {step === 2 && <OnBoardingStep2 userId={userId}/>}
     </div>

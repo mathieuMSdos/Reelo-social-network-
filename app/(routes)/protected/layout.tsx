@@ -3,6 +3,7 @@
 import { auth } from "@/auth";
 import WrapperShowModal from "@/src/components/CRUD components/createPostModal/wrapperShowModal/WrapperShowModal";
 import BackGround from "@/src/components/UI/BackGround";
+import LeftMenuApp from "@/src/components/leftMenuApp/LeftMenuApp";
 import ProtectedHeaderWrapper from "@/src/components/protectedHeader/ProtectedHeaderWrapper";
 import ProfileInitializer from "@/src/components/welcomePageNavBar/ProfileInitializer/ProfileInitializer";
 import { redirect } from "next/navigation";
@@ -21,17 +22,24 @@ const layoutProtected = async ({
 
   return (
     <>
-      <main className="bg-white flex flex-col  md:px-2 lg:px-7 xl:px-20 gap-4  h-auto w-full max-w-screen-2xl text-textBlack  ">
+    <div className="flex flex-col gap-2 w-full min-h-screen max-w-screen-xl mx-auto pb-6 text-textBlack bg-white">
+    <ProtectedHeaderWrapper/>
+
+      <div className=" flex gap-20 w-full    ">
         <ProfileInitializer session={session} />
         <BackGround />
-        <ProtectedHeaderWrapper />
-        <div className="py-1">
-          {/* contenu */}
+        {/* Menu */}
+        <aside className="sticky top-0 shrink-0 h-screen max-w-52">
+          <LeftMenuApp />
+        </aside>
+        {/* Contenu dynamique */}
+        <main className="flex-1 min-h-screen ">
+          <ProfileInitializer session={session} />
           {children}
-        </div>
-      </main>
-      {/* Create post modal */}
+        </main>
+      </div>
       <WrapperShowModal />
+    </div>
     </>
   );
 };
