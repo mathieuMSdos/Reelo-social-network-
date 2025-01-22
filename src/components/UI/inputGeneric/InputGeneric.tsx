@@ -31,7 +31,7 @@ const InputGeneric = ({
     <div className="relative w-full">
       <input
         className={`bg-greyPurple py-2 px-3 rounded-lg focus:outline-none ${className} ${
-          searchIcon && "pl-7"
+          searchIcon && "pl-9"
         }`}
         type={type}
         value={value}
@@ -44,9 +44,9 @@ const InputGeneric = ({
       />
       {searchIcon && (
         <GenericIcon
-          className="absolute top-1/2 left-1 -translate-y-1/2"
+          className="absolute top-1/2 left-2 -translate-y-1/2"
           icon={lordIconSearch}
-          size={20}
+          size={22}
         />
       )}
     </div>

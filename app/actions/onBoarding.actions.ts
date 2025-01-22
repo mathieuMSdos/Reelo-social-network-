@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@/auth";
+import { upperFirstLetterOfAString } from "@/lib/utils/scriptJS/upperCaseFirstLetter";
 import { prisma } from "@/prisma";
 
 // --------------------------------------------------
@@ -41,7 +42,7 @@ export const updateUserAction = async (data: updateUserParams) => {
       },
       data: {
         username: data.username,
-        displayName: data.displayName,
+        displayName: upperFirstLetterOfAString(data.displayName),
         hasCompletedOnboarding: data.hasCompletedOnboarding,
       },
     });

@@ -31,6 +31,10 @@ model User {
   // système de comptage pour optimiser les perf : évite d'avoir à compte rles relations à chaque requête
   followedByCount Int @default(0)
   followingCount Int @default(0)
+
+  @@index([username])
+  @@index([displayName])
+
 }
 
 model Post {

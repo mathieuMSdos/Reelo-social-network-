@@ -8,7 +8,6 @@ import { getProfilPosts } from "../../../../app/actions/crudPostActions/crudGetP
 import GenericIcon from "../../UI/lordIcons/GenericIcon";
 import PostProfileItem from "./postProfileItem/PostProfileItem";
 import SkeletonPost from "./postProfileItem/SkeletonPost";
-import ThreeDots from "../../UI/threeDot/ThreeDots";
 
 const FeedPostColumn = () => {
   // zustand state
