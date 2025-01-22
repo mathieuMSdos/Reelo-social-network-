@@ -4,6 +4,7 @@ import { Player } from "@lordicon/react";
 import { useEffect, useRef } from "react";
 
 interface GenericIconProps {
+  className?: string
   icon: string;
   size?: number;
   colorize?: string;
@@ -15,6 +16,7 @@ const GenericIcon = ({
   size,
   colorize,
   loop = false,
+  className,
 }: GenericIconProps) => {
   const playerRef = useRef<Player>(null);
 
@@ -27,7 +29,7 @@ const GenericIcon = ({
   };
 
   return (
-    <div onMouseEnter={handleHover}>
+    <div className={`${className}`} onMouseEnter={handleHover}>
       <Player
         ref={playerRef}
         icon={ICON}

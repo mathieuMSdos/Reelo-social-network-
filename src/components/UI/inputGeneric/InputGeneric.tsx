@@ -1,12 +1,16 @@
+import lordIconSearch from "@/src/assets/icons/system-regular-42-search-hover-search.json";
 import React from "react";
+import GenericIcon from "../lordIcons/GenericIcon";
+
 interface InputGenericProps {
-  className?: string,
+  className?: string;
   type: string;
   value: string;
   placeholder?: string;
   minLength?: number;
   maxLength?: number;
   autoFocus?: boolean;
+  showSearchIcon?: boolean;
   "aria-label"?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -21,18 +25,31 @@ const InputGeneric = ({
   "aria-label": ariaLabel,
   onChange,
   className,
+  showSearchIcon: searchIcon,
 }: InputGenericProps) => {
   return (
-    <input className={`bg-greyPurple w-1/2 py-2 px-3 rounded-3xl focus:outline-none ${className}`}
-      type={type}
-      value={value}
-      placeholder={placeholder}
-      minLength={minLength}
-      maxLength={maxLength}
-      autoFocus={autoFocus}
-      aria-label={ariaLabel}
-      onChange={onChange}
-    />
+    <div className="relative w-full">
+      <input
+        className={`bg-greyPurple py-2 px-3 rounded-lg focus:outline-none ${className} ${
+          searchIcon && "pl-7"
+        }`}
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        minLength={minLength}
+        maxLength={maxLength}
+        autoFocus={autoFocus}
+        aria-label={ariaLabel}
+        onChange={onChange}
+      />
+      {searchIcon && (
+        <GenericIcon
+          className="absolute top-1/2 left-1 -translate-y-1/2"
+          icon={lordIconSearch}
+          size={20}
+        />
+      )}
+    </div>
   );
 };
 
