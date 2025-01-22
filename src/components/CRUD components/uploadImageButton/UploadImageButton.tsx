@@ -1,20 +1,20 @@
-import { useStore } from "@/lib/store/index.store";
-import { useMutation } from "@tanstack/react-query";
 import React, { useRef } from "react";
 
 interface UploadImageButtonProps {
   className?: string;
   text?: string;
   children: React.ReactNode;
+  onImageUpload: (formdata: FormData) => void;
 }
 
 const UploadImageButton = ({
   className,
   text,
   children,
+  onImageUpload,
 }: UploadImageButtonProps) => {
   //ZUSTAND state
-  const setUploadedImage = useStore((state) => state.setUploadedImage);
+  // const setUploadedImage = useStore((state) => state.setUploadedImage);
 
   // astuce pour déclenché le click sur l'input file sans le voir (hidden)
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -23,40 +23,23 @@ const UploadImageButton = ({
     fileInputRef.current?.click();
   };
 
-  // TANSTACK pour l'upload de l'image
-
-  const {
-    mutate: uploadImageAction,
-    isPending,
-    error,
-  } = useMutation({
-    mutationFn: async (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files) {
-        const formData = new FormData();
-        formData.append("image", e.target.files[0]);
-
-        // on appel le server action pour pousser l'image vers cloudinary
-        const response = await uploadImageAction(formData);
-
-        // mise à jour du store ZUSTAND pour stocker les infos sur l'image en cours
-        setUploadedImage(response.imageUrl, response.imageId);
-      }
-    },
-  });
-
   // // action à partir de l'upload
-  // const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files) {
-  //     const formData = new FormData();
-  //     formData.append("image", e.target.files[0]);
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const formData = new FormData();
+      formData.append("image", e.target.files[0]);
 
-  //     // on appel le server action pour pousser l'image vers cloudinary
-  //     const response = await uploadImageAction(formData);
+      //on appel le server action pour pousser l'image vers cloudinary
 
-  //     // mise à jour du store ZUSTAND pour stocker les infos sur l'image en cours
-  //     setUploadedImage(response.imageUrl, response.imageId);
-  //   }
-  // };
+      onImageUpload(formData);
+
+      // // on appel le server action pour pousser l'image vers cloudinary
+      // const response = await uploadImageAction(formData);
+
+      // // mise à jour du store ZUSTAND pour stocker les infos sur l'image en cours
+      // setUploadedImage(response.imageUrl, response.imageId);
+    }
+  };
 
   return (
     <button
@@ -67,7 +50,7 @@ const UploadImageButton = ({
         className="hidden"
         type="file"
         accept=".png,.jpg,.jpeg,.webp"
-        onChange={uploadImageAction}
+        onChange={handleUpload}
         ref={fileInputRef}
       />
       {children}

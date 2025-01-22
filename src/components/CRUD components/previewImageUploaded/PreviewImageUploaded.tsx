@@ -25,10 +25,10 @@ const PreviewImageUploaded = ({
   return (
     <div className="relative">
       <Image
-        className="rounded-md object-cover"
+        className="rounded-md object-cover border"
         src={imageUrl}
-        height={100}
-        width={150}
+        height={200}
+        width={200}
         alt="preview_post_image"
       />
       <div className="absolute top-0 right-0 text-slate-50">

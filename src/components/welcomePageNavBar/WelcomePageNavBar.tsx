@@ -32,7 +32,7 @@ const WelcomePageNavBar = () => {
     };
     window.addEventListener("resize", closeDropDownFunction);
     return () => window.removeEventListener("resize", closeDropDownFunction);
-  }, []);
+  }, [setIsOpen]);
 
   // FRAMER MOTION
   const menuVariants = {
@@ -66,9 +66,9 @@ const WelcomePageNavBar = () => {
     <header className="relative flex justify-center items-center px-2  ">
       {/* TRICKS DESIGN cette div ne sert qu'à faire le contour animé qui s'agrandit quand on ouvre le menu mais ne contient rien */}
       <motion.div
-        className="fixed top-2 left-2 right-2 flex w-auto justify-between py-1 px-4 h-12  backdrop-blur-xl border border-darkLine rounded-2xl overflow-hidden bg-gradient-to-b from-backGroundDark/100 to-backGroundDark/70"
+        className="fixed top-2 left-2 right-2 flex w-auto justify-between py-1 px-4 h-12  backdrop-blur-xl border border-darkLine rounded-2xl overflow-hidden bg-gradient-to-b from-backGroundDark/100 to-backGroundDark/70 bgred"
         initial={{ height: "3rem" }}
-        animate={{ height: isOpen ? "25rem" : "3rem" }}
+        animate={{ height: isOpen ? "20rem" : "3rem" }}
         transition={
           isOpen
             ? {

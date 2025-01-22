@@ -2,6 +2,7 @@
 
 import { createPost } from "@/app/actions/crudPostActions/post.action";
 import { deleteImageOnCloudinary } from "@/app/actions/crudPostActions/uploadImageActions/deleteImageOnCloudinary.action";
+import { uploadImageAction } from "@/app/actions/crudPostActions/uploadImageActions/uploadImage.action";
 import { PostSchema, PostSchemaZod } from "@/lib/schema/post.schema";
 import { useStore } from "@/lib/store/index.store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -26,13 +27,14 @@ const CreatePostModal = () => {
   const setIsCreatePostModalOpen = useStore(
     (state) => state.setIsCreatePostModalOpen
   );
-  const imageUrl = useStore((state) => state.imageUrl);
-  const imageId = useStore((state) => state.imageId);
-  const resetUploadedImage = useStore((state) => state.resetUploadedImage);
+  // const imageUrl = useStore((state) => state.imageUrl);
+  // const imageId = useStore((state) => state.imageId);
+  // const resetUploadedImage = useStore((state) => state.resetUploadedImage);
 
   // state local
   const [postContent, setPostContent] = useState("");
   const [controlRules, setcontrolRules] = useState({ isContent: false });
+  const [imageData, setImageData] = useState({ imageUrl: "", imageId: "" });
 
   // invalider les data post du user pour délenché un refetch et faire apparaître le nouveau post dans son feed grâçe à tanstack
   const QueryClient = useQueryClient();
@@ -45,11 +47,11 @@ const CreatePostModal = () => {
       // suppression de l'image sur cloudinary
       await deleteImageOnCloudinary(imageId);
       //suppression de l'image dans le store zustand
-      resetUploadedImage();
+      // resetUploadedImage();
     }
   };
 
-  // TANSTACK gestion du create post
+  // TANSTACK action poster le post
 
   const { mutate: createPostMutation, isPending } = useMutation({
     mutationFn: (data: PostSchemaZod) => createPost(data),
@@ -61,7 +63,9 @@ const CreatePostModal = () => {
       toast.dismiss();
       toast.success("Posted successfully !");
       setIsCreatePostModalOpen(false);
-      resetUploadedImage();
+      // on vide le state pour vider les infos preview de l'image
+      setImageData({ imageUrl: "", imageId: "" });
+
       // déclenché un refetch du feed post de l'utilisateur dans sa sectino profil
       QueryClient.invalidateQueries({ queryKey: ["posts", userId] });
     },
@@ -76,8 +80,8 @@ const CreatePostModal = () => {
       const data = {
         authorId: `${userId}`,
         content: `${postContent}`,
-        imageUrl: `${imageUrl}`,
-        imageId: `${imageId}`,
+        imageUrl: `${imageData.imageUrl}`,
+        imageId: `${imageData.imageId}`,
         published: true,
       };
       const validateData = PostSchema.parse(data);
@@ -85,6 +89,26 @@ const CreatePostModal = () => {
       createPostMutation(validateData);
     }
   };
+
+  // TANSTACK pour l'upload de l'image
+
+  const {
+    mutate: uploadImageMutation,
+    isPending: isPendingUploadImage,
+    error: errorUplaodImage,
+  } = useMutation({
+    mutationFn: async (formData: FormData) => {
+      // on vide le state de l'image au cas ou l'user upload une 2ème fois pour nettoyer la previex image
+      setImageData({ imageUrl: "", imageId: "" });
+
+      // on appel le server action pour pousser l'image vers cloudinary
+      const response = await uploadImageAction(formData);
+      //on stock l'url et l'id de l'image dans le state pour pouvoir faire une preview
+      setImageData({ imageUrl: response.imageUrl, imageId: response.imageId });
+      // on invalide les data post du profil pour déclencher un nouveau fetch
+      QueryClient.invalidateQueries({ queryKey: ["posts", userId] });
+    },
+  });
 
   // Controle avant le post (post non vide)
   useEffect(() => {
@@ -154,28 +178,29 @@ const CreatePostModal = () => {
                     </BadgeButton>
                   </li>
                   <li>
-                    <UploadImageButton text="Image">
+                    <UploadImageButton
+                      text="Image"
+                      onImageUpload={uploadImageMutation}
+                    >
                       <ImageIcon size={18} />
                     </UploadImageButton>
                   </li>
                 </ul>
                 {/* Preview uploaded image */}
-                {isPending && (
-                  <div className="h-52 w-52 flex items-center justify-center bg-skeletonGrey animate-pulse ">
+                {isPendingUploadImage && (
+                  <div className="h-52 w-52 flex items-center justify-center bg-skeletonGrey animate-pulse rounded-lg mt-2">
                     <LoadingUi text="Processing..." />
                   </div>
                 )}
 
-                <div className="w-full flex justify-start items-center">
-                  {imageUrl && imageId ? (
+                {imageData.imageUrl && imageData.imageId && (
+                  <div className="w-full h-full flex justify-start items-center mt-2">
                     <PreviewImageUploaded
-                      imageUrl={imageUrl}
-                      imageId={imageId}
+                      imageUrl={imageData.imageUrl}
+                      imageId={imageData.imageId}
                     />
-                  ) : (
-                    ""
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

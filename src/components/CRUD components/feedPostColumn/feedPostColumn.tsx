@@ -1,6 +1,6 @@
 "use client";
 import { useStore } from "@/lib/store/index.store";
-import loadingIconLord from "@/src/assets/icons/system-regular-716-spinner-three-dots-hover-trapdoor.json";
+import loadingIconLord from "@/src/assets/icons/system-solid-716-spinner-three-dots-hover-trapdoor.json";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
@@ -80,15 +80,14 @@ const FeedPostColumn = () => {
         className="w-full h-20 py-3 px-10 flex justify-center items-center "
         ref={ref}
       >
-        {isFetchingNextPage && <GenericIcon icon={loadingIconLord} />}
+        {isFetchingNextPage && <GenericIcon icon={loadingIconLord} loop={true} />}
         {!hasNextPage && data?.pages[0]?.posts.length > 0 && (
-          <p className="text-left font-bold text-darkLine">
+          <p className="text-left font-bold text-textGrey">
             That's all for now!
           </p>
         )}
       </div>
       {/* </BentoContainer> */}
-
     </div>
   );
 };
