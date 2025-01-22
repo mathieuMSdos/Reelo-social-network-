@@ -1,9 +1,9 @@
-import InputSearchPorfil from "./inputSearchPorfil/InputSearchPorfil";
+import InputSearchProfil from "./inputSearchPorfil/InputSearchProfil";
 
 const RightMenuApp = () => {
   return (
     <div className="flex flex-col gap-2 items-center justify-start">
-      <InputSearchPorfil />
+      <InputSearchProfil />
     </div>
   );
 };
