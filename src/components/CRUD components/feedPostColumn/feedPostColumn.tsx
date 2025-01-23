@@ -35,7 +35,7 @@ const FeedPostColumn = () => {
   // Utilisation react-intersection-observer pour gérer le déclenchement des fetch post dans l'infinite scroll
   const { ref, inView } = useInView({
     threshold: 0,
-    rootMargin: "100px", //permet de déclencher le nextpagefetch légérement avant d'tteindre l'observer
+    rootMargin: "300px", //permet de déclencher le nextpagefetch  avant d'atteindre l'observer
     triggerOnce: false, // false car on veut que ça se déclenche plusieurs fois jusqu'à ce qu'il n'y est plus de post
   });
 

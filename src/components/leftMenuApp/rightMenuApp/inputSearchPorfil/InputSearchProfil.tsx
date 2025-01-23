@@ -6,6 +6,7 @@ import GenericIcon from "@/src/components/UI/lordIcons/GenericIcon";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import InputGeneric from "../../../UI/inputGeneric/InputGeneric";
@@ -72,31 +73,33 @@ const InputSearchProfil = () => {
                         <h3 className="text-darkLine font-bold">Results</h3>
                         <ul className="w-full flex flex-col">
                           {data.map((item) => (
-                            <li
-                              className="w-full hover:bg-greyPurple hover:px-3 py-2 rounded-lg cursor-pointer transition-all duration-150"
+                            <Link
                               key={item.username}
+                              href={`/protected/${item.username}`}
                             >
-                              <div className="flex gap-2">
-                                <Image
-                                  className="rounded-full"
-                                  src={
-                                    item.image ||
-                                    "/default_avatar/default_avatar.png"
-                                  }
-                                  width={38}
-                                  height={38}
-                                  alt="profil-picture"
-                                />
-                                <div className="hidden md:flex justify-center flex-col">
-                                  <p className="text-sm font-bold">
-                                    {item.displayName}
-                                  </p>
-                                  <p className="text-xs text-textGrey">
-                                    {item.username}
-                                  </p>
+                              <li className="w-full hover:bg-greyPurple py-2 px-2 rounded-lg cursor-pointer transition-all duration-150">
+                                <div className="flex gap-2">
+                                  <Image
+                                    className="rounded-full"
+                                    src={
+                                      item.image ||
+                                      "/default_avatar/default_avatar.png"
+                                    }
+                                    width={38}
+                                    height={38}
+                                    alt="profil-picture"
+                                  />
+                                  <div className="hidden md:flex justify-center flex-col">
+                                    <p className="text-sm font-bold">
+                                      {item.displayName}
+                                    </p>
+                                    <p className="text-xs text-textGrey">
+                                      {item.username}
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-                            </li>
+                              </li>
+                            </Link>
                           ))}
                         </ul>
                       </>
