@@ -1,18 +1,25 @@
 "use client";
 
 import { searchUserDropDownMenu } from "@/app/actions/searchUserRightMenu.action";
+import { useStore } from "@/lib/store/index.store";
 import loadingIconLord from "@/src/assets/icons/system-solid-716-spinner-three-dots-hover-trapdoor.json";
 import GenericIcon from "@/src/components/UI/lordIcons/GenericIcon";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDebounce } from "use-debounce";
 import InputGeneric from "../../../UI/inputGeneric/InputGeneric";
 import BentoContainer from "../../../bentoContainer/BentoContainer";
+import { UserPublicDataType } from "@/src/types/user.types";
 
 const InputSearchProfil = () => {
+  // ZUSTAND store
+  const resultProfile = useStore((state) => state.resultProfile);
+  const updateResultProfile = useStore((state) => state.updateResultProfile);
+
+  // State local
   const [inputValue, setInputValue] = useState("");
   const [debouncedValue] = useDebounce(inputValue, 500);
 
@@ -22,9 +29,11 @@ const InputSearchProfil = () => {
     enabled: debouncedValue.length > 0,
   });
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+
+//ZUSTAND stocker le profil recherché dans le store ZUSTAND pour avoir toutes les infos à afficher sur la page d'atterrisage.
+  const handleResultClick = (data:UserPublicDataType) => {
+    updateResultProfile(data)
+  };
 
   return (
     <>
@@ -77,7 +86,10 @@ const InputSearchProfil = () => {
                               key={item.username}
                               href={`/protected/${item.username}`}
                             >
-                              <li className="w-full hover:bg-greyPurple py-2 px-2 rounded-lg cursor-pointer transition-all duration-150">
+                              <li
+                                className="w-full hover:bg-greyPurple py-2 px-2 rounded-lg cursor-pointer transition-all duration-150"
+                                onClick={() => handleResultClick(item)}
+                              >
                                 <div className="flex gap-2">
                                   <Image
                                     className="rounded-full"

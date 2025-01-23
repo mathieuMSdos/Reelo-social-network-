@@ -12,6 +12,17 @@ export const searchUserDropDownMenu = async (searchQuery: string) => {
           { displayName: { startsWith: searchQuery, mode: "insensitive" } },
         ],
       },
+      select:{
+        id: true,
+        username: true, 
+        displayName: true,
+        image: true,
+        name: true,
+        followedByCount: true,
+        followingCount: true,
+        createdAt: true,
+        updatedAt: true
+      },
       take: limit,
     });
 

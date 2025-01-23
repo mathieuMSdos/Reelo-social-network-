@@ -37,7 +37,7 @@ const CreatePostModal = () => {
   const [imageData, setImageData] = useState({ imageUrl: "", imageId: "" });
 
   // invalider les data post du user pour délenché un refetch et faire apparaître le nouveau post dans son feed grâçe à tanstack
-  const QueryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   //  Gérer la fermeture de la modale si on clique à l'extérieur
   const handleClickOutsideCloseModal = async (e: React.MouseEvent) => {
@@ -67,7 +67,7 @@ const CreatePostModal = () => {
       setImageData({ imageUrl: "", imageId: "" });
 
       // déclenché un refetch du feed post de l'utilisateur dans sa sectino profil
-      QueryClient.invalidateQueries({ queryKey: ["posts", userId] });
+      queryClient.invalidateQueries({ queryKey: ["posts", userId] });
     },
     onError: () => {
       toast.dismiss();
@@ -106,7 +106,7 @@ const CreatePostModal = () => {
       //on stock l'url et l'id de l'image dans le state pour pouvoir faire une preview
       setImageData({ imageUrl: response.imageUrl, imageId: response.imageId });
       // on invalide les data post du profil pour déclencher un nouveau fetch
-      QueryClient.invalidateQueries({ queryKey: ["posts", userId] });
+      queryClient.invalidateQueries({ queryKey: ["posts", userId] });
     },
   });
 

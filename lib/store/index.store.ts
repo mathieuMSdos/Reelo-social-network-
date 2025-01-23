@@ -12,6 +12,10 @@ import {
   ProfilInfosInAppType,
 } from "./profilInfosInApp.slice";
 import {
+  searchProfileSlice,
+  SearchProfileSliceProps,
+} from "./searchProfile.slice";
+import {
   uploadedImageSlice,
   UploadedImageSliceType,
 } from "./uploadedImage.slice";
@@ -22,7 +26,8 @@ type Store = FormOnBoardingSliceType &
   BurgerMenuSliceType &
   ProfilInfosInAppType &
   CreatePostModalSliceType &
-  UploadedImageSliceType; // Ajoute d'autres slices ici si besoin
+  UploadedImageSliceType &
+  SearchProfileSliceProps; // Ajoute d'autres slices ici si besoin
 
 export const useStore = create<Store>()(
   persist(
@@ -32,6 +37,7 @@ export const useStore = create<Store>()(
       ...profilInfosInAppSlice(...args),
       ...createPostModalSlice(...args),
       ...uploadedImageSlice(...args),
+      ...searchProfileSlice(...args),
     })),
     {
       name: "main-store",
