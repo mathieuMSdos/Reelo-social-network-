@@ -1,3 +1,5 @@
+import { followAction } from "@/app/actions/socialActions/following.actions";
+import { useStore } from "@/lib/store/index.store";
 import { UserPublicDataType } from "@/src/types/user.types";
 import { UserRoundPlus } from "lucide-react";
 import Image from "next/image";
@@ -9,16 +11,26 @@ interface ProfileBannerProps {
 }
 
 const ProfileBanner = ({ data }: ProfileBannerProps) => {
+  //ZUSTAND info du profil user connecté
+  const userId = useStore((state) => state.userId);
+  // Infos du profil consulté
   const {
-    createdAt,
-    displayName,
-    followedByCount,
-    followingCount,
-    id,
-    image,
-    name,
-    username,
+    createdAt: profileCreatedAt,
+    displayName: profileDisplayName,
+    followedByCount: profileFollowedByCount,
+    followingCount: profileFollowingCount,
+    id: profileId,
+    image: profileImage,
+    name: profileName,
+    username: profileUsername,
   } = data;
+
+  const handleFollow = async (userID: string, userFollowedID: string) => {
+    // server action follow
+   const result = await followAction(userID, userFollowedID);
+
+   console.log(result)
+  };
 
   return (
     <div className="w-full h-auto flex flex-col justify-start items-center gap-2">
@@ -27,14 +39,14 @@ const ProfileBanner = ({ data }: ProfileBannerProps) => {
           <div className="flex justify-center items-center flex-shrink-0 gap-3">
             <Image
               className="rounded-full"
-              src={image || "/default_avatar/default_avatar.png"}
+              src={profileImage || "/default_avatar/default_avatar.png"}
               width={50}
               height={50}
               alt="profil-picture"
             />
             <div className=" flex-col justify-center ">
-              <p className="font-bold">{displayName}</p>
-              <p className="text-xs text-textGrey">{username}</p>
+              <p className="font-bold">{profileDisplayName}</p>
+              <p className="text-xs text-textGrey">{profileUsername}</p>
             </div>
           </div>
           {/* sépration */}
@@ -52,7 +64,10 @@ const ProfileBanner = ({ data }: ProfileBannerProps) => {
           {/* sépration */}
 
           <div className="flex justify-center items-center min-w-24 ">
-            <PrimaryButton text="Follow">
+            <PrimaryButton
+              text="Follow"
+              onClick={() => handleFollow(userId, profileId)}
+            >
               <UserRoundPlus size={20} />
             </PrimaryButton>
           </div>

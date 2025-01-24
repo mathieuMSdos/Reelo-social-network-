@@ -26,8 +26,9 @@ model User {
   Authenticator Authenticator[]
 
   // Follow/Unfollow système
-  followedBy User[] @relation("UserFollows")
   following  User[] @relation("UserFollows")
+  followedBy User[] @relation("UserFollows")
+
   // système de comptage pour optimiser les perf : évite d'avoir à compte rles relations à chaque requête
   followedByCount Int @default(0)
   followingCount Int @default(0)
