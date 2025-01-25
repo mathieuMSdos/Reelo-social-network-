@@ -9,17 +9,17 @@ export const followAction = async (userID: string, userFollowedID: string) => {
   try {
     // permet de vérifier si l'utilisateur qui veux follow et l'utilisateur à follow exist bien en BDD
     const usersCheck = await checkUsersExist(userID, userFollowedID);
-    if(!usersCheck?.success){return usersCheck }
+    if(!usersCheck?.data.existingUsers){return usersCheck }
 
     // Permet d'empêcher qu'un utilisateur s'autofollow
     const selfFollowCheck  = await checkSelfFollow(userID, userFollowedID);
-    if (!selfFollowCheck?.success) {
+    if (selfFollowCheck?.data.isSameUser) {
       return selfFollowCheck ;
     }
 
     // permet de vérifier si la relation follow existe déjà. pour empêcher qu'un user follow un autre user plus d'1 fois.
     const existingFollowCheck = await checkExistingFollow(userID, userFollowedID)
-    if(!existingFollowCheck?.success) {return existingFollowCheck }
+    if(existingFollowCheck?.data.existingFollow) {return existingFollowCheck }
 
     // Si tout est ok alors on lance la transaction qui cotnient toute les opération nécessaire à un follow
 

@@ -11,17 +11,15 @@ export const checkUsersExist = async (
     prisma.user.findUnique({ where: { id: userFollowedID } }),
   ]);
 
-  if (user || userFollowed) { 
+  if (!user || !userFollowed) {
     return {
-      success: true,
-      message: "Users exist",
-      data: { user, userFollowed }
-     
+      message: "Users don't exist",
+      data: { existingUsers: false },
     };
   }
   return {
-    success: false,
-    message: "Users don't exist",
-    data: null
+    message: "Users exist",
+    data: { existingUsers: true, user, userFollowed },
+   
   };
 };

@@ -1,16 +1,24 @@
 import { followAction } from "@/app/actions/socialActions/following.actions";
 import { useStore } from "@/lib/store/index.store";
 import { UserPublicDataType } from "@/src/types/user.types";
+import { useMutation } from "@tanstack/react-query";
 import { UserRoundPlus } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 import BentoContainer from "../bentoContainer/BentoContainer";
 import PrimaryButton from "../UI/primaryButton/PrimaryButton";
 
 interface ProfileBannerProps {
-  data: UserPublicDataType;
+  data: UserPublicDataType & { alreadyFollowed: boolean };
+}
+
+interface DataFollowType {
+  userId: string;
+  userFollowedID: string;
 }
 
 const ProfileBanner = ({ data }: ProfileBannerProps) => {
+  const [toggle, setToggle] = useState(false);
   //ZUSTAND info du profil user connecté
   const userId = useStore((state) => state.userId);
   // Infos du profil consulté
@@ -19,18 +27,31 @@ const ProfileBanner = ({ data }: ProfileBannerProps) => {
     displayName: profileDisplayName,
     followedByCount: profileFollowedByCount,
     followingCount: profileFollowingCount,
-    id: profileId,
+    id: userFollowedID,
     image: profileImage,
     name: profileName,
     username: profileUsername,
+    alreadyFollowed,
   } = data;
 
-  const handleFollow = async (userID: string, userFollowedID: string) => {
-    // server action follow
-   const result = await followAction(userID, userFollowedID);
-
-   console.log(result)
-  };
+  // TANSTACK follow action
+  const {
+    mutate: followMutation,
+    isPending: followIsPending,
+    error: followError,
+  } = useMutation({
+    mutationFn: ({ userId, userFollowedID }: DataFollowType) =>
+      followAction(userId, userFollowedID),
+    onMutate: () => {
+      console.log("en cours");
+    },
+    onSuccess: (response) => {
+      console.log("réussi");
+      console.log(response);
+      setToggle(true);
+    },
+    onError: (error) => console.log(error),
+  });
 
   return (
     <div className="w-full h-auto flex flex-col justify-start items-center gap-2">
@@ -66,7 +87,8 @@ const ProfileBanner = ({ data }: ProfileBannerProps) => {
           <div className="flex justify-center items-center min-w-24 ">
             <PrimaryButton
               text="Follow"
-              onClick={() => handleFollow(userId, profileId)}
+              disabled={alreadyFollowed}
+              onClick={() => followMutation({ userId, userFollowedID })}
             >
               <UserRoundPlus size={20} />
             </PrimaryButton>

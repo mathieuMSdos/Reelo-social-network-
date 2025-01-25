@@ -1,23 +1,27 @@
 "use client";
 
-import { searchUserDropDownMenu } from "@/app/actions/searchUserRightMenu.action";
+import { searchUserDropDownMenu } from "@/app/actions/searchUserDropDownMenu.action";
 import { useStore } from "@/lib/store/index.store";
 import loadingIconLord from "@/src/assets/icons/system-solid-716-spinner-three-dots-hover-trapdoor.json";
 import GenericIcon from "@/src/components/UI/lordIcons/GenericIcon";
+import { UserPublicDataType } from "@/src/types/user.types";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import InputGeneric from "../../../UI/inputGeneric/InputGeneric";
 import BentoContainer from "../../../bentoContainer/BentoContainer";
-import { UserPublicDataType } from "@/src/types/user.types";
 
 const InputSearchProfil = () => {
   // ZUSTAND store
   const resultProfile = useStore((state) => state.resultProfile);
   const updateResultProfile = useStore((state) => state.updateResultProfile);
+  const userId = useStore((state) => {
+    state.userId;
+  });
+
 
   // State local
   const [inputValue, setInputValue] = useState("");
@@ -25,15 +29,23 @@ const InputSearchProfil = () => {
 
   const { data, isFetching, error } = useQuery({
     queryKey: ["searchUser", debouncedValue],
-    queryFn: () => searchUserDropDownMenu(debouncedValue),
+    queryFn: () => searchUserDropDownMenu(debouncedValue, userId),
     enabled: debouncedValue.length > 0,
   });
 
-
-//ZUSTAND stocker le profil recherché dans le store ZUSTAND pour avoir toutes les infos à afficher sur la page d'atterrisage.
-  const handleResultClick = (data:UserPublicDataType) => {
-    updateResultProfile(data)
+  //ZUSTAND stocker le profil recherché dans le store ZUSTAND pour avoir toutes les infos à afficher sur la page d'atterrisage.
+  const handleResultClick = (data: UserPublicDataType) => {
+    console.log(data)
+    updateResultProfile(data);
   };
+
+  useEffect(() => {
+    console.log(data)
+  
+
+  }, [data])
+  
+  
 
   return (
     <>

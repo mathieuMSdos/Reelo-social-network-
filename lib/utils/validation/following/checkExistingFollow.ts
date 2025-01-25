@@ -13,7 +13,6 @@ export const checkExistingFollow = async (
 
   if (!existingFollow) {
     return {
-      success: true,
       message: "Not already follow",
       data: {
         existingFollow: false,
@@ -21,7 +20,6 @@ export const checkExistingFollow = async (
     };
   } else {
     return {
-      success: false,
       message: "Already following this user",
 
       data: { existingFollow: true },

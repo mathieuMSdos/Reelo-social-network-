@@ -1,15 +1,13 @@
 export const checkSelfFollow = async (userID: string, userFollowedID: string) => {
   if (userID !== userFollowedID) {
     return {
-      success: true,
       message: "Different users",
-      data: null,
+      data: { isSameUser: false },
     };
   } else {
     return {
-      success: false,
       message: "You cannot follow yourself",
-      data: null,
+      data: { isSameUser: true },
     };
   }
 };
