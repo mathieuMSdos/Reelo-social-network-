@@ -28,6 +28,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/components/leftMenuApp/rightMenuApp/inputSearchPorfile"
-  ],
+, "src/components/profileBanner/BadgeCounter.tsx"  ],
   "exclude": ["node_modules"]
 }

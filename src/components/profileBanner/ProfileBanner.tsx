@@ -1,13 +1,15 @@
-"use client"
+"use client";
 import { followAction } from "@/app/actions/socialActions/following.actions";
+import { unfollowAction } from "@/app/actions/socialActions/unfollow.actions";
 import { useStore } from "@/lib/store/index.store";
 import { UserPublicDataType } from "@/src/types/user.types";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UserRoundPlus } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
 import BentoContainer from "../bentoContainer/BentoContainer";
 import PrimaryButton from "../UI/primaryButton/PrimaryButton";
+import BadgeCounter from "./BadgeCounter";
+import BadgeDate from "./BadgeDate";
 
 interface ProfileBannerProps {
   data: UserPublicDataType & { alreadyFollowed: boolean };
@@ -34,7 +36,11 @@ const ProfileBanner = ({ data }: ProfileBannerProps) => {
     alreadyFollowed,
   } = data;
 
-  // TANSTACK follow action
+  //TANSTACK ini queryclient
+  const queryClient = useQueryClient();
+
+  // TANSTACK follow action + optimistic update
+
   const {
     mutate: followMutation,
     isPending: followIsPending,
@@ -42,15 +48,111 @@ const ProfileBanner = ({ data }: ProfileBannerProps) => {
   } = useMutation({
     mutationFn: ({ userId, userFollowedID }: DataFollowType) =>
       followAction(userId, userFollowedID),
-    onMutate: () => {
-      console.log("en cours");
+    onMutate: async () => {
+      // Annuler les requêtes en cours
+      await queryClient.cancelQueries({
+        queryKey: ["userProfile", profileUsername],
+      });
+      // Snapshot de l'état précédent
+      const previousProfile = queryClient.getQueryData([
+        "userProfile",
+        profileUsername,
+      ]);
+
+      // Optimistic update
+      queryClient.setQueryData(
+        ["userProfile", profileUsername],
+        (currentData: {
+          data: UserPublicDataType & { alreadyFollowed: boolean };
+        }) => ({
+          data: {
+            ...currentData.data,
+            followedByCount: currentData.data.followingCount + 1,
+            alreadyFollowed: true,
+          },
+        })
+      );
+      return { previousProfile };
     },
     onSuccess: (response) => {
       console.log("réussi");
       console.log(response);
-      setToggle(true);
+      queryClient.invalidateQueries({
+        queryKey: ["userProfile", profileUsername],
+      });
     },
-    onError: (error) => console.log(error),
+    onError: (error, _, context) => {
+      console.log(error);
+      // Rollback en cas d'erreur
+      queryClient.setQueryData(
+        ["userProfile", profileUsername],
+        context?.previousProfile
+      );
+    },
+    onSettled: () => {
+      // Rafraîchir les données
+      queryClient.invalidateQueries({
+        queryKey: ["userProfile", profileUsername],
+      });
+    },
+  });
+
+  // TANSTACK Unfollow action
+  const {
+    mutate: unfollowMutation,
+    isPending: unfollowPending,
+    error: unfollowError,
+  } = useMutation({
+    mutationFn: ({ userId, userFollowedID }: DataFollowType) =>
+      unfollowAction(userId, userFollowedID),
+    onMutate: async () => {
+      // Annuler les requête en cours
+      await queryClient.cancelQueries({
+        queryKey: ["userProfile", profileUsername],
+      });
+      // Snapshot de l'état précédent
+      const previousProfile = queryClient.getQueryData([
+        "userProfile",
+        profileUsername,
+      ]);
+
+      // Optimistic update
+      queryClient.setQueryData(
+        ["userProfile", profileUsername],
+        (currentData: {
+          data: UserPublicDataType & { alreadyFollowed: boolean };
+        }) => ({
+          data: {
+            ...currentData.data,
+            followingCount: currentData.data.followingCount - 1,
+            alreadyFollowed: false,
+          },
+        })
+      );
+      return { previousProfile };
+    },
+    onSuccess: (response) => {
+      console.log("unfollow fini");
+      console.log(response);
+      // invalider le cache pour refetch
+      queryClient.invalidateQueries({
+        queryKey: ["userProfile", profileUsername],
+      });
+    },
+    onError: (error, _, context) => {
+      console.log(error);
+      // Rollback en cas d'erreur
+      queryClient.setQueryData(
+        ["userProfile", profileUsername],
+        context?.previousProfile
+      );
+    },
+    onSettled: () => {
+      // Rafraîchir les données
+      queryClient.invalidateQueries({
+        queryKey: ["userProfile", profileUsername],
+      });
+    },
   });
 
   return (
@@ -84,18 +186,33 @@ const ProfileBanner = ({ data }: ProfileBannerProps) => {
           <span className="mx-2 my-1 w-px self-stretch bg-skeletonGrey"></span>
           {/* sépration */}
 
-          <div className="flex justify-center items-center min-w-24 ">
-            <PrimaryButton
-              text="Follow"
-              disabled={alreadyFollowed}
-              onClick={() => followMutation({ userId, userFollowedID })}
-            >
-              <UserRoundPlus size={20} />
-            </PrimaryButton>
-          </div>
+          {userId && (
+            <div className="flex justify-center items-center min-w-24 ">
+              {/* on choisi le type de bouton en fonction de l'état de la relation entre les 2 utilisateurs */}
+              {!alreadyFollowed ? (
+                <PrimaryButton
+                  text="Follow"
+                  onClick={() => followMutation({ userId, userFollowedID })}
+                >
+                  <UserRoundPlus size={20} />
+                </PrimaryButton>
+              ) : (
+                <PrimaryButton
+                  text="Unfollow"
+                  onClick={() => unfollowMutation({ userId, userFollowedID })}
+                >
+                  <UserRoundPlus size={20} />
+                </PrimaryButton>
+              )}
+            </div>
+          )}
         </div>
       </BentoContainer>
-      <div className="w-full h-auto flex justify-start">badge</div>
+      <div className="w-full h-auto  flex justify-start items-center gap-3">
+        <BadgeCounter text={"Followers"} counter={profileFollowedByCount} />
+        <BadgeCounter text={"Following"} counter={profileFollowingCount} />
+        <BadgeDate text="Joined Retwitter in" date={profileCreatedAt} />
+      </div>
     </div>
   );
 };
