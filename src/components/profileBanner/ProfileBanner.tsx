@@ -67,7 +67,7 @@ const ProfileBanner = ({ data }: ProfileBannerProps) => {
         }) => ({
           data: {
             ...currentData.data,
-            followedByCount: currentData.data.followingCount + 1,
+            followedByCount: currentData.data.followedByCount + 1,
             alreadyFollowed: true,
           },
         })
@@ -75,14 +75,11 @@ const ProfileBanner = ({ data }: ProfileBannerProps) => {
       return { previousProfile };
     },
     onSuccess: (response) => {
-      console.log("réussi");
-      console.log(response);
       queryClient.invalidateQueries({
         queryKey: ["userProfile", profileUsername],
       });
     },
     onError: (error, _, context) => {
-      console.log(error);
       // Rollback en cas d'erreur
       queryClient.setQueryData(
         ["userProfile", profileUsername],
@@ -124,7 +121,7 @@ const ProfileBanner = ({ data }: ProfileBannerProps) => {
         }) => ({
           data: {
             ...currentData.data,
-            followingCount: currentData.data.followingCount - 1,
+            followedByCount: currentData.data.followedByCount - 1,
             alreadyFollowed: false,
           },
         })
@@ -132,15 +129,12 @@ const ProfileBanner = ({ data }: ProfileBannerProps) => {
       return { previousProfile };
     },
     onSuccess: (response) => {
-      console.log("unfollow fini");
-      console.log(response);
       // invalider le cache pour refetch
       queryClient.invalidateQueries({
         queryKey: ["userProfile", profileUsername],
       });
     },
     onError: (error, _, context) => {
-      console.log(error);
       // Rollback en cas d'erreur
       queryClient.setQueryData(
         ["userProfile", profileUsername],
