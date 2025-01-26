@@ -10,7 +10,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import InputGeneric from "../../../UI/inputGeneric/InputGeneric";
 import BentoContainer from "../../../bentoContainer/BentoContainer";
@@ -20,12 +20,7 @@ const InputSearchProfil = () => {
   const queryClient = useQueryClient();
 
   // ZUSTAND store
-  const resultProfile = useStore((state) => state.resultProfile);
-  const updateResultProfile = useStore((state) => state.updateResultProfile);
-  const userId = useStore((state) => {
-    state.userId;
-  });
-
+  const userId = useStore((state) => state.userId);
   // State local
   const [inputValue, setInputValue] = useState("");
   const [debouncedValue] = useDebounce(inputValue, 500);
@@ -37,13 +32,13 @@ const InputSearchProfil = () => {
     enabled: debouncedValue.length > 0,
   });
 
+
   //PREFETCH des données du profil à consulté pour limité le temps de chargement quand on consulte la page profil
   const handleResultClick = (data: UserPublicDataType) => {
     queryClient.prefetchQuery({
       queryKey: ["userProfile", data.username],
       queryFn: () => searchUserInfoProfileAction(userId, data.id),
     });
-    // updateResultProfile(data);
   };
 
   return (

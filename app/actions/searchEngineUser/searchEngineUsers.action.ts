@@ -44,6 +44,6 @@ export const searchEngineUsersAction = async (
     return userProfileCompleted;
   } catch (error) {
     console.log(error);
-    return [];
+    return { data: error };
   }
 };

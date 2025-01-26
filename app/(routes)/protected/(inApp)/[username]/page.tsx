@@ -29,7 +29,7 @@ const Page = ({ params }: PageParamsType) => {
   // on fait une query: si les données sont pas en cache, le fetch aura lieu, si les données ont été prefetch ça récupère le contenu dans le cache pour un affichage rapide
   const { data, isPending, error } = useQuery({
     queryKey: ["userProfile", decodeUsername],
-    // queryFn: () => searchUserInfoProfileAction(userId, decodeUsername),
+    queryFn: () => searchUserInfoProfileAction(userId, decodeUsername),
   });
 
   useEffect(() => {
