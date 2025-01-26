@@ -4,16 +4,12 @@ import { prisma } from "@/prisma";
 
 export const searchUserInfoProfileAction = async (
   userId: string,
-  searchedUserID?: string,
   usernameProfile?: string
 ) => {
   try {
     const userSearched = await prisma.user.findFirst({
       where: {
-        OR: [
-          { username: usernameProfile || undefined },
-          { id: searchedUserID || undefined }
-        ]
+        username: usernameProfile,
       },
       select: {
         id: true,

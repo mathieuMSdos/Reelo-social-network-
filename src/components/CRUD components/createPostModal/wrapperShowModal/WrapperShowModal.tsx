@@ -6,7 +6,6 @@ const WrapperShowModal = () => {
   const isCreatePostModalOpen = useStore(
     (state) => state.isCreatePostModalOpen
   );
-  console.log(isCreatePostModalOpen)
   return <>{isCreatePostModalOpen && <CreatePostModal />} </>;
 };
 

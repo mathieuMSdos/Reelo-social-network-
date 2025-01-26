@@ -1,3 +1,4 @@
+"use client"
 import { followAction } from "@/app/actions/socialActions/following.actions";
 import { useStore } from "@/lib/store/index.store";
 import { UserPublicDataType } from "@/src/types/user.types";
@@ -18,7 +19,6 @@ interface DataFollowType {
 }
 
 const ProfileBanner = ({ data }: ProfileBannerProps) => {
-  const [toggle, setToggle] = useState(false);
   //ZUSTAND info du profil user connecté
   const userId = useStore((state) => state.userId);
   // Infos du profil consulté

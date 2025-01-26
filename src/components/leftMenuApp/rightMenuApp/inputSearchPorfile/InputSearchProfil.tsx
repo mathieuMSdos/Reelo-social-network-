@@ -10,7 +10,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDebounce } from "use-debounce";
 import InputGeneric from "../../../UI/inputGeneric/InputGeneric";
 import BentoContainer from "../../../bentoContainer/BentoContainer";
@@ -33,11 +33,11 @@ const InputSearchProfil = () => {
   });
 
 
-  //PREFETCH des données du profil à consulté pour limité le temps de chargement quand on consulte la page profil
+  //PREFETCH des données du profilpour limiter le temps de chargement quand on consulte la page profil
   const handleResultClick = (data: UserPublicDataType) => {
     queryClient.prefetchQuery({
       queryKey: ["userProfile", data.username],
-      queryFn: () => searchUserInfoProfileAction(userId, data.id),
+      queryFn: () => searchUserInfoProfileAction(userId, data.username),
     });
   };
 
