@@ -1,20 +1,24 @@
 "use client";
 
-import { searchUserDropDownMenu } from "@/app/actions/searchUserDropDownMenu.action";
+import { searchEngineUsersAction } from "@/app/actions/searchEngineUser/searchEngineUsers.action";
+import { searchUserInfoProfileAction } from "@/app/actions/searchEngineUser/searchUserInfoProfile.action";
 import { useStore } from "@/lib/store/index.store";
 import loadingIconLord from "@/src/assets/icons/system-solid-716-spinner-three-dots-hover-trapdoor.json";
 import GenericIcon from "@/src/components/UI/lordIcons/GenericIcon";
 import { UserPublicDataType } from "@/src/types/user.types";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDebounce } from "use-debounce";
 import InputGeneric from "../../../UI/inputGeneric/InputGeneric";
 import BentoContainer from "../../../bentoContainer/BentoContainer";
 
 const InputSearchProfil = () => {
+  // TANSTACK init
+  const queryClient = useQueryClient();
+
   // ZUSTAND store
   const resultProfile = useStore((state) => state.resultProfile);
   const updateResultProfile = useStore((state) => state.updateResultProfile);
@@ -22,30 +26,25 @@ const InputSearchProfil = () => {
     state.userId;
   });
 
-
   // State local
   const [inputValue, setInputValue] = useState("");
   const [debouncedValue] = useDebounce(inputValue, 500);
 
+  // TANSTACK Moteur de recherche d'utilisateur
   const { data, isFetching, error } = useQuery({
     queryKey: ["searchUser", debouncedValue],
-    queryFn: () => searchUserDropDownMenu(debouncedValue, userId),
+    queryFn: () => searchEngineUsersAction(debouncedValue, userId),
     enabled: debouncedValue.length > 0,
   });
 
-  //ZUSTAND stocker le profil recherché dans le store ZUSTAND pour avoir toutes les infos à afficher sur la page d'atterrisage.
+  //PREFETCH des données du profil à consulté pour limité le temps de chargement quand on consulte la page profil
   const handleResultClick = (data: UserPublicDataType) => {
-    console.log(data)
-    updateResultProfile(data);
+    queryClient.prefetchQuery({
+      queryKey: [`${data.username}`, data.id],
+      queryFn: () => searchUserInfoProfileAction(userId, data.id),
+    });
+    // updateResultProfile(data);
   };
-
-  useEffect(() => {
-    console.log(data)
-  
-
-  }, [data])
-  
-  
 
   return (
     <>
