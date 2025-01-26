@@ -1,4 +1,4 @@
-import InputSearchProfil from "./inputSearchPorfil/InputSearchProfil";
+import InputSearchProfil from "./inputSearchPorfile/InputSearchProfil";
 
 const RightMenuApp = () => {
   return (

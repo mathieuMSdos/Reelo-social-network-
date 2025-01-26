@@ -40,7 +40,7 @@ const InputSearchProfil = () => {
   //PREFETCH des données du profil à consulté pour limité le temps de chargement quand on consulte la page profil
   const handleResultClick = (data: UserPublicDataType) => {
     queryClient.prefetchQuery({
-      queryKey: [`${data.username}`, data.id],
+      queryKey: ["userProfile", data.username],
       queryFn: () => searchUserInfoProfileAction(userId, data.id),
     });
     // updateResultProfile(data);
