@@ -5,7 +5,7 @@ import FeedPostColumn from "@/src/components/CRUD components/feedPostColumn/feed
 import RightMenuApp from "@/src/components/leftMenuApp/rightMenuApp/RightMenuApp";
 import ProfileBanner from "@/src/components/profileBanner/ProfileBanner";
 import { useQuery } from "@tanstack/react-query";
-import { use, useEffect, useMemo } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 
 interface PageParamsType {
   params: Promise<{
@@ -14,42 +14,53 @@ interface PageParamsType {
 }
 
 const Page = ({ params }: PageParamsType) => {
+  // StateLocal 
+
+  const [isMyOwnProfile, setIsMyOwnProfile] = useState(false)
+
   // on récupère le username en paramètre de l'url
   const { username } = use(params);
 
+  // ZUSTAND : on récupère l'username de l'utilisateur connecté
+  const userId = useStore((state) => state.userId);
+  const myUserName = useStore((state) => state.username);
+
+
   // UseMemo pour decoder l'uri et faire réapparaître le @ devant username
-  const decodeUsername = useMemo(() => {
+  const decodedProfileUsername = useMemo(() => {
     return decodeURIComponent(username);
   }, [username]);
 
-  //
-  const userId = useStore((state) => state.userId);
 
   // TANSTACK Récupération du profil de l'utilisateur consulté dans le cache de tanstack
   // on fait une query: si les données sont pas en cache, le fetch aura lieu, si les données ont été prefetch ça récupère le contenu dans le cache pour un affichage rapide
   const { data, isPending, error } = useQuery({
-    queryKey: ["userProfile", decodeUsername],
-    queryFn: () => searchUserInfoProfileAction(userId, decodeUsername),
+    queryKey: ["userProfile", decodedProfileUsername],
+    queryFn: () => searchUserInfoProfileAction(userId, decodedProfileUsername),
     enabled: !!userId, //déclenche le fetch que si userID est true
   });
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    
+    if(decodedProfileUsername === myUserName) {
+      setIsMyOwnProfile(true)
+    }
+
+  }, [decodedProfileUsername,myUserName]);
 
   useEffect(() => {
     console.log("isPending:", isPending);
-  }, [isPending, decodeUsername]);
+  }, [isPending, decodedProfileUsername]);
 
   return (
     <>
       {isPending
         ? "pending"
         : data && (
-            <div className="w-full flex gap-20 justify-between min-h-screen ">
-              <div className=" w-full min-w-56 max-w-screen-xl">
-                <ProfileBanner data={data?.data} />
-                <FeedPostColumn profilId={data.data.id} />
+            <div className="w-full flex gap-20 justify-between min-h-screen  ">
+              <div className=" flex flex-col gap-10 w-full min-w-56 max-w-screen-xl ">
+                <ProfileBanner data={data?.data} isMyOwnProfile={isMyOwnProfile} />
+                <FeedPostColumn profilId={data.data.id} isMyOwnProfile={isMyOwnProfile} />
               </div>
               <div className="w-full max-w-64 bg-purple-100">
                 <RightMenuApp />

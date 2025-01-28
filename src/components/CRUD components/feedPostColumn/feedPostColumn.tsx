@@ -11,9 +11,10 @@ import SkeletonPost from "./postProfileItem/SkeletonPost";
 
 interface FeedPostColumnProps {
   profilId: string;
+  isMyOwnProfile: boolean;
 }
 
-const FeedPostColumn = ({ profilId }: FeedPostColumnProps) => {
+const FeedPostColumn = ({ profilId, isMyOwnProfile }: FeedPostColumnProps) => {
   // zustand state
   const userId = useStore((state) => state.userId);
 
@@ -50,11 +51,11 @@ const FeedPostColumn = ({ profilId }: FeedPostColumnProps) => {
   }, [inView, hasNextPage, fetchNextPage]);
 
   return (
-    <div className="flex flex-col items-center justify-start w-full h-auto min-h-screen ">
+    <div className="flex flex-col items-center justify-start w-full h-auto min-h-screen gap-1  ">
       {/* header */}
       <div className="flex justify-between w-full mb-3">
-        <h3 className="text-left text-lg font-bold text-darkLine ">
-          Your Posts
+        <h3 className="text-left text-xl font-bold text-darkLine ">
+          {isMyOwnProfile ? "My Posts" : "Posts"}
         </h3>
       </div>
       <ul className="w-full min-h-screen flex flex-col gap-3 ">

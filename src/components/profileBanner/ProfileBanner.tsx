@@ -18,9 +18,10 @@ interface ProfileBannerProps {
 interface DataFollowType {
   userId: string;
   userFollowedID: string;
+  isMyOwnProfile: boolean;
 }
 
-const ProfileBanner = ({ data }: ProfileBannerProps) => {
+const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
   //ZUSTAND info du profil user connecté
   const userId = useStore((state) => state.userId);
   // Infos du profil consulté
@@ -170,35 +171,41 @@ const ProfileBanner = ({ data }: ProfileBannerProps) => {
           <span className="mx-2 my-1 w-px self-stretch bg-skeletonGrey"></span>
           {/* sépration */}
 
-          <div className="flex justify-center items-center flex-grow ">
-            <p className="text-sm text-center">
+          <div className="w-full flex justify-center items-center flex-grow ">
+            <p className="text-sm ">
               15 years • Founder & Designer at @ http://chocho.agency 💫
               Creation of landing page & Website for SaaS/Agency
             </p>
           </div>
-          {/* sépration */}
-          <span className="mx-2 my-1 w-px self-stretch bg-skeletonGrey"></span>
-          {/* sépration */}
+          {!isMyOwnProfile && (
+            <>
+              {/* sépration */}
+              <span className="mx-2 my-1 w-px self-stretch bg-skeletonGrey"></span>
+              {/* sépration */}
 
-          {userId && (
-            <div className="flex justify-center items-center min-w-24 ">
-              {/* on choisi le type de bouton en fonction de l'état de la relation entre les 2 utilisateurs */}
-              {!alreadyFollowed ? (
-                <PrimaryButton
-                  text="Follow"
-                  onClick={() => followMutation({ userId, userFollowedID })}
-                >
-                  <UserRoundPlus size={20} />
-                </PrimaryButton>
-              ) : (
-                <PrimaryButton
-                  text="Unfollow"
-                  onClick={() => unfollowMutation({ userId, userFollowedID })}
-                >
-                  <UserRoundPlus size={20} />
-                </PrimaryButton>
+              {userId && (
+                <div className="flex justify-center items-center min-w-24 ">
+                  {/* on choisi le type de bouton en fonction de l'état de la relation entre les 2 utilisateurs */}
+                  {!alreadyFollowed ? (
+                    <PrimaryButton
+                      text="Follow"
+                      onClick={() => followMutation({ userId, userFollowedID })}
+                    >
+                      <UserRoundPlus size={20} />
+                    </PrimaryButton>
+                  ) : (
+                    <PrimaryButton
+                      text="Unfollow"
+                      onClick={() =>
+                        unfollowMutation({ userId, userFollowedID })
+                      }
+                    >
+                      <UserRoundPlus size={20} />
+                    </PrimaryButton>
+                  )}
+                </div>
               )}
-            </div>
+            </>
           )}
         </div>
       </BentoContainer>
