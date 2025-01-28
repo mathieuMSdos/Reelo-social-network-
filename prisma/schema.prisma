@@ -22,13 +22,13 @@ model User {
   Authenticator          Authenticator[]
   posts                  Post[]
   sessions               Session[]
-  // User_A                 User[]          @relation("UserFollows")
-  // User_B                 User[]          @relation("UserFollows")
+
   followedByCount        Int             @default(0)
   followingCount         Int             @default(0)
   //Les relations
   followedBy User[] @relation("UserFollows")
   following User[] @relation("UserFollows")
+  postLiked Post[] @relation("UserLikes")
 
   @@index([username])
   @@index([displayName])
@@ -44,6 +44,9 @@ model Post {
   imageId   String?
   imageUrl  String?
   author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  likeCount Int      @default(0)
+  // Relations
+  likedBy User[]     @relation("UserLikes")
 
   @@index([authorId])
   @@index([createdAt(sort: Desc)])
