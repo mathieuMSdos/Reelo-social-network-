@@ -45,13 +45,14 @@ const InputSearchProfil = () => {
     <>
       <BentoContainer className="w-full p-4 flex flex-col justify-center items-center gap-4 transition-all duration-150">
         <InputGeneric
-          className="text-textGrey w-full"
+          className="text-textGrey w-full placeholder:translate-x-4 focus:placeholder:translate-x-0  "
           type="text"
           showSearchIcon={true}
           showDeleteIcon={true}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           setInputValue={setInputValue}
+          placeholder="Search user"
         />
         <AnimatePresence mode="wait">
           {(isFetching || data) && (

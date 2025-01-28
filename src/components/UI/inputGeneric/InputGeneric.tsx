@@ -37,7 +37,7 @@ const InputGeneric = ({
   return (
     <div className="relative w-full">
       <input
-        className={`bg-greyPurple py-2 px-4 rounded-lg focus:outline-none ${className}`}
+        className={`bg-greyPurple py-2 px-4 rounded-lg focus:outline-none ${className} `}
         type={type}
         value={value}
         placeholder={placeholder}
