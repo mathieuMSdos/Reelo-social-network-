@@ -9,11 +9,15 @@ import GenericIcon from "../../UI/lordIcons/GenericIcon";
 import PostProfileItem from "./postProfileItem/PostProfileItem";
 import SkeletonPost from "./postProfileItem/SkeletonPost";
 
-const FeedPostColumn = () => {
+interface FeedPostColumnProps {
+  profilId: string;
+}
+
+const FeedPostColumn = ({ profilId }: FeedPostColumnProps) => {
   // zustand state
   const userId = useStore((state) => state.userId);
 
-  // Setup Tanstack query infinite scroll pour le getPost
+  // TANSTACK  query infinite scroll pour le getPost
   const {
     data,
     fetchNextPage,
@@ -24,7 +28,7 @@ const FeedPostColumn = () => {
   } = useInfiniteQuery({
     queryKey: ["posts", userId],
     initialPageParam: 0,
-    queryFn: ({ pageParam }) => getProfilPosts(userId, pageParam),
+    queryFn: ({ pageParam }) => getProfilPosts(profilId, pageParam),
     enabled: !!userId,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (!lastPage?.hasMore) return null;
@@ -79,7 +83,9 @@ const FeedPostColumn = () => {
         className="w-full h-20 py-3 px-10 flex justify-center items-center "
         ref={ref}
       >
-        {isFetchingNextPage && <GenericIcon icon={loadingIconLord} loop={true} />}
+        {isFetchingNextPage && (
+          <GenericIcon icon={loadingIconLord} loop={true} />
+        )}
         {!hasNextPage && data?.pages[0]?.posts.length > 0 && (
           <p className="text-left font-bold text-textGrey">
             That's all for now!

@@ -49,7 +49,7 @@ const Page = ({ params }: PageParamsType) => {
             <div className="w-full flex gap-20 justify-between min-h-screen ">
               <div className=" w-full min-w-56 max-w-screen-xl">
                 <ProfileBanner data={data?.data} />
-                {/* <FeedPostColumn /> */}
+                <FeedPostColumn profilId={data.data.id} />
               </div>
               <div className="w-full max-w-64 bg-purple-100">
                 <RightMenuApp />

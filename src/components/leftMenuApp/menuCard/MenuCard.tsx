@@ -1,4 +1,5 @@
 "use client";
+import { useStore } from "@/lib/store/index.store";
 import BentoContainer from "../../bentoContainer/BentoContainer";
 import ItemIconMenuCard from "./ItemIconMenuCard";
 // Import des icons animé Lord Icon
@@ -12,13 +13,15 @@ import { useState } from "react";
 
 const MenuCard = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const username = useStore((state) => state.username);
 
+  // {`/protected/${item.username}`}
   const itemsContentArray = [
     { icon: lordIconHome, text: "Home", href: "/protected/dashboard" },
     { icon: lordIconSearch, text: "Explore", href: "" },
     { icon: lordIconNotifications, text: "Notifications", href: "" },
     { icon: lordIconMessages, text: "Messages", href: "" },
-    { icon: lordIconProfile, text: "Profiles", href: "/protected/profil" },
+    { icon: lordIconProfile, text: "Profiles", href: `/protected/${username}` },
   ];
 
   return (

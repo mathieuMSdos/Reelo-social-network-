@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import GenericIcon from '../../UI/lordIcons/GenericIcon';
 import Link from 'next/link';
 
