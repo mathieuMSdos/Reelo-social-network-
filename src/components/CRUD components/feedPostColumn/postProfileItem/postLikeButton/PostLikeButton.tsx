@@ -148,7 +148,7 @@ const PostLikeButton = ({
       <Heart
         className={`${
           userAlreadyLikeThisPost ? "text-purpleBtn" : "text-textGrey"
-        }transition-all duration-100 `}
+        }  transition-all duration-100 `}
         fill="currentColor"
         size={20}
       />
