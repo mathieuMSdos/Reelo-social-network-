@@ -1,6 +1,6 @@
 "use client";
-import { followAction } from "@/app/actions/socialActions/following.actions";
-import { unfollowAction } from "@/app/actions/socialActions/unfollow.actions";
+import { followAction } from "@/app/actions/socialActions/FollowUnfollowUser/following.actions";
+import { unfollowAction } from "@/app/actions/socialActions/FollowUnfollowUser/unfollow.actions";
 import { useStore } from "@/lib/store/index.store";
 import { UserPublicDataType } from "@/src/types/user.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";

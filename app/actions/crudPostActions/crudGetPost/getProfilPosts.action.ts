@@ -1,7 +1,12 @@
 "use server";
+import { userAlreadyLikeThisPost } from "@/lib/utils/validation/like/userAlreadyLikeThisPost";
 import { prisma } from "../../../../prisma";
 
-export const getProfilPosts = async (authorId: string, page: number) => {
+export const getProfilPosts = async (
+  authorId: string,
+  page: number,
+  userId: string
+) => {
   const limit = 10;
   const skip = page * limit;
 
@@ -11,20 +16,29 @@ export const getProfilPosts = async (authorId: string, page: number) => {
       take: limit,
       skip: skip,
       orderBy: { createdAt: "desc" },
-      include:{
-        author: true
-      }
+      include: {
+        author: true,
+        likedBy: true,
+      },
     });
 
     // permet de savoir si il reste des post à charger
     // si posts.length est différent de limit ça veux dire qu'on a pas fetch 10 post on a reçu moins.
     // si on a reçu moins c'est qu'il n'y a plus de post à fetch donc qu'on a atteind la fin des posts
     const hasMore = posts.length === limit;
-    
 
-    return { posts, hasMore }
+    // ajouter l'info est ce que l'utilisateur connecté à liké ce post ou non
+    const postsWithLikeStatus = await Promise.all(
+      posts.map(async (post) => {
+        const likeStatus = await userAlreadyLikeThisPost(userId, post.id);
+        return {
+          ...post,
+          userAlreadyLikeThisPost: likeStatus.data.isAlreadyLikeThisPost
+        };
+      })
+    );
 
-
+    return { posts: postsWithLikeStatus, hasMore }
   } catch (error) {
     console.log(error);
   }

@@ -3,7 +3,7 @@
 import { isUserExist } from "@/lib/utils/validation/generic/isUserExist";
 import { userAlreadyLikeThisPost } from "@/lib/utils/validation/like/userAlreadyLikeThisPost";
 import { prisma } from "@/prisma";
-import { isTryingToAutoLike } from "../../../lib/utils/validation/like/isTryingToAutoLike";
+import { isTryingToAutoLike } from "../../../../lib/utils/validation/like/isTryingToAutoLike";
 
 export const likePostAction = async (userId, idPost, authorId) => {
   try {

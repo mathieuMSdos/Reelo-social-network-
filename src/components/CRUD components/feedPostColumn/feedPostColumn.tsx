@@ -29,7 +29,7 @@ const FeedPostColumn = ({ profilId, isMyOwnProfile }: FeedPostColumnProps) => {
   } = useInfiniteQuery({
     queryKey: ["posts", profilId],
     initialPageParam: 0,
-    queryFn: ({ pageParam }) => getProfilPosts(profilId, pageParam),
+    queryFn: ({ pageParam }) => getProfilPosts(profilId, pageParam, userId),
     enabled: !!userId,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (!lastPage?.hasMore) return null;

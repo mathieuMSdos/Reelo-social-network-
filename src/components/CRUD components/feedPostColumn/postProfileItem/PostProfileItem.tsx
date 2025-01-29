@@ -8,14 +8,13 @@ import BentoContainer from "../../../bentoContainer/BentoContainer";
 import PostLikeButton from "./postLikeButton/PostLikeButton";
 
 const PostProfileItem = ({ postData }) => {
-  console.log(postData)
   const [showMore, setShowMore] = useState(false);
 
   // infos sur l'autheur du post
   const { id: authorId, image, displayName, username } = postData.author;
 
   // infos contenu du post
-  const { id, content, imageUrl, createdAt, likeCount } = postData;
+  const { id, content, imageUrl, createdAt, likeCount,userAlreadyLikeThisPost } = postData;
 
   const truncatedContent = useMemo(() => {
     if (content.length > 120) {
@@ -112,6 +111,7 @@ const PostProfileItem = ({ postData }) => {
             authorId={authorId}
             idPost={id}
             likeCount={likeCount}
+            userAlreadyLikeThisPost={userAlreadyLikeThisPost}
           />
         </div>
       </div>

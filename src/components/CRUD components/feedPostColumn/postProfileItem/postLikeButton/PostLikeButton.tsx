@@ -1,6 +1,7 @@
 "use client";
 
-import { likePostAction } from "@/app/actions/socialActions/likePost.action";
+import { likePostAction } from "@/app/actions/socialActions/likePost/likePost.action";
+import { unlikePostAction } from "@/app/actions/socialActions/likePost/unLikePost.action";
 import { useStore } from "@/lib/store/index.store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Heart } from "lucide-react";
@@ -10,20 +11,26 @@ interface PostLikeButtonProps {
   idPost: string;
   likeCount: number;
   likedBy: { id: string }[];
+  userAlreadyLikeThisPost: boolean;
 }
 
-const PostLikeButton = ({ authorId, idPost, likeCount, likedBy }: PostLikeButtonProps) => {
+const PostLikeButton = ({
+  authorId,
+  idPost,
+  likeCount,
+  likedBy,
+  userAlreadyLikeThisPost,
+}: PostLikeButtonProps) => {
   const userId = useStore((state) => state.userId);
   const queryClient = useQueryClient();
-  const hasLiked = likedBy?.some(like => like.id === userId);
 
-  const { mutate: likeMutation, isPending } = useMutation({
+  const { mutate: likeMutation } = useMutation({
     // Fonction qui effectue la mutation côté serveur
     mutationFn: () => likePostAction(userId, idPost, authorId),
 
     // Gestion de l'optimistic update
     onMutate: async () => {
-      // Annuler les potentielles requêtes déjà en cours 
+      // Annuler les potentielles requêtes déjà en cours
       await queryClient.cancelQueries({ queryKey: ["posts", authorId] });
 
       // Sauvegarder l'état précédent pour pouvoir revenir en arrière en cas d'erreur
@@ -37,16 +44,17 @@ const PostLikeButton = ({ authorId, idPost, likeCount, likedBy }: PostLikeButton
           ...oldData,
           pages: oldData.pages.map((page: any) => ({
             ...page,
-            posts: page.posts.map((post: any) => 
+            posts: page.posts.map((post: any) =>
               post.id === idPost
                 ? {
                     ...post,
                     likeCount: post.likeCount + 1,
-                    likedBy: [...(post.likedBy || []), { id: userId }]
+                    likedBy: [...(post.likedBy || []), { id: userId }],
+                    userAlreadyLikeThisPost: true,
                   }
                 : post
-            )
-          }))
+            ),
+          })),
         };
       });
 
@@ -62,23 +70,96 @@ const PostLikeButton = ({ authorId, idPost, likeCount, likedBy }: PostLikeButton
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: ["posts", authorId],
-        exact: true
+        exact: true,
       });
-    }
+    },
+  });
+
+  const { mutate: unlikeMutation } = useMutation({
+    // Fonction qui effectue la mutation côté serveur
+    mutationFn: () => unlikePostAction(userId, idPost, authorId),
+
+    // Gestion de l'optimistic update
+    onMutate: async () => {
+      // Annuler les potentielles requêtes déjà en cours
+      await queryClient.cancelQueries({ queryKey: ["posts", authorId] });
+
+      // Sauvegarder l'état précédent pour pouvoir revenir en arrière en cas d'erreur
+      const previousData = queryClient.getQueryData(["posts", authorId]);
+
+      // Mettre à jour le cache de manière optimiste
+      queryClient.setQueryData(["posts", authorId], (oldData: any) => {
+        if (!oldData?.pages) return oldData;
+
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page: any) => ({
+            ...page,
+            posts: page.posts.map((post: any) =>
+              post.id === idPost
+                ? {
+                    ...post,
+                    likeCount: post.likeCount - 1,
+                    likedBy: (post.likedBy || []).filter(
+                      (like) => like.id !== userId
+                    ),
+                    userAlreadyLikeThisPost: false,
+                  }
+                : post
+            ),
+          })),
+        };
+      });
+
+      return { previousData };
+    },
+    onSuccess: async () => {
+      console.log("unlike réussi");
+    },
+
+    // En cas d'erreur, on revient à l'état précédent
+    onError: (_, __, context) => {
+      queryClient.setQueryData(["posts", authorId], context?.previousData);
+    },
+
+    // Une fois la mutation terminée (succès ou échec), on rafraîchit les données
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["posts", authorId],
+        exact: true,
+      });
+    },
   });
 
   return (
     <button
       className="flex gap-1 items-center justify-center"
-      onClick={() => userId && !hasLiked && likeMutation()}
-      disabled={hasLiked || isPending}
+      onClick={() =>
+        // si l'utilisateur n'a  jamais liké le post on lui présente la fonction pour liker
+        {
+          if (!userAlreadyLikeThisPost) {
+            likeMutation();
+          } else {
+            unlikeMutation();
+          }
+        }
+      }
     >
       <Heart
-        className={`${hasLiked ? 'text-red-500' : 'text-textGrey'}`}
+        className={`${
+          userAlreadyLikeThisPost ? "text-purpleBtn" : "text-textGrey"
+        }transition-all duration-100 `}
         fill="currentColor"
         size={20}
       />
-      <p className="text-textGrey font-bold">{likeCount}</p>
+      <p
+        className={`${
+          userAlreadyLikeThisPost ? "text-purpleBtn" : "text-textGrey"
+        } font-bold transition-all duration-100
+`}
+      >
+        {likeCount}
+      </p>
     </button>
   );
 };
