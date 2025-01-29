@@ -25,10 +25,11 @@ export const followAction = async (userID: string, userFollowedID: string) => {
 
     await prisma.$transaction([
       prisma.user.update({
-        where: { id: userID },
+        where: { id: userID, },
         data: {
           followingCount: { increment: 1 },
           following: { connect: { id: userFollowedID } },
+          
         },
       }),
       prisma.user.update({
