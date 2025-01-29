@@ -6,20 +6,25 @@ export const checkUsersExist = async (
   userID: string,
   userFollowedID: string
 ) => {
-  const [user, userFollowed] = await prisma.$transaction([
-    prisma.user.findUnique({ where: { id: userID } }),
-    prisma.user.findUnique({ where: { id: userFollowedID } }),
-  ]);
-
-  if (!user || !userFollowed) {
+  try {
+    const [user, userFollowed] = await prisma.$transaction([
+      prisma.user.findUnique({ where: { id: userID } }),
+      prisma.user.findUnique({ where: { id: userFollowedID } }),
+    ]);
+  
+    if (!user || !userFollowed) {
+      return {
+        message: "Users don't exist",
+        data: { existingUsers: false },
+      };
+    }
     return {
-      message: "Users don't exist",
-      data: { existingUsers: false },
+      message: "Users exist",
+      data: { existingUsers: true, user, userFollowed },
+     
     };
+  } catch (error) {
+    console.log(error)
   }
-  return {
-    message: "Users exist",
-    data: { existingUsers: true, user, userFollowed },
-   
-  };
+ 
 };

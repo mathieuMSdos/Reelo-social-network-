@@ -18,15 +18,22 @@ const PostLikeButton = ({
   // ZUSTAND userID
   const userId = useStore((state) => state.userId);
 
-
   // TANSTACK
   const {
     mutate: likeMutation,
     isPending: LikeIsPending,
     error: LikeError,
   } = useMutation({
-    mutationFn: async ({ userId, idPost, authorId }) => {
-      likePostAction(userId, idPost,authorId);
+    mutationFn: async ({
+      userId,
+      idPost,
+      authorId,
+    }: {
+      userId: string;
+      idPost: string;
+      authorId: string;
+    }): Promise<void> => {
+      await likePostAction(userId, idPost, authorId);
     },
     onMutate: async () => {},
     onSuccess: async () => {},
@@ -36,8 +43,9 @@ const PostLikeButton = ({
   return (
     <button
       className="flex gap-1 items-center justify-center"
-      onClick={ () => {
-        likeMutation({ userId, idPost, authorId });
+      onClick={() => {
+        if (userId && idPost && authorId)
+          likeMutation({ userId, idPost, authorId });
       }}
     >
       <Heart className="text-textGrey" fill="currentColor" size={20} />

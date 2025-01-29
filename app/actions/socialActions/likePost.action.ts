@@ -1,6 +1,7 @@
 "use server";
 
 import { isUserExist } from "@/lib/utils/validation/generic/isUserExist";
+import { userAlreadyLikeThisPost } from "@/lib/utils/validation/like/userAlreadyLikeThisPost";
 import { prisma } from "@/prisma";
 import { isTryingToAutoLike } from "../../../lib/utils/validation/like/isTryingToAutoLike";
 
@@ -18,6 +19,15 @@ export const likePostAction = async (userId, idPost, authorId) => {
     if (checkAutoLike.data.isTryingToAutoLike) {
       console.log(checkAutoLike);
       throw new Error("trying to autolike error");
+    }
+
+    // Un utilisateur ne peux liker qu'un post donc on vérifie si il n'a pas déjà liké ce post
+    const checkAlreadyLikeThisPost = await userAlreadyLikeThisPost(
+      userId,
+      idPost
+    );
+    if (checkAlreadyLikeThisPost.data.isAlreadyLikeThisPost) {
+      throw new Error("User has already liked this post");
     }
 
     // Si tout est ok on lance l'écriture en BDD via prisma
@@ -42,6 +52,6 @@ export const likePostAction = async (userId, idPost, authorId) => {
       },
     };
   } catch (error) {
-    throw new Error("message", error);
+    throw new Error(`Failed to like post: ${error.message}`);
   }
 };
