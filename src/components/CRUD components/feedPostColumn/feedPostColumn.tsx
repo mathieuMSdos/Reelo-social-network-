@@ -27,7 +27,7 @@ const FeedPostColumn = ({ profilId, isMyOwnProfile }: FeedPostColumnProps) => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["posts", userId],
+    queryKey: ["posts", profilId],
     initialPageParam: 0,
     queryFn: ({ pageParam }) => getProfilPosts(profilId, pageParam),
     enabled: !!userId,

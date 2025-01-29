@@ -8,6 +8,7 @@ import BentoContainer from "../../../bentoContainer/BentoContainer";
 import PostLikeButton from "./postLikeButton/PostLikeButton";
 
 const PostProfileItem = ({ postData }) => {
+  console.log(postData)
   const [showMore, setShowMore] = useState(false);
 
   // infos sur l'autheur du post

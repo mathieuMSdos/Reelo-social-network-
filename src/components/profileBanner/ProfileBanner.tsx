@@ -54,7 +54,7 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
       await queryClient.cancelQueries({
         queryKey: ["userProfile", profileUsername],
       });
-      // Snapshot de l'état précédent
+      // Snapshot de l'état actuel
       const previousProfile = queryClient.getQueryData([
         "userProfile",
         profileUsername,
