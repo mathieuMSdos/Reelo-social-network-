@@ -3,16 +3,15 @@ import WrapperToggleModal from "../CRUD components/createPostModal/wrapperOpenMo
 import PrimaryButton from "../UI/primaryButton/PrimaryButton";
 import MenuCard from "./menuCard/MenuCard";
 import ProfilCard from "./profilCard/ProfilCard";
-import StatsCard from "./statsCard/StatsCard";
+import StatsCardWrapper from "./statsCard/StatsCardWrapper";
 
 const LeftMenuApp = () => {
   return (
     <div className="flex flex-col gap-2 items-center justify-start">
       <ProfilCard />
-      <div className="w-full flex justify-center items-center gap-2 ">
-        <StatsCard className="w-full py-5" stats="10,876" text="Followers" />
-        <StatsCard className="w-full py-5" stats="176" text="Following" />
-      </div>
+
+      <StatsCardWrapper />
+
       <MenuCard />
       <WrapperToggleModal>
         <PrimaryButton

@@ -5,6 +5,8 @@ export interface ProfilInfosInAppType {
   username: string | null;
   displayName: string | null;
   image: string | null;
+  followedByCount: number;
+  followingCount: number;
   updateProfile: (
     data: Partial<Omit<ProfilInfosInAppType, "updateProfile">>
   ) => void;
@@ -17,6 +19,8 @@ export const profilInfosInAppSlice: StateCreator<ProfilInfosInAppType> = (
   username: null,
   displayName: null,
   image: null,
+  followedByCount: 0,
+  followingCount: 0,
 
   updateProfile: (data) => {
     set((state) => ({ ...state, ...data }));

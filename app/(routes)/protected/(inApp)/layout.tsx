@@ -34,7 +34,7 @@ const layoutProtected = async ({
         </aside>
         {/* Contenu dynamique */}
         <div className="flex-1 min-h-screen ">
-          <ProfileInitializer session={session} />
+          {/* <ProfileInitializer session={session} /> */}
           {children}
         </div>
       </div>

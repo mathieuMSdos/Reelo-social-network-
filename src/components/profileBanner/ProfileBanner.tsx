@@ -59,8 +59,15 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
         "userProfile",
         profileUsername,
       ]);
+      // ZUSTAND Snaptshort compteur follower zustand
+      const previousFollowingCount = useStore.getState().followingCount;
 
       // Optimistic update
+      // ZUSTAND mise à jour du compteur followingCount
+      useStore.getState().updateProfile({
+        followingCount: useStore.getState().followingCount + 1,
+      });
+      // mise à jour du cache tanstastck
       queryClient.setQueryData(
         ["userProfile", profileUsername],
         (currentData: {
@@ -73,7 +80,7 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
           },
         })
       );
-      return { previousProfile };
+      return { previousProfile, previousFollowingCount };
     },
     onSuccess: (response) => {
       queryClient.invalidateQueries({
@@ -81,6 +88,11 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
       });
     },
     onError: (error, _, context) => {
+      //ZUSTAND Rollback vers previousFollowingCount
+      useStore.getState().updateProfile({
+        followingCount: context?.previousFollowingCount,
+      });
+
       // Rollback en cas d'erreur
       queryClient.setQueryData(
         ["userProfile", profileUsername],
@@ -114,7 +126,15 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
         profileUsername,
       ]);
 
+      //ZUSTAND snapshot de l'état précédent
+      const previousFollowingCount = useStore.getState().followingCount;
+
       // Optimistic update
+      // ZUSTAND mise à jour du compteur followingCount
+      useStore.getState().updateProfile({
+        followingCount: useStore.getState().followingCount - 1,
+      });
+
       queryClient.setQueryData(
         ["userProfile", profileUsername],
         (currentData: {
@@ -127,15 +147,20 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
           },
         })
       );
-      return { previousProfile };
+      return { previousProfile, previousFollowingCount };
     },
     onSuccess: (response) => {
       // invalider le cache pour refetch
       queryClient.invalidateQueries({
-        queryKey: ["userProfile", profileUsername],
+        queryKey: [["userProfile", profileUsername], ["userSession"]],
       });
     },
     onError: (error, _, context) => {
+      //ZUSTAND Rollback vers previousFollowingCount
+      useStore.getState().updateProfile({
+        followingCount: context?.previousFollowingCount,
+      });
+
       // Rollback en cas d'erreur
       queryClient.setQueryData(
         ["userProfile", profileUsername],

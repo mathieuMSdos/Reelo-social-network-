@@ -7,6 +7,7 @@ import { useEffect } from "react";
 const ProfileInitializer = ({ session }) => {
   // ZUSTAND: on place les infos de session dans le store pour qu'elles soient accessibles partout dans l'app
   const updateProfile = useStore((state) => state.updateProfile);
+  
 
   useEffect(() => {
     if (session) {
@@ -15,7 +16,10 @@ const ProfileInitializer = ({ session }) => {
         displayName: upperFirstLetterOfAString(session?.user?.displayName),
         username: session?.user?.username,
         image: session?.user?.image,
+        followedByCount: session?.user?.followedByCount,
+        followingCount: session?.user?.followingCount,
       };
+
       updateProfile(profileInfos);
     }
   }, [session, updateProfile]);

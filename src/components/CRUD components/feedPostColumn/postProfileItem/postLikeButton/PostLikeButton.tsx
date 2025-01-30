@@ -165,7 +165,7 @@ const PostLikeButton = ({
             ? {
                 scale: [1, 0.5, 1.5, 1],
                 transition: {
-                  duration: 0.3,
+                  duration: 0.2,
                   onComplete: () => setIsAnimating(false),
                 },
               }

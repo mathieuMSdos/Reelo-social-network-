@@ -13,6 +13,8 @@ export const userSchema = z.object({
   hasCompletedOnboarding: z.boolean().nullable(),
   createdAt: z.date().nullable(),
   updatedAt: z.date().nullable(),
+  followedByCount: z.number(),
+  followingCount: z.number()
 })
 
 // Type inféré de Zod

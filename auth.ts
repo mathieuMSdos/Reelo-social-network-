@@ -2,11 +2,9 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+import { userSchema } from "./lib/schema/user.schema";
 import { userNameGenerator } from "./lib/utils/scriptJS/usernameGenerator";
 import { prisma } from "./prisma";
-import { userSchema,  } from "./lib/schema/user.schema";
-
-
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -21,15 +19,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       try {
         if (user) {
           // ZOD validation typage pour USER
-          const validatedUser = userSchema.parse(user)
+          const validatedUser = userSchema.parse(user);
 
           token.id = validatedUser.id;
           token.email = validatedUser.email;
           token.name = validatedUser.name;
           token.picture = validatedUser.image;
           token.hasCompletedOnboarding = validatedUser.hasCompletedOnboarding;
+          token.followedByCount = validatedUser.followedByCount;
+          token.followingCount = validatedUser.followingCount;
         }
-        // console.log(user);
 
         if (!token.id) {
           return token;
@@ -46,6 +45,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             email: true,
             name: true,
             hasCompletedOnboarding: true,
+            followedByCount: true,
+            followingCount: true,
           },
         });
 
@@ -61,6 +62,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
               dbUser.hasCompletedOnboarding ??
               token.hasCompletedOnboarding ??
               null,
+            followedByCount: dbUser.followedByCount ?? 0,
+            followingCount: dbUser.followingCount ?? 0,
           };
           return updatedToken;
         }
@@ -71,7 +74,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return token;
       }
     },
-    
 
     session: async ({ session, token }) => {
       const updatedSession = {
@@ -85,6 +87,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           name: token.name ?? null,
           image: token.picture ?? null,
           hasCompletedOnboarding: token.hasCompletedOnboarding ?? null,
+          followedByCount: token.followedByCount ?? 0,
+          followingCount: token.followingCount ?? 0,
         },
       };
 
