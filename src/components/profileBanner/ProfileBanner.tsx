@@ -83,11 +83,13 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
       return { previousProfile, previousFollowingCount };
     },
     onSuccess: (response) => {
+      console.log(response);
       queryClient.invalidateQueries({
         queryKey: ["userProfile", profileUsername],
       });
     },
     onError: (error, _, context) => {
+      console.log(error);
       //ZUSTAND Rollback vers previousFollowingCount
       useStore.getState().updateProfile({
         followingCount: context?.previousFollowingCount,
@@ -150,12 +152,14 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
       return { previousProfile, previousFollowingCount };
     },
     onSuccess: (response) => {
+      console.log(response);
       // invalider le cache pour refetch
       queryClient.invalidateQueries({
         queryKey: [["userProfile", profileUsername], ["userSession"]],
       });
     },
     onError: (error, _, context) => {
+      console.log(error);
       //ZUSTAND Rollback vers previousFollowingCount
       useStore.getState().updateProfile({
         followingCount: context?.previousFollowingCount,

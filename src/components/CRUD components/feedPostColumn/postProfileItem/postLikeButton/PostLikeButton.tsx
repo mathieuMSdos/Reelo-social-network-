@@ -64,9 +64,13 @@ const PostLikeButton = ({
 
       return { previousData };
     },
+    onSuccess: (response) => {
+      console.log(response);
+    },
 
     // En cas d'erreur, on revient à l'état précédent
-    onError: (_, __, context) => {
+    onError: (error, __, context) => {
+      console.log(error);
       queryClient.setQueryData(["posts", authorId], context?.previousData);
     },
 
@@ -117,12 +121,13 @@ const PostLikeButton = ({
 
       return { previousData };
     },
-    onSuccess: async () => {
-      console.log("unlike réussi");
+    onSuccess: async (response) => {
+      console.log(response);
     },
 
     // En cas d'erreur, on revient à l'état précédent
-    onError: (_, __, context) => {
+    onError: (error, __, context) => {
+      console.log(error);
       queryClient.setQueryData(["posts", authorId], context?.previousData);
     },
 

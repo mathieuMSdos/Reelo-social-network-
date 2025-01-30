@@ -103,12 +103,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     // Ajout de la gestion des autorisations
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith("/protected/dashboard");
+      const isOnHomePage = nextUrl.pathname.startsWith("/protected/home");
       const isAuthRoute = nextUrl.pathname.startsWith("/api/auth");
 
       if (isAuthRoute) return true;
 
-      if (isOnDashboard && !isLoggedIn) {
+      if (isOnHomePage && !isLoggedIn) {
         return false;
       }
 

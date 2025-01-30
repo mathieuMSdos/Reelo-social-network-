@@ -87,7 +87,7 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
       await update();
       // on refresh hard pour que les composants et l'app se mettent à jour avec les nouvelles données de session. Sans ça certain composant ne se mettrait pas à jour avec les nouvelles données
       router.refresh();
-      router.push("/protected/dashboard");
+      router.push("/protected/home");
     },
     onError: () => {
       toast.dismiss();

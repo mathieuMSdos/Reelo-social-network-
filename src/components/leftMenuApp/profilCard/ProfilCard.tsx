@@ -1,8 +1,9 @@
 "use client";
 import { useStore } from "@/lib/store/index.store";
-import { PenLine } from "lucide-react";
 import Image from "next/image";
 import BentoContainer from "../../bentoContainer/BentoContainer";
+import Link from "next/link";
+import { PenLine } from "lucide-react";
 
 const ProfilCard = () => {
   const username = useStore((state) => state.username);
@@ -41,11 +42,12 @@ const ProfilCard = () => {
         {/* Texte */}
         <div className=" flex flex-col gap-2 ">
           {/* identitité */}
-
-          <div className="flex flex-col items-center -space-y-1">
-            <p className="text-lg font-bold">{displayName}</p>
-            <p className="text-xs text-textGrey ">{username}</p>
-          </div>
+          <Link href={`/protected/${username}`}>
+            <div className="flex flex-col items-center -space-y-1">
+              <p className="text-lg font-bold">{displayName}</p>
+              <p className="text-xs text-textGrey ">{username}</p>
+            </div>
+          </Link>
 
           {/* Profil description */}
 

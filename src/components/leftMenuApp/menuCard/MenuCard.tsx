@@ -17,7 +17,7 @@ const MenuCard = () => {
 
   // {`/protected/${item.username}`}
   const itemsContentArray = [
-    { icon: lordIconHome, text: "Home", href: "/protected/dashboard" },
+    { icon: lordIconHome, text: "Home", href: "/protected/home" },
     { icon: lordIconSearch, text: "Explore", href: "" },
     { icon: lordIconNotifications, text: "Notifications", href: "" },
     { icon: lordIconMessages, text: "Messages", href: "" },

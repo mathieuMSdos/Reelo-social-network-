@@ -26,9 +26,9 @@ export async function middleware(request: NextRequest) {
 
     // Cas 2: Utilisateur a DÉJÀ complété l'onboarding
     // ET essaie d'accéder à la page d'onboarding
-    // → Redirection vers le dashboard (empêche de refaire l'onboarding)
+    // → Redirection vers la home (empêche de refaire l'onboarding)
     if (hasCompletedOnboarding && request.nextUrl.pathname.startsWith('/protected/onboardingPage')) {
-      return NextResponse.redirect(new URL("/protected/dashboard", request.url));
+      return NextResponse.redirect(new URL("/protected/home", request.url));
     }
   }
 
