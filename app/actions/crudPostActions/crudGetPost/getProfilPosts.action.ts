@@ -2,7 +2,7 @@
 import { userAlreadyLikeThisPost } from "@/lib/utils/validation/like/userAlreadyLikeThisPost";
 import { prisma } from "../../../../prisma";
 
-export const getProfilPosts = async (
+export const getProfilPostsAction = async (
   authorId: string,
   page: number,
   userId: string
@@ -33,13 +33,24 @@ export const getProfilPosts = async (
         const likeStatus = await userAlreadyLikeThisPost(userId, post.id);
         return {
           ...post,
-          userAlreadyLikeThisPost: likeStatus.data.isAlreadyLikeThisPost
+          userAlreadyLikeThisPost: likeStatus.data.isAlreadyLikeThisPost,
         };
       })
     );
 
-    return { posts: postsWithLikeStatus, hasMore }
+    // console.log(JSON.stringify(postsWithLikeStatus, null, 2));
+
+    return {
+      posts: postsWithLikeStatus,
+      hasMore,
+      nextPage: hasMore ? page + 1 : undefined,
+    };
   } catch (error) {
-    console.log(error);
+    console.error("get profile post request", error);
+    return {
+      posts: [],
+      hasMore: false,
+      error: "Failed to fetch posts",
+    };
   }
 };

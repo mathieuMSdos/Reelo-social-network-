@@ -3,10 +3,11 @@
 import { likePostAction } from "@/app/actions/socialActions/likePost/likePost.action";
 import { unlikePostAction } from "@/app/actions/socialActions/likePost/unLikePost.action";
 import { useStore } from "@/lib/store/index.store";
+import { QueryKeyOfFeedContext } from "@/src/contexts/QueryKeyOfFeedContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 interface PostLikeButtonProps {
   authorId: string;
@@ -23,11 +24,17 @@ const PostLikeButton = ({
   likedBy,
   userAlreadyLikeThisPost,
 }: PostLikeButtonProps) => {
+  // STate local
+
   const [isAnimating, setIsAnimating] = useState(false);
-
+  // ZUSTAND
   const userId = useStore((state) => state.userId);
-  const queryClient = useQueryClient();
 
+  // context react
+  const queryKeyContext = useContext(QueryKeyOfFeedContext)
+
+  // TANSTAK initiatialisation du queryclient
+  const queryClient = useQueryClient();
   const { mutate: likeMutation } = useMutation({
     // Fonction qui effectue la mutation côté serveur
     mutationFn: () => likePostAction(userId, idPost, authorId),
@@ -35,13 +42,13 @@ const PostLikeButton = ({
     // Gestion de l'optimistic update
     onMutate: async () => {
       // Annuler les potentielles requêtes déjà en cours
-      await queryClient.cancelQueries({ queryKey: ["posts", authorId] });
+      await queryClient.cancelQueries({ queryKey: queryKeyContext });
 
       // Sauvegarder l'état précédent pour pouvoir revenir en arrière en cas d'erreur
-      const previousData = queryClient.getQueryData(["posts", authorId]);
+      const previousData = queryClient.getQueryData(queryKeyContext);
 
       // Mettre à jour le cache de manière optimiste
-      queryClient.setQueryData(["posts", authorId], (oldData: any) => {
+      queryClient.setQueryData(queryKeyContext, (oldData: any) => {
         if (!oldData?.pages) return oldData;
 
         return {
@@ -71,13 +78,13 @@ const PostLikeButton = ({
     // En cas d'erreur, on revient à l'état précédent
     onError: (error, __, context) => {
       console.log(error);
-      queryClient.setQueryData(["posts", authorId], context?.previousData);
+      queryClient.setQueryData(queryKeyContext, context?.previousData);
     },
 
     // Une fois la mutation terminée (succès ou échec), on rafraîchit les données
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ["posts", authorId],
+        queryKey: queryKeyContext,
         exact: true,
       });
     },
@@ -90,13 +97,13 @@ const PostLikeButton = ({
     // Gestion de l'optimistic update
     onMutate: async () => {
       // Annuler les potentielles requêtes déjà en cours
-      await queryClient.cancelQueries({ queryKey: ["posts", authorId] });
+      await queryClient.cancelQueries({ queryKey: queryKeyContext });
 
       // Sauvegarder l'état précédent pour pouvoir revenir en arrière en cas d'erreur
-      const previousData = queryClient.getQueryData(["posts", authorId]);
+      const previousData = queryClient.getQueryData(queryKeyContext);
 
       // Mettre à jour le cache de manière optimiste
-      queryClient.setQueryData(["posts", authorId], (oldData: any) => {
+      queryClient.setQueryData(queryKeyContext, (oldData: any) => {
         if (!oldData?.pages) return oldData;
 
         return {
@@ -128,19 +135,22 @@ const PostLikeButton = ({
     // En cas d'erreur, on revient à l'état précédent
     onError: (error, __, context) => {
       console.log(error);
-      queryClient.setQueryData(["posts", authorId], context?.previousData);
+      queryClient.setQueryData(queryKeyContext, context?.previousData);
     },
 
     // Une fois la mutation terminée (succès ou échec), on rafraîchit les données
     onSettled: () => {
       queryClient.invalidateQueries({
-        queryKey: ["posts", authorId],
+        queryKey: queryKeyContext,
         exact: true,
       });
     },
   });
 
   const handleClickLikeButton = () => {
+
+
+
     if (authorId === userId) {
       // si userid est l'auteur du post on l'empêche de liker (en front ici mais dans le server action il y a une protection aussi)
       return;
@@ -162,6 +172,7 @@ const PostLikeButton = ({
   return (
     <button
       className="flex gap-1 items-center justify-center"
+      disabled={authorId === userId}
       onClick={() => handleClickLikeButton()}
     >
       <motion.div

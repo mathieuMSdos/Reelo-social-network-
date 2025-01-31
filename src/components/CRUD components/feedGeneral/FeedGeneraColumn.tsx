@@ -1,17 +1,21 @@
-"use client"
+"use client";
+import { getGeneralFeedPostsAction } from "@/app/actions/crudPostActions/crudGetPost/getGeneralFeedPostsAction";
 import { useStore } from "@/lib/store/index.store";
-import React, { useEffect } from "react";
-import SkeletonPost from "../feedProfile/postProfileItem/SkeletonPost";
-import PostProfileItem from "../feedProfile/postProfileItem/PostProfileItem";
-import GenericIcon from "../../UI/lordIcons/GenericIcon";
 import loadingIconLord from "@/src/assets/icons/system-solid-716-spinner-three-dots-hover-trapdoor.json";
+import { QueryKeyOfFeedContext } from "@/src/contexts/QueryKeyOfFeedContext";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-
+import GenericIcon from "../../UI/lordIcons/GenericIcon";
+import PostProfileItem from "../feedProfile/postProfileItem/PostProfileItem";
+import SkeletonPost from "../feedProfile/postProfileItem/SkeletonPost";
 
 const FeedGeneraColumn = () => {
   // zustand state
   const userId = useStore((state) => state.userId);
+
+  // Valeur à passer au context
+  const queryKey = ["posts", userId];
 
   // TANSTACK  query infinite scroll pour le getPost
   const {
@@ -22,9 +26,9 @@ const FeedGeneraColumn = () => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["generalFeed", userId],
+    queryKey: queryKey,
     initialPageParam: 0,
-    queryFn: ({ pageParam }) => getGeneralFeedPosts(userId, pageParam),
+    queryFn: ({ pageParam }) => getGeneralFeedPostsAction(userId, pageParam),
     enabled: !!userId,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (!lastPage?.hasMore) return null;
@@ -46,50 +50,50 @@ const FeedGeneraColumn = () => {
   }, [inView, hasNextPage, fetchNextPage]);
 
   return (
-    <div className="flex flex-col items-center justify-start w-full h-auto min-h-screen gap-1  ">
-      {/* header */}
-      <div className="flex justify-between w-full mb-3">
-        <h3 className="text-left text-xl font-bold text-darkLine ">
-          For you
-        </h3>
+    <QueryKeyOfFeedContext.Provider value={queryKey} >
+      <div className="flex flex-col items-center justify-start w-full h-auto min-h-screen gap-1  ">
+        {/* header */}
+        <div className="flex justify-between w-full mb-3">
+          <h3 className="text-left text-xl font-bold text-darkLine ">
+            For you
+          </h3>
+        </div>
+        <ul className="w-full min-h-screen flex flex-col gap-3 ">
+          {/* afficher autant de skeleton post que ceux qu'on est en trian de fetch */}
+          {status === "pending" && (
+            <>
+              {Array.from({ length: 10 }, (_, index) => {
+                return <SkeletonPost key={index} />;
+              })}
+            </>
+          )}
+          {data &&
+            data.pages.map((page, index) => (
+              <React.Fragment key={index}>
+                {page.posts.map((post) => (
+                  <li key={post.id}>
+                    <PostProfileItem postData={post} />
+                  </li>
+                ))}
+              </React.Fragment>
+            ))}
+        </ul>
+        {/* Obeserver pour délcencher le fetch des nouveaux post et créé l'effet infinite scroll */}
+        <div
+          className="w-full h-20 py-3 px-10 flex justify-center items-center "
+          ref={ref}
+        >
+          {isFetchingNextPage && (
+            <GenericIcon icon={loadingIconLord} loop={true} />
+          )}
+          {!hasNextPage && data?.pages[0]?.posts.length > 0 && (
+            <p className="text-left font-bold text-textGrey">
+              That's all for now!
+            </p>
+          )}
+        </div>
       </div>
-      <ul className="w-full min-h-screen flex flex-col gap-3 ">
-        {/* afficher autant de skeleton post que ceux qu'on est en trian de fetch */}
-        {status === "pending" && (
-          <>
-            {Array.from({ length: 10 }, (_, index) => {
-              return <SkeletonPost key={index} />;
-            })}
-          </>
-        )}
-        {data &&
-          data.pages.map((page, index) => (
-            <React.Fragment key={index}>
-              {page.posts.map((post) => (
-                <li key={post.id}>
-                  <PostProfileItem postData={post} />
-                </li>
-              ))}
-            </React.Fragment>
-          ))}
-      </ul>
-      {/* Obeserver pour délcencher le fetch des nouveaux post et créé l'effet infinite scroll */}
-      {/* <BentoContainer className="w-full mt-3 "> */}
-      <div
-        className="w-full h-20 py-3 px-10 flex justify-center items-center "
-        ref={ref}
-      >
-        {isFetchingNextPage && (
-          <GenericIcon icon={loadingIconLord} loop={true} />
-        )}
-        {!hasNextPage && data?.pages[0]?.posts.length > 0 && (
-          <p className="text-left font-bold text-textGrey">
-            That's all for now!
-          </p>
-        )}
-      </div>
-      {/* </BentoContainer> */}
-    </div>
+    </QueryKeyOfFeedContext.Provider>
   );
 };
 

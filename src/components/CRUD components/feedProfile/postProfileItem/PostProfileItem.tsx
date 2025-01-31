@@ -32,6 +32,7 @@ const PostProfileItem = ({ postData }) => {
     return dateFormat(createdAt);
   }, [createdAt]);
 
+
   return (
     <BentoContainer className="w-full h-fit rounded-xl py-8 px-10  ">
       {/* post header */}
