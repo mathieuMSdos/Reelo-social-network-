@@ -81,13 +81,7 @@ const PostLikeButton = ({
       queryClient.setQueryData(queryKeyContext, context?.previousData);
     },
 
-    // Une fois la mutation terminée (succès ou échec), on rafraîchit les données
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: queryKeyContext,
-        exact: true,
-      });
-    },
+  
   });
 
   const { mutate: unlikeMutation } = useMutation({
@@ -138,17 +132,10 @@ const PostLikeButton = ({
       queryClient.setQueryData(queryKeyContext, context?.previousData);
     },
 
-    // Une fois la mutation terminée (succès ou échec), on rafraîchit les données
-    onSettled: () => {
-      queryClient.invalidateQueries({
-        queryKey: queryKeyContext,
-        exact: true,
-      });
-    },
+
   });
 
   const handleClickLikeButton = () => {
-
 
 
     if (authorId === userId) {

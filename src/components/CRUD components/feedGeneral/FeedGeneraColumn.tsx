@@ -15,7 +15,7 @@ const FeedGeneraColumn = () => {
   const userId = useStore((state) => state.userId);
 
   // Valeur à passer au context
-  const queryKey = ["posts", userId];
+  const queryKey = ["generalFeed", userId];
 
   // TANSTACK  query infinite scroll pour le getPost
   const {
@@ -24,7 +24,7 @@ const FeedGeneraColumn = () => {
     hasNextPage,
     isFetching,
     isFetchingNextPage,
-    status,
+    isPending,
   } = useInfiniteQuery({
     queryKey: queryKey,
     initialPageParam: 0,
@@ -50,7 +50,7 @@ const FeedGeneraColumn = () => {
   }, [inView, hasNextPage, fetchNextPage]);
 
   return (
-    <QueryKeyOfFeedContext.Provider value={queryKey} >
+    <QueryKeyOfFeedContext.Provider value={queryKey}>
       <div className="flex flex-col items-center justify-start w-full h-auto min-h-screen gap-1  ">
         {/* header */}
         <div className="flex justify-between w-full mb-3">
@@ -60,7 +60,7 @@ const FeedGeneraColumn = () => {
         </div>
         <ul className="w-full min-h-screen flex flex-col gap-3 ">
           {/* afficher autant de skeleton post que ceux qu'on est en trian de fetch */}
-          {status === "pending" && (
+          {isPending || isFetching && (
             <>
               {Array.from({ length: 10 }, (_, index) => {
                 return <SkeletonPost key={index} />;

@@ -44,6 +44,8 @@ const FeedProfileColumn = ({
       if (!lastPage?.hasMore) return null;
       return lastPageParam + 1;
     },
+    staleTime: Infinity // pas besoin de recharger ses propres post sauf qu'en l'user publie un post 
+
   });
 
   // Utilisation react-intersection-observer pour gérer le déclenchement des fetch post dans l'infinite scroll
@@ -70,7 +72,7 @@ const FeedProfileColumn = ({
         </div>
         <ul className="w-full min-h-screen flex flex-col gap-3 ">
           {/* afficher autant de skeleton post que ceux qu'on est en trian de fetch */}
-          {isPending && (
+          {isPending || isFetching && (
             <>
               {Array.from({ length: 10 }, (_, index) => {
                 return <SkeletonPost key={index} />;
