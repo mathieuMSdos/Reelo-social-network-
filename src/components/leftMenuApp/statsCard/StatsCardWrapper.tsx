@@ -9,12 +9,12 @@ const StatsCardWrapper = () => {
   return (
     <div className="w-full flex justify-center items-center gap-2">
       <StatsCard
-        className="w-full py-5"
+        className="w-full py-2"
         stats={followedByCount}
         text="Followers"
       />
       <StatsCard
-        className="w-full py-5"
+        className="w-full py-2"
         stats={followingCount}
         text="Following"
       />

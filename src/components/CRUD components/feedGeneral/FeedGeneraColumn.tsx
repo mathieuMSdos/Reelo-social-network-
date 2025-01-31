@@ -1,20 +1,15 @@
-"use client";
+"use client"
 import { useStore } from "@/lib/store/index.store";
+import React, { useEffect } from "react";
+import SkeletonPost from "../feedProfile/postProfileItem/SkeletonPost";
+import PostProfileItem from "../feedProfile/postProfileItem/PostProfileItem";
+import GenericIcon from "../../UI/lordIcons/GenericIcon";
 import loadingIconLord from "@/src/assets/icons/system-solid-716-spinner-three-dots-hover-trapdoor.json";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { getProfilPosts } from "../../../../app/actions/crudPostActions/crudGetPost/getProfilPosts.action";
-import GenericIcon from "../../UI/lordIcons/GenericIcon";
-import PostProfileItem from "./postProfileItem/PostProfileItem";
-import SkeletonPost from "./postProfileItem/SkeletonPost";
 
-interface FeedPostColumnProps {
-  profilId: string;
-  isMyOwnProfile: boolean;
-}
 
-const FeedPostColumn = ({ profilId, isMyOwnProfile }: FeedPostColumnProps) => {
+const FeedGeneraColumn = () => {
   // zustand state
   const userId = useStore((state) => state.userId);
 
@@ -27,9 +22,9 @@ const FeedPostColumn = ({ profilId, isMyOwnProfile }: FeedPostColumnProps) => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["posts", profilId],
+    queryKey: ["generalFeed", userId],
     initialPageParam: 0,
-    queryFn: ({ pageParam }) => getProfilPosts(profilId, pageParam, userId),
+    queryFn: ({ pageParam }) => getGeneralFeedPosts(userId, pageParam),
     enabled: !!userId,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (!lastPage?.hasMore) return null;
@@ -55,7 +50,7 @@ const FeedPostColumn = ({ profilId, isMyOwnProfile }: FeedPostColumnProps) => {
       {/* header */}
       <div className="flex justify-between w-full mb-3">
         <h3 className="text-left text-xl font-bold text-darkLine ">
-          {isMyOwnProfile ? "My Posts" : "Posts"}
+          For you
         </h3>
       </div>
       <ul className="w-full min-h-screen flex flex-col gap-3 ">
@@ -98,4 +93,4 @@ const FeedPostColumn = ({ profilId, isMyOwnProfile }: FeedPostColumnProps) => {
   );
 };
 
-export default FeedPostColumn;
+export default FeedGeneraColumn;
