@@ -34,6 +34,7 @@ const FeedGeneraColumn = () => {
       if (!lastPage?.hasMore) return null;
       return lastPageParam + 1;
     },
+    staleTime: 1 * 60 * 1000, // 5 minutes
   });
 
   // Utilisation react-intersection-observer pour gérer le déclenchement des fetch post dans l'infinite scroll
