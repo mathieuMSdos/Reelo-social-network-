@@ -8,8 +8,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import InputGeneric from "../UI/inputGeneric/InputGeneric";
+import PlasticCardContainer from "../UI/plasticCardContainer/PlasticCardContainer";
 import PrimaryButton from "../UI/primaryButton/PrimaryButton";
-import TertiaryButton from "../UI/tertiaryButton/TertiaryButton";
+import SecondaryButton from "../UI/secondaryButton/SecondaryButton";
 import BasicAlertRules from "./BasicAlertRules";
 
 // TYPE
@@ -111,10 +112,11 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-3 w-2/5 px-6 py-8 border rounded-lg">
-      <h1>STEP 2: Choose your display Name</h1>
-      <h5>This is how others will see you. You can change it anytime.</h5>
+    <PlasticCardContainer className1="" className2="py-8 px-5 gap-1">
+      <h2 className=" font-bold text-xl mb-5 ">Choose your display Name</h2>
+
       <InputGeneric
+        className="w-64 text-lg font-semibold"
         type="text"
         value={inputValue}
         placeholder="Your display name here..."
@@ -129,17 +131,15 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
         textForValidation="Choose a display name between 4 and 30 characters"
         textForInvalidation="Choose a display name between 4 and 30 characters"
       />
-      <div className="flex gap-1">
-        <div className=" w-full flex justify-end items-center">
-          <TertiaryButton text="Previous" onClick={setPreviousStep} />
-          <PrimaryButton
-            text="Continue"
-            onClick={handleSubmit}
-            disabled={!displayNameChosenIsValidated}
-          />
-        </div>
+      <div className="w-full flex justify-center mt-5 gap-5 ">
+        <SecondaryButton text="Previous" onClick={setPreviousStep} />
+        <PrimaryButton
+          text="Continue"
+          onClick={handleSubmit}
+          disabled={!displayNameChosenIsValidated}
+        />
       </div>
-    </div>
+    </PlasticCardContainer>
   );
 };
 

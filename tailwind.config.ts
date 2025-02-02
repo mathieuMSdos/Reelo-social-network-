@@ -24,7 +24,7 @@ export default {
         greySecondaryBtn: "#EFEFF3",
         greyPurple: "#EDECF6",
         skeletonGrey:"#dddce8",
-        textBlack: "#10091A",
+        textBlack: "#2F2F31",
         textGrey: "#64748B"
       },
     },

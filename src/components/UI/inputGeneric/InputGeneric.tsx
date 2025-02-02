@@ -35,7 +35,7 @@ const InputGeneric = ({
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <div className="relative w-full">
+    <div className="relative">
       <input
         className={`bg-greyPurple py-2 px-4 rounded-lg focus:outline-none ${className} `}
         type={type}

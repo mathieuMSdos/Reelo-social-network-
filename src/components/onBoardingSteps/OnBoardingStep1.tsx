@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
 import InputGeneric from "../UI/inputGeneric/InputGeneric";
+import PlasticCardContainer from "../UI/plasticCardContainer/PlasticCardContainer";
 import PrimaryButton from "../UI/primaryButton/PrimaryButton";
 import BasicAlertRules from "./BasicAlertRules";
 
@@ -104,36 +105,37 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
   }, [data, actualUsername, isFetching, rules.isMinAndMaxLength]);
 
   return (
-    <div className="flex flex-col gap-3 w-2/5 px-6 py-8 border rounded-lg">
-      <h1>step 1</h1>
-      <h2>STEP 1: Confirm your username</h2>
-      <InputGeneric
-      className="w-full"
-        type="text"
-        value={inputValue}
-        placeholder={actualUsername}
-        maxLength={20}
-        autoFocus
-        aria-label="username"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          inputControl(e);
-          setDisplayRules(true);
-        }}
-      />
-      {/* info container */}
-      <div>
-        {/* Indication en temps réel */}
-        {displayRules && inputValue.length < 6 ? (
-          <p className="text-red-500">6 characters minimum</p>
-        ) : inputValue.length > 20 ? (
-          <p className="text-red-500">20 characters maximum</p>
-        ) : (
-          ""
-        )}
+    <PlasticCardContainer className1="" className2="py-8 px-5">
+      <div className=" w-full flex flex-col justify-center items-center gap-5 ">
+        <h2 className=" font-bold text-2xl mb-5 ">Confirm your username</h2>
+        <div className="w-full flex justify-center">
+          <InputGeneric
+            className="w-64 text-lg font-semibold"
+            type="text"
+            value={inputValue}
+            placeholder={actualUsername}
+            maxLength={20}
+            autoFocus
+            aria-label="username"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              inputControl(e);
+              setDisplayRules(true);
+            }}
+          />
+        </div>
+        {/* info container */}
+        {/* Indication en temps réel
+          {displayRules && inputValue.length < 6 ? (
+            <p className="text-red-500">6 characters minimum</p>
+          ) : inputValue.length > 20 ? (
+            <p className="text-red-500">20 characters maximum</p>
+          ) : (
+            ""
+          )} */}
 
         {/* Contraintes à respecter pour username */}
         {displayRules && (
-          <div>
+          <div className="flex flex-col">
             <BasicAlertRules
               isValidate={rules.isMinAndMaxLength}
               textForValidation={
@@ -143,11 +145,11 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
                 "Choose a username between 6 and 20 characters"
               }
             />
-            <BasicAlertRules
-              isValidate={rules.isFirstAt}
-              textForInvalidation='Your username must start with "@"'
-              textForValidation='Your username must start with "@"'
-            />
+            {/* <BasicAlertRules
+                isValidate={rules.isFirstAt}
+                textForInvalidation='Your username must start with "@"'
+                textForValidation='Your username must start with "@"'
+              /> */}
 
             <BasicAlertRules
               isValidate={isChosenUsernameValid}
@@ -158,21 +160,21 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
             />
           </div>
         )}
+        <div className="w-full flex justify-center mt-5 ">
+          <PrimaryButton
+            className="w-24"
+            text="Continue"
+            onClick={handleSubmit}
+            disabled={
+              !rules.isFirstAt ||
+              !rules.isMinAndMaxLength ||
+              !isChosenUsernameValid ||
+              isFetching
+            }
+          />
+        </div>
       </div>
-      <div className="flex justify-end items-center">
-        <PrimaryButton
-          className="w-24"
-          text="Continue"
-          onClick={handleSubmit}
-          disabled={
-            !rules.isFirstAt ||
-            !rules.isMinAndMaxLength ||
-            !isChosenUsernameValid ||
-            isFetching
-          }
-        />
-      </div>
-    </div>
+    </PlasticCardContainer>
   );
 };
 
