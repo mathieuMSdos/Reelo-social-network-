@@ -4,6 +4,7 @@ import { useStore } from "@/lib/store/index.store";
 import BentoContainer from "@/src/components/bentoContainer/BentoContainer";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 
 const WhoToFollow = () => {
@@ -15,6 +16,7 @@ const WhoToFollow = () => {
     queryKey: ["whoToFollow"],
     queryFn: async () => suggestUsersAction(userId),
     enabled: !!userId,
+    staleTime: 1 * 60 * 1000, // 1 minute
   });
 
   useEffect(() => {
@@ -26,34 +28,50 @@ const WhoToFollow = () => {
       {/* 3 suggestions */}
       <div>
         <ul>
-          {data &&
+          {isPending ? (
+            <div className="flex flex-col gap-2">
+                <div className="h-12 w-2/3 bg-skeletonGrey rounded-lg animate-pulse"></div>
+                <div className="h-12 w-2/3 bg-skeletonGrey rounded-lg animate-pulse"></div>
+                <div className="h-12 w-2/3 bg-skeletonGrey rounded-lg animate-pulse"></div>
+
+            </div>
+          ) : (
+            data &&
             data.suggestions.map((profileSuggested) => (
-              <li
-                className="w-full hover:bg-greyPurple py-2 px-2 rounded-lg cursor-pointer transition-all duration-150"
-                key={profileSuggested.id}
+              <Link
+                key={profileSuggested.username}
+                href={`/protected/${profileSuggested.username}`}
               >
-                <div className="flex gap-2">
-                  <Image
-                    className="rounded-full"
-                    src={
-                      profileSuggested.image ||
-                      "/default_avatar/default_avatar.png"
-                    }
-                    width={38}
-                    height={38}
-                    alt="profil-picture"
-                  />
-                  <div className="hidden md:flex justify-center flex-col">
-                    <p className="text-sm font-bold">
-                      {profileSuggested.displayName}
-                    </p>
-                    <p className="text-xs text-textGrey">
-                      {profileSuggested.username}
-                    </p>
+                <li
+                  className="w-full hover:bg-greyPurple py-2 px-2 rounded-lg cursor-pointer transition-all duration-150"
+                  key={profileSuggested.id}
+                >
+                  <div className="flex gap-2">
+                    <Image
+                      className="rounded-full"
+                      src={
+                        profileSuggested.image ||
+                        "/default_avatar/default_avatar.png"
+                      }
+                      width={38}
+                      height={38}
+                      alt="profil-picture"
+                    />
+                    <div className="hidden md:flex justify-center flex-col">
+                      <p className="text-sm font-bold">
+                        {profileSuggested.displayName}
+                      </p>
+                      <p className="text-xs text-textGrey">
+                        {profileSuggested.username}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </li>
-            ))}
+                </li>
+
+              </Link>
+              
+            ))
+          )}
         </ul>
       </div>
     </BentoContainer>

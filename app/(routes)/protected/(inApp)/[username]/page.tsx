@@ -64,8 +64,10 @@ const Page = ({ params }: PageParamsType) => {
                   isMyOwnProfile={isMyOwnProfile}
                 />
               </div>
-              <div className="w-full max-w-64 bg-purple-100">
-                <RightMenuApp />
+              <div className="sticky top-0 shrink-0 w-full max-w-72 flex flex-col">
+                <div className="w-full sticky top-0">
+                  <RightMenuApp />
+                </div>
               </div>
             </div>
           )}
