@@ -6,6 +6,7 @@ import GenericIcon from "../UI/lordIcons/GenericIcon";
 
 interface BasicAlertRulesProps {
   isValidate: boolean;
+  textForIsFetching?: string;
   textForValidation: string;
   textForInvalidation: string;
   isFetching?: boolean;
@@ -18,6 +19,7 @@ const BasicAlertRules = ({
   textForInvalidation,
   isFetching: isFetching = false,
   isError = false,
+  textForIsFetching,
 }: BasicAlertRulesProps) => {
   return (
     <div className="flex gap-1">
@@ -28,7 +30,13 @@ const BasicAlertRules = ({
       ) : (
         <CircleX />
       )}
-      <p>{isValidate ? textForValidation : textForInvalidation}</p>
+      <p>
+        {isFetching
+          ? textForIsFetching
+          : isValidate
+          ? textForValidation
+          : textForInvalidation}
+      </p>
     </div>
   );
 };

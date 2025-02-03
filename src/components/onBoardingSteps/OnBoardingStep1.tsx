@@ -5,24 +5,21 @@ import { useStore } from "@/lib/store/index.store";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
+import { motion, AnimatePresence } from "framer-motion";
 import InputGeneric from "../UI/inputGeneric/InputGeneric";
 import PlasticCardContainer from "../UI/plasticCardContainer/PlasticCardContainer";
 import PrimaryButton from "../UI/primaryButton/PrimaryButton";
 import BasicAlertRules from "./BasicAlertRules";
-
-// ---------- TYPE ----------
 
 interface OnBoardingStep1Props {
   actualUsername: string;
 }
 
 const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
-  // ---------- zustand state ----------
   const setNextStep = useStore((state) => state.setNextStep);
   const newUserNameStored = useStore((state) => state.newUserName);
   const setNewUsername = useStore((state) => state.setNewUsername);
 
-  // ---------- const state local ----------
   const [inputValue, setInputValue] = useState(newUserNameStored || "@");
   const [displayRules, setDisplayRules] = useState(false);
   const [rules, setRules] = useState({
@@ -31,12 +28,8 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
     isFirstAt: false,
   });
 
-  // ---------- FUNCTIONS ----------
-
-  // contrôle du champ input
   const inputControl = (e: React.ChangeEvent<HTMLInputElement>) => {
     const noSpaceValue = e.target.value.replace(/\s+/g, "_");
-
     setInputValue(noSpaceValue);
   };
 
@@ -45,13 +38,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
     setNewUsername(inputValue);
   };
 
-  //---------- USE EFFECT----------
-
-  // Proposer le username par defaut à l'utilisateur (la valeur n'est pas dispo dès le montage du composant donc on est obligé de passer par un useEffect pour eéviter que inputValue soit undefined dès le début)
-  // mettre le username choisi qu'on récupère depuis zustand pour conserverles données entre les étapes du formulaire si jamais l'user reviens en arrière de l'étape 2 vers l'étapes 1 on veux l'usernamechoisi en premier
   useEffect(() => {
-    // On check si actualUsername à récupérer son contenu est n'est plus undefined.
-
     if (newUserNameStored) {
       setInputValue(newUserNameStored);
     } else if (actualUsername) {
@@ -59,7 +46,6 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
     }
   }, [actualUsername, newUserNameStored]);
 
-  // vérifie en temps réél si inputValue est conforme aux critères
   useEffect(() => {
     setRules({
       isMinAndMaxLength: inputValue.length >= 6 && inputValue.length <= 20,
@@ -68,46 +54,40 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
     });
   }, [inputValue]);
 
-  // Forcé le @
   useEffect(() => {
     if (inputValue.length <= 1) {
       setInputValue("@");
     }
   }, [inputValue]);
 
-  // --------  TANSTACK --------
-
-  // Debouncing pattern : on vérifie en direct si l'username choisi existe déjà mais on met un système de debounce pour pas surcharger le server en requête + on utilise tanstack aussi pour limiter les requêtes BDD.
   const [debouncedValue] = useDebounce(inputValue, 500);
 
-  const { data, isFetching, isError, error } = useQuery({
+  const { data, isFetching, isError } = useQuery({
     queryKey: ["username", debouncedValue],
     queryFn: () => isUsernameAlreadyExistAction(debouncedValue),
     enabled: rules.isMinAndMaxLength === true,
     refetchOnWindowFocus: false,
   });
 
-  // -------- UseMemo --------
   const isChosenUsernameValid = useMemo(() => {
-    // si le nom d'utilisateur tapé n'existe pas dans la BDD c'est un username valide, si l'username est = à actual username il est donc déjà en BDD mais c'est valide puisque c'est lui même sinon c'est pas valide il doit changer de username
-
-    // Design pattern Optimistic Update, on part du principe que le username ne sera pas déjà pris. LE fait qu'il ne soit pas déjà pris est la règle et le cas qu'il soit déjà pris c'est l'exception.
-
-    // Objectif éviter le saut visuel d'un icon à l'autre le temps que data est undefined pendant la requête prisma
-    if (isFetching && rules.isMinAndMaxLength && rules.isNoEmpty) {
+    if (!rules.isNoEmpty) {
+      return false;
+    }
+  
+    if (isFetching && rules.isMinAndMaxLength) {
       return true;
     }
-
+  
     if (data) {
-      return !data.isExist || data.username === actualUsername;
+      return (!data.isExist || data.username === actualUsername) && rules.isMinAndMaxLength;
     }
     return rules.isMinAndMaxLength;
-  }, [data, actualUsername, isFetching, rules.isMinAndMaxLength]);
+  }, [data, actualUsername, isFetching, rules.isMinAndMaxLength, rules.isNoEmpty]);
 
   return (
     <PlasticCardContainer className1="" className2="py-8 px-5">
-      <div className=" w-full flex flex-col justify-center items-center gap-5 ">
-        <h2 className=" font-bold text-2xl mb-5 ">Confirm your username</h2>
+      <div className="w-full flex flex-col justify-center items-center gap-5">
+        <h2 className="font-bold text-2xl mb-5">Confirm your username</h2>
         <div className="w-full flex justify-center">
           <InputGeneric
             className="w-64 text-lg font-semibold"
@@ -123,44 +103,38 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
             }}
           />
         </div>
-        {/* info container */}
-        {/* Indication en temps réel
-          {displayRules && inputValue.length < 6 ? (
-            <p className="text-red-500">6 characters minimum</p>
-          ) : inputValue.length > 20 ? (
-            <p className="text-red-500">20 characters maximum</p>
-          ) : (
-            ""
-          )} */}
 
-        {/* Contraintes à respecter pour username */}
-        {displayRules && (
-          <div className="flex flex-col gap-1">
-            <BasicAlertRules
-              isValidate={rules.isMinAndMaxLength}
-              textForValidation={
-                "Choose a username between 6 and 20 characters"
-              }
-              textForInvalidation={
-                "Choose a username between 6 and 20 characters"
-              }
-            />
-            {/* <BasicAlertRules
-                isValidate={rules.isFirstAt}
-                textForInvalidation='Your username must start with "@"'
-                textForValidation='Your username must start with "@"'
-              /> */}
+        <AnimatePresence mode="wait">
+          {displayRules && (
+            <motion.div 
+              className="flex flex-col gap-1"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{
+                duration: 0.3,
+                ease: "easeInOut"
+              }}
+            >
+              <BasicAlertRules
+                isValidate={rules.isMinAndMaxLength}
+                textForValidation="Choose a username between 6 and 20 characters"
+                textForInvalidation="Choose a username between 6 and 20 characters"
+              />
 
-            <BasicAlertRules
-              isValidate={isChosenUsernameValid}
-              textForValidation={"Username is available !"}
-              textForInvalidation={"Change username"}
-              isFetching={isFetching}
-              isError={isError}
-            />
-          </div>
-        )}
-        <div className="w-full flex justify-center mt-5 ">
+              <BasicAlertRules
+                isValidate={isChosenUsernameValid}
+                textForIsFetching="Checking availability..."
+                textForValidation="Username is available !"
+                textForInvalidation="Change username"
+                isFetching={isFetching}
+                isError={isError}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="w-full flex justify-center mt-5">
           <PrimaryButton
             className="w-24"
             text="Continue"

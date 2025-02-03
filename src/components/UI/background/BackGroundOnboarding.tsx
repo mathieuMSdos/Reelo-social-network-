@@ -54,12 +54,7 @@ const BackgroundOnboarding = () => {
                 values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
                 result="goo"
               />
-              <feTurbulence
-                type="fractalNoise"
-                baseFrequency="0.8"
-                numOctaves="3"
-                result="noise"
-              />
+      
               <feBlend in="SourceGraphic" in2="goo" />
             </filter>
           </defs>
