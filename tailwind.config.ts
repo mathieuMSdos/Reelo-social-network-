@@ -23,6 +23,8 @@ export default {
         darkLine: "#261F30",
         greySecondaryBtn: "#EFEFF3",
         greyPurple: "#EDECF6",
+        greyDarkerPurple: "#e4e3ee",
+
         skeletonGrey:"#dddce8",
         textBlack: "#2F2F31",
         textGrey: "#64748B"

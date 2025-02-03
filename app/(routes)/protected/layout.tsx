@@ -1,9 +1,9 @@
 // layoutProtected.tsx
 
 import { auth } from "@/auth";
-import BackGround from "@/src/components/UI/BackGround";
 import ProfileInitializer from "@/src/components/welcomePageNavBar/ProfileInitializer/ProfileInitializer";
 import { redirect } from "next/navigation";
+import BackGroundOnboarding from '../../../src/components/UI/background/BackGroundOnboarding';
 
 const layoutProtected = async ({
   children,
@@ -19,9 +19,9 @@ const layoutProtected = async ({
 
   return (
     <>
-      <div className="flex flex-col gap-2 w-full min-h-screen max-w-screen-xl mx-auto pb-6 text-textBlack bg-backgrounfLight">
+      <div className="flex flex-col gap-2 w-full min-h-screen max-w-screen-xl mx-auto pb-6 text-textBlack bg-transparent">
         <ProfileInitializer session={session} />
-        <BackGround />
+        {/* <BackGroundOnboarding /> */}
 
         {children}
       </div>

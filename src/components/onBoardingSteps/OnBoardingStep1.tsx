@@ -135,7 +135,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
 
         {/* Contraintes à respecter pour username */}
         {displayRules && (
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-1">
             <BasicAlertRules
               isValidate={rules.isMinAndMaxLength}
               textForValidation={
