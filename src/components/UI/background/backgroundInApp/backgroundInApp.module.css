@@ -1,0 +1,51 @@
+.gradientContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  filter: blur(40px);
+  opacity: 0.3;
+}
+
+.gradient1 {
+  position: absolute;
+  width: 90%;
+  height: 70%;
+  left: -133.33px;
+  top: 110%;
+  background: linear-gradient(135deg, #B5ACFF 0%, #A79DFF 40%, #5747C6 100%);
+  transform: rotate(25.22deg);
+  border-radius: 20%;
+}
+
+.gradient2 {
+  position: absolute;
+  width: 100%;
+  height: 60%;
+  left: -30%;
+  top: 100%;
+  background: linear-gradient(45deg, #E19DFF 0%, #d58dff 40%, #A334D6 100%);
+  transform: rotate(121.55deg);
+  border-radius: 20%;
+}
+
+.gradient3 {
+  position: absolute;
+  width: 100%;
+  height: 60%;
+  left: 25%;
+  top: 90%;
+  background: linear-gradient(225deg, #CBA9FF 0%, #BF99FF 40%, #7A3DD6 100%);
+  transform: rotate(51.17deg);
+  border-radius: 50%;
+}
+
+.gradient4 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 60%;
+  top: 138%;
+  background: linear-gradient(315deg, #ABAEFF 0%, #9FA3FF 40%, #4F54D6 100%);
+  transform: rotate(50deg);
+  border-radius: 20%;
+}

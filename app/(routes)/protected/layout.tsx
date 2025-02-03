@@ -3,7 +3,6 @@
 import { auth } from "@/auth";
 import ProfileInitializer from "@/src/components/welcomePageNavBar/ProfileInitializer/ProfileInitializer";
 import { redirect } from "next/navigation";
-import BackGroundOnboarding from '../../../src/components/UI/background/BackGroundOnboarding';
 
 const layoutProtected = async ({
   children,
