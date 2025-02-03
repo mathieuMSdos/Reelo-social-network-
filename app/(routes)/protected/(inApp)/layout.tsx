@@ -22,7 +22,7 @@ const layoutProtected = async ({
 
   return (
     <>
-      <div className="flex flex-col gap-2 w-full min-h-screen max-w-screen-xl mx-auto pb-6 text-textBlack">
+      <div className="flex flex-col gap-5 w-full min-h-screen max-w-screen-xl mx-auto pb-6 text-textBlack mt-3">
         <ProtectedHeaderWrapper />
 
         <div className=" flex gap-20 w-full    ">
@@ -34,7 +34,6 @@ const layoutProtected = async ({
           </aside>
           {/* Contenu dynamique */}
           <div className="flex-1 min-h-screen ">
-            {/* <ProfileInitializer session={session} /> */}
             {children}
           </div>
         </div>

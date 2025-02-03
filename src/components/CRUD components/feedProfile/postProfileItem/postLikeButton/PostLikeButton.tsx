@@ -13,7 +13,7 @@ interface PostLikeButtonProps {
   authorId: string;
   idPost: string;
   likeCount: number;
-  likedBy: { id: string }[];
+  likedBy?: { id: string }[];
   userAlreadyLikeThisPost: boolean;
 }
 

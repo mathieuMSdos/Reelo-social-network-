@@ -32,7 +32,6 @@ const InputSearchProfil = () => {
     enabled: debouncedValue.length > 0,
   });
 
-
   //PREFETCH des données du profilpour limiter le temps de chargement quand on consulte la page profil
   const handleResultClick = (data: UserPublicDataType) => {
     queryClient.prefetchQuery({
@@ -43,9 +42,11 @@ const InputSearchProfil = () => {
 
   return (
     <>
-      <BentoContainer className="w-full p-4 flex flex-col justify-center items-center gap-4 transition-all duration-150">
+      <BentoContainer className="w-full p-4 pb-6 flex flex-col justify-center items-start gap-4 transition-all duration-150 text-darkLine  ">
+        <h3 className="w-full text-lg font-bold text-left ">Explore</h3>
+
         <InputGeneric
-          className="text-textGrey w-full placeholder:translate-x-4 focus:placeholder:translate-x-0  "
+          className="text-textGrey w-full placeholder:translate-x-4 focus:placeholder:translate-x-0   "
           type="text"
           showSearchIcon={true}
           showDeleteIcon={true}
