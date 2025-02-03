@@ -15,7 +15,7 @@ const WathsHappen = () => {
         {itemData.map((item) => (
           <li
             key={item.hashTag}
-            className="flex justify-between items-center w-full hover:bg-greyPurple py-2 px-2 rounded-lg cursor-pointer transition-all duration-150"
+            className="flex justify-between items-center w-full hover:bg-greyPurple py-1 px-2 rounded-lg cursor-pointer transition-all duration-150"
           >
             <div>
               <p className="font-semibold">{item.hashTag}</p>

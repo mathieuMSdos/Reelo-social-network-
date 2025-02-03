@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
+import WrapperFollowUnffolowButton from "./WrapperFollowUnffolowButton";
 
 const WhoToFollow = () => {
   //ZUSTAND
@@ -30,46 +31,50 @@ const WhoToFollow = () => {
         <ul>
           {isPending ? (
             <div className="flex flex-col gap-2">
-                <div className="h-12 w-2/3 bg-skeletonGrey rounded-lg animate-pulse"></div>
-                <div className="h-12 w-2/3 bg-skeletonGrey rounded-lg animate-pulse"></div>
-                <div className="h-12 w-2/3 bg-skeletonGrey rounded-lg animate-pulse"></div>
-
+              <div className="h-12 w-2/3 bg-skeletonGrey rounded-lg animate-pulse"></div>
+              <div className="h-12 w-2/3 bg-skeletonGrey rounded-lg animate-pulse"></div>
+              <div className="h-12 w-2/3 bg-skeletonGrey rounded-lg animate-pulse"></div>
             </div>
           ) : (
             data &&
             data.suggestions.map((profileSuggested) => (
-              <Link
-                key={profileSuggested.username}
-                href={`/protected/${profileSuggested.username}`}
+              <li
+                className="w-full flex justify-between hover:bg-greyPurple py-2 px-2 rounded-lg  transition-all duration-150"
+                key={profileSuggested.id}
               >
-                <li
-                  className="w-full hover:bg-greyPurple py-2 px-2 rounded-lg cursor-pointer transition-all duration-150"
-                  key={profileSuggested.id}
-                >
-                  <div className="flex gap-2">
-                    <Image
-                      className="rounded-full"
-                      src={
-                        profileSuggested.image ||
-                        "/default_avatar/default_avatar.png"
-                      }
-                      width={38}
-                      height={38}
-                      alt="profil-picture"
-                    />
-                    <div className="hidden md:flex justify-center flex-col">
+                <div className="flex gap-2">
+                  <Image
+                    className="rounded-full"
+                    src={
+                      profileSuggested.image ||
+                      "/default_avatar/default_avatar.png"
+                    }
+                    width={38}
+                    height={38}
+                    alt="profil-picture"
+                  />
+
+                  <div className="hidden md:flex justify-center flex-col cursor-pointer">
+                    <Link
+                      key={profileSuggested.username}
+                      href={`/protected/${profileSuggested.username}`}
+                    >
                       <p className="text-sm font-bold">
                         {profileSuggested.displayName}
                       </p>
-                      <p className="text-xs text-textGrey">
-                        {profileSuggested.username}
-                      </p>
-                    </div>
-                  </div>
-                </li>
 
-              </Link>
-              
+                    <p className="text-xs text-textGrey">
+                      {profileSuggested.username}
+                    </p>
+                    </Link>
+
+                  </div>
+                </div>
+                {/* button */}
+                <div>
+                  <WrapperFollowUnffolowButton />
+                </div>
+              </li>
             ))
           )}
         </ul>
