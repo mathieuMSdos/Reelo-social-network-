@@ -5,9 +5,7 @@ import BentoContainer from "@/src/components/bentoContainer/BentoContainer";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import WrapperFollowUnffolowButton from "./WrapperFollowUnffolowButton";
 import SkeletonWhoToFollow from "./SkeletonWhoToFollow";
-import { useEffect } from "react";
 
 const WhoToFollow = () => {
   //ZUSTAND
@@ -21,8 +19,6 @@ const WhoToFollow = () => {
     staleTime: 1 * 60 * 1000, // 1 minute
   });
 
-  
-
   return (
     <BentoContainer className=" flex flex-col w-full p-4 gap-4 text-darkLine">
       <h3 className="text-lg font-bold">Who to follow</h3>
@@ -30,12 +26,11 @@ const WhoToFollow = () => {
       <div>
         <ul>
           {isPending ? (
-            <div className="flex flex-col gap-2">
-             <SkeletonWhoToFollow/>
-             <SkeletonWhoToFollow/>
-             <SkeletonWhoToFollow/>
-              </div>
-
+            <div className="flex flex-col gap-2 px-3">
+              <SkeletonWhoToFollow />
+              <SkeletonWhoToFollow />
+              <SkeletonWhoToFollow />
+            </div>
           ) : (
             data &&
             data.suggestions.map((profileSuggested) => (
@@ -69,12 +64,6 @@ const WhoToFollow = () => {
                       </p>
                     </Link>
                   </div>
-                </div>
-                {/* button */}
-                <div>
-                  <WrapperFollowUnffolowButton
-                    profileSuggested={profileSuggested}
-                  />
                 </div>
               </li>
             ))
