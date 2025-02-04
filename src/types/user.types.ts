@@ -9,7 +9,7 @@ export interface UserType {
   image: string | null;
   username: string | null;
   displayName: string;
-  hasCompletedOnboarding: boolean;
+  hasCompletedOnboarding?: boolean;
   createdAt: Date | null;
   updatedAt: Date | null;
   posts?: Post[];

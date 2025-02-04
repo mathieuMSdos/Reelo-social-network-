@@ -31,6 +31,6 @@ export const userAlreadyLikeThisPost = async (
     }
   } catch (error) {
     console.log(error);
-    throw new Error("error:", error);
+    throw new Error("error:", { cause: error });
   }
 };

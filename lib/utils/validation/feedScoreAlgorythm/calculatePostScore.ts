@@ -4,7 +4,13 @@
  * - La pénalité temporelle est atténuée et plafonnée
  * - Un post avec des likes garde un score positif plus longtemps
  */
-export const calculatePostScore = (post) => {
+
+interface Post {
+  createdAt: Date;
+  likeCount: number;
+}
+
+export const calculatePostScore = (post:Post) => {
   // Calcul de l'âge en heures
   const ageInHours = 
     (new Date().getTime() - new Date(post.createdAt).getTime()) / 

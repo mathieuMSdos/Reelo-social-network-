@@ -124,7 +124,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   events: {
     createUser: async (user) => {
       try {
-        let generatedUsername = await userNameGenerator(user.user.name);
+        let generatedUsername = await userNameGenerator(
+          user.user.name ?? "user"
+        );
 
         let isExistingUserName = await prisma.user.findUnique({
           where: {
@@ -133,7 +135,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         });
 
         while (isExistingUserName) {
-          generatedUsername = await userNameGenerator(user.user.user.name);
+          generatedUsername = await userNameGenerator(user.user.name ?? "user");
           isExistingUserName = await prisma.user.findUnique({
             where: {
               username: generatedUsername,

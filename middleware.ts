@@ -1,5 +1,12 @@
 import { auth } from "@/auth";
 import { NextResponse, type NextRequest } from "next/server";
+import { UserType } from "./src/types/user.types";
+
+declare module 'next-auth' {
+  interface Session {
+    user: UserType;
+  }
+}
 
 export async function middleware(request: NextRequest) {
   // Récupère la session de l'utilisateur (via le token JWT)
@@ -14,7 +21,8 @@ export async function middleware(request: NextRequest) {
 
   // Étape 2: Gestion des utilisateurs connectés
   if (session?.user) {
-    // Récupère le statut d'onboarding depuis la session utilisateur
+    console.log(session.user)
+    // Récupère le statut d'hasCompletedOnboarding depuis la session utilisateur
     const hasCompletedOnboarding = session.user.hasCompletedOnboarding;
     
     // Cas 1: Utilisateur n'a PAS complété l'onboarding
