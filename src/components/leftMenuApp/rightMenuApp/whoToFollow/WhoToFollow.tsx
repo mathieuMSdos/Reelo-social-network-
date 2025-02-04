@@ -1,12 +1,13 @@
 "use client";
-import { suggestUsersAction } from "@/app/actions/whoToFollow/whoToFollow.action";
+import { suggestUsersAction } from "@/app/actions/whoToFollow/suggestUsers.action";
 import { useStore } from "@/lib/store/index.store";
 import BentoContainer from "@/src/components/bentoContainer/BentoContainer";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
 import WrapperFollowUnffolowButton from "./WrapperFollowUnffolowButton";
+import SkeletonWhoToFollow from "./SkeletonWhoToFollow";
+import { useEffect } from "react";
 
 const WhoToFollow = () => {
   //ZUSTAND
@@ -20,9 +21,8 @@ const WhoToFollow = () => {
     staleTime: 1 * 60 * 1000, // 1 minute
   });
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  
+
   return (
     <BentoContainer className=" flex flex-col w-full p-4 gap-4 text-darkLine">
       <h3 className="text-lg font-bold">Who to follow</h3>
@@ -31,10 +31,11 @@ const WhoToFollow = () => {
         <ul>
           {isPending ? (
             <div className="flex flex-col gap-2">
-              <div className="h-12 w-2/3 bg-skeletonGrey rounded-lg animate-pulse"></div>
-              <div className="h-12 w-2/3 bg-skeletonGrey rounded-lg animate-pulse"></div>
-              <div className="h-12 w-2/3 bg-skeletonGrey rounded-lg animate-pulse"></div>
-            </div>
+             <SkeletonWhoToFollow/>
+             <SkeletonWhoToFollow/>
+             <SkeletonWhoToFollow/>
+              </div>
+
           ) : (
             data &&
             data.suggestions.map((profileSuggested) => (
@@ -63,16 +64,17 @@ const WhoToFollow = () => {
                         {profileSuggested.displayName}
                       </p>
 
-                    <p className="text-xs text-textGrey">
-                      {profileSuggested.username}
-                    </p>
+                      <p className="text-xs text-textGrey">
+                        {profileSuggested.username}
+                      </p>
                     </Link>
-
                   </div>
                 </div>
                 {/* button */}
                 <div>
-                  <WrapperFollowUnffolowButton />
+                  <WrapperFollowUnffolowButton
+                    profileSuggested={profileSuggested}
+                  />
                 </div>
               </li>
             ))

@@ -59,7 +59,7 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
         "userProfile",
         profileUsername,
       ]);
-      // ZUSTAND Snaptshort compteur follower zustand
+      // ZUSTAND Snaptshot compteur follower zustand
       const previousFollowingCount = useStore.getState().followingCount;
 
       // Optimistic update

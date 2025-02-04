@@ -1,16 +1,17 @@
 import { prisma } from "@/prisma";
 
 // Type pour la réponse de la fonction
-type GetSuggestUsersToFollowResponse = {
+interface GetSuggestUsersToFollowResponse {
   success: boolean;
   data?: {
     id: string;
     username: string | null;
     displayName: string;
     image: string | null;
+    alreadyFollowed: boolean; // Ajout de cette propriété
   }[];
   error?: string;
-};
+}
 
 /**
  * Récupère 3 suggestions d'utilisateurs à suivre pour un utilisateur donné
@@ -69,12 +70,13 @@ export async function getSuggestUsersToFollow(
       take: 3
     });
 
-    // Formatage de la réponse
+    // Formatage de la réponse avec alreadyFollowed toujours à false
     const formattedUsers = suggestedUsers.map(user => ({
       id: user.id,
       username: user.username,
       displayName: user.displayName,
-      image: user.image
+      image: user.image,
+      alreadyFollowed: false // Comme ce sont des suggestions, c'est toujours false
     }));
 
     return {

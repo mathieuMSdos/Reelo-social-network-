@@ -44,9 +44,7 @@ const Page = ({ params }: PageParamsType) => {
     }
   }, [decodedProfileUsername, myUserName]);
 
-  useEffect(() => {
-    console.log("isPending:", isPending);
-  }, [isPending, decodedProfileUsername]);
+
 
   return (
     <>
