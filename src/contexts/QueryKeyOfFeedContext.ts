@@ -1,3 +1,3 @@
 import { createContext } from "react";
 
-export const QueryKeyOfFeedContext = createContext(null)
+export const QueryKeyOfFeedContext = createContext(["feed"])

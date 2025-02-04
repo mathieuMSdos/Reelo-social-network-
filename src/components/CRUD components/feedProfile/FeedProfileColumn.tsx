@@ -2,6 +2,7 @@
 import { useStore } from "@/lib/store/index.store";
 import loadingIconLord from "@/src/assets/icons/system-solid-716-spinner-three-dots-hover-trapdoor.json";
 import { QueryKeyOfFeedContext } from "@/src/contexts/QueryKeyOfFeedContext";
+import { UserPublicDataType } from "@/src/types/user.types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
@@ -9,7 +10,6 @@ import { getProfilPostsAction } from "../../../../app/actions/crudPostActions/cr
 import GenericIcon from "../../UI/lordIcons/GenericIcon";
 import PostProfileItem from "./postProfileItem/PostProfileItem";
 import SkeletonPost from "./postProfileItem/SkeletonPost";
-import { UserPublicDataType } from "@/src/types/user.types";
 
 interface FeedPostColumnProps {
   profileData: UserPublicDataType & { alreadyFollowed: boolean };
@@ -59,8 +59,7 @@ const FeedProfileColumn = ({
     if (inView && hasNextPage && !isFetching) {
       fetchNextPage();
     }
-    console.log(data);
-  }, [inView, hasNextPage, fetchNextPage, data]);
+  }, [inView, hasNextPage, fetchNextPage, isFetching]);
 
   return (
     <QueryKeyOfFeedContext.Provider value={queryKey}>
@@ -88,14 +87,16 @@ const FeedProfileColumn = ({
               {isMyOwnProfile ? (
                 <>
                   <h2 className="text-xl font-bold mb-2">
-                    You haven't posted anything yet
+                    You haven&apos;t posted anything yet
                   </h2>
-                  <p className="text-sm">When you post, it'll show up here.</p>
+                  <p className="text-sm">
+                    When you post, it&apos;ll show up here.
+                  </p>
                 </>
               ) : (
                 <>
                   <h2 className="text-xl font-bold mb-2">
-                    @{profileData.displayName} hasn't posted
+                    @{profileData.displayName} hasn&apos;t posted
                   </h2>
                   <p className="text-sm">
                     When they do, their posts will show up here.
@@ -124,9 +125,9 @@ const FeedProfileColumn = ({
           {isFetchingNextPage && (
             <GenericIcon icon={loadingIconLord} loop={true} />
           )}
-          {!hasNextPage && data?.pages[0]?.posts.length > 0 && (
+          {!hasNextPage && data && data?.pages[0]?.posts?.length > 0 && (
             <p className="text-left font-bold text-textGrey">
-              That's all for now!
+              That&apos;s all for now!
             </p>
           )}
         </div>

@@ -28,7 +28,10 @@ const FeedGeneralColumn = () => {
   } = useInfiniteQuery({
     queryKey: queryKey,
     initialPageParam: 0,
-    queryFn: ({ pageParam }) => getGeneralFeedPostsAction(userId, pageParam),
+    queryFn: ({ pageParam }) => {
+      if (userId) return getGeneralFeedPostsAction(userId, pageParam);
+      throw new Error("UserId is required");
+    },
     enabled: !!userId,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (!lastPage?.hasMore) return null;
@@ -48,7 +51,7 @@ const FeedGeneralColumn = () => {
     if (inView && hasNextPage && !isFetching) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, fetchNextPage]);
+  }, [inView, hasNextPage, fetchNextPage, isFetching]);
 
   return (
     <QueryKeyOfFeedContext.Provider value={queryKey}>
@@ -90,7 +93,7 @@ const FeedGeneralColumn = () => {
           )}
           {!hasNextPage && data?.pages[0]?.posts.length > 0 && (
             <p className="text-left font-bold text-textGrey">
-              That's all for now!
+              That`&apos;`s all for now!
             </p>
           )}
         </div>

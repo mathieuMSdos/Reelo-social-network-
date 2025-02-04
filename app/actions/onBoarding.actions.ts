@@ -60,8 +60,8 @@ export const updateUserAction = async (data: updateUserParams) => {
       user: updateUser,
     };
   } catch (error) {
-    throw new Error(
-      "Erreur lors de la mise à jour de l'utilisateur:" + error.message
-    );
+    throw new Error("Erreur lors de la mise à jour de l'utilisateur", {
+      cause: error,
+    });
   }
 };

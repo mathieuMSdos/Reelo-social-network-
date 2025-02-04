@@ -1,7 +1,6 @@
 "use client";
 import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
-import SecondaryButton from "../UI/secondaryButton/SecondaryButton";
 import SecondaryButtonInApp from '../UI/secondaryButtonInApp/SecondaryButtonInApp';
 
 const SignOutButtonWrapper = () => {

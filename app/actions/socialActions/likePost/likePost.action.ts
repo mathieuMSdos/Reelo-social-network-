@@ -5,7 +5,11 @@ import { userAlreadyLikeThisPost } from "@/lib/utils/validation/like/userAlready
 import { prisma } from "@/prisma";
 import { isTryingToAutoLike } from "../../../../lib/utils/validation/like/isTryingToAutoLike";
 
-export const likePostAction = async (userId, idPost, authorId) => {
+export const likePostAction = async (
+  userId: string,
+  idPost: string,
+  authorId: string
+) => {
   try {
     // on vérifie si l'utilisateur qui veux like existe
     const checkUser = await isUserExist(userId);
@@ -52,6 +56,6 @@ export const likePostAction = async (userId, idPost, authorId) => {
       },
     };
   } catch (error) {
-    throw new Error(`Failed to like post: ${error.message}`);
+    throw new Error("Echec like Post", { cause: error });
   }
 };

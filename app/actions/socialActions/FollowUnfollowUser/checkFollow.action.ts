@@ -9,7 +9,7 @@ export const checkFollowAction = async (
 ) => {
   try {
     const usersCheck = await checkUsersExist(userID, userFollowedID);
-    if (usersCheck.data.existingUsers) {
+    if (usersCheck?.data.existingUsers) {
       return await checkExistingFollow(userID, userFollowedID);
     }
   } catch (error) {

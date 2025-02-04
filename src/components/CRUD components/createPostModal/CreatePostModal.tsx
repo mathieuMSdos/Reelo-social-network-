@@ -27,9 +27,6 @@ const CreatePostModal = () => {
   const setIsCreatePostModalOpen = useStore(
     (state) => state.setIsCreatePostModalOpen
   );
-  // const imageUrl = useStore((state) => state.imageUrl);
-  // const imageId = useStore((state) => state.imageId);
-  // const resetUploadedImage = useStore((state) => state.resetUploadedImage);
 
   // state local
   const [postContent, setPostContent] = useState("");
@@ -45,9 +42,8 @@ const CreatePostModal = () => {
       //Modif du state zustand pour fermer la modal
       setIsCreatePostModalOpen(false);
       // suppression de l'image sur cloudinary
-      await deleteImageOnCloudinary(imageId);
-      //suppression de l'image dans le store zustand
-      // resetUploadedImage();
+      await deleteImageOnCloudinary(imageData.imageId);
+
     }
   };
 
@@ -92,23 +88,23 @@ const CreatePostModal = () => {
 
   // TANSTACK pour l'upload de l'image
 
-  const {
-    mutate: uploadImageMutation,
-    isPending: isPendingUploadImage,
-    error: errorUplaodImage,
-  } = useMutation({
-    mutationFn: async (formData: FormData) => {
-      // on vide le state de l'image au cas ou l'user upload une 2ème fois pour nettoyer la previex image
-      setImageData({ imageUrl: "", imageId: "" });
+  const { mutate: uploadImageMutation, isPending: isPendingUploadImage } =
+    useMutation({
+      mutationFn: async (formData: FormData) => {
+        // on vide le state de l'image au cas ou l'user upload une 2ème fois pour nettoyer la previex image
+        setImageData({ imageUrl: "", imageId: "" });
 
-      // on appel le server action pour pousser l'image vers cloudinary
-      const response = await uploadImageAction(formData);
-      //on stock l'url et l'id de l'image dans le state pour pouvoir faire une preview
-      setImageData({ imageUrl: response.imageUrl, imageId: response.imageId });
-      // on invalide les data post du profil pour déclencher un nouveau fetch
-      queryClient.invalidateQueries({ queryKey: ["posts", userId] });
-    },
-  });
+        // on appel le server action pour pousser l'image vers cloudinary
+        const response = await uploadImageAction(formData);
+        //on stock l'url et l'id de l'image dans le state pour pouvoir faire une preview
+        setImageData({
+          imageUrl: response.imageUrl,
+          imageId: response.imageId,
+        });
+        // on invalide les data post du profil pour déclencher un nouveau fetch
+        queryClient.invalidateQueries({ queryKey: ["posts", userId] });
+      },
+    });
 
   // Controle avant le post (post non vide)
   useEffect(() => {
@@ -198,6 +194,9 @@ const CreatePostModal = () => {
                     <PreviewImageUploaded
                       imageUrl={imageData.imageUrl}
                       imageId={imageData.imageId}
+                      onImageDelete={() =>
+                        setImageData({ imageUrl: "", imageId: "" })
+                      }
                     />
                   </div>
                 )}

@@ -21,7 +21,6 @@ const PostLikeButton = ({
   authorId,
   idPost,
   likeCount,
-  likedBy,
   userAlreadyLikeThisPost,
 }: PostLikeButtonProps) => {
   // STate local
@@ -48,14 +47,14 @@ const PostLikeButton = ({
       const previousData = queryClient.getQueryData(queryKeyContext);
 
       // Mettre à jour le cache de manière optimiste
-      queryClient.setQueryData(queryKeyContext, (oldData: any) => {
+      queryClient.setQueryData(queryKeyContext, (oldData) => {
         if (!oldData?.pages) return oldData;
 
         return {
           ...oldData,
-          pages: oldData.pages.map((page: any) => ({
+          pages: oldData.pages.map((page) => ({
             ...page,
-            posts: page.posts.map((post: any) =>
+            posts: page.posts.map((post) =>
               post.id === idPost
                 ? {
                     ...post,
@@ -97,14 +96,14 @@ const PostLikeButton = ({
       const previousData = queryClient.getQueryData(queryKeyContext);
 
       // Mettre à jour le cache de manière optimiste
-      queryClient.setQueryData(queryKeyContext, (oldData: any) => {
+      queryClient.setQueryData(queryKeyContext, (oldData) => {
         if (!oldData?.pages) return oldData;
 
         return {
           ...oldData,
-          pages: oldData.pages.map((page: any) => ({
+          pages: oldData.pages.map((page) => ({
             ...page,
-            posts: page.posts.map((post: any) =>
+            posts: page.posts.map((post) =>
               post.id === idPost
                 ? {
                     ...post,

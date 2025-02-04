@@ -26,7 +26,7 @@ const InputSearchProfil = () => {
   const [debouncedValue] = useDebounce(inputValue, 500);
 
   // TANSTACK Moteur de recherche d'utilisateur
-  const { data, isFetching, error } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ["searchUser", debouncedValue],
     queryFn: () => searchEngineUsersAction(debouncedValue, userId),
     enabled: debouncedValue.length > 0,

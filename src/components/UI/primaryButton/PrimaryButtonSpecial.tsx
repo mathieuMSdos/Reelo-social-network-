@@ -85,7 +85,6 @@ const PrimaryButtonSpecial: React.FC<PrimaryButtonSpecialProps> = ({ text, onCli
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!buttonRef.current || !containerRef.current) return;
     
-    const containerRect = containerRef.current.getBoundingClientRect();
     const buttonRect = buttonRef.current.getBoundingClientRect();
     
     const buttonX = e.clientX - buttonRect.left;

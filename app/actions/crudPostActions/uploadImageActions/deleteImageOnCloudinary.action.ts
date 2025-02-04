@@ -10,14 +10,14 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const deleteImageOnCloudinary = async (imageId:string) => {
+export const deleteImageOnCloudinary = async (imageId: string) => {
   try {
     await cloudinary.uploader.destroy(imageId);
     return {
       success: true,
-      imageId: imageId
-    }
+      imageId: imageId,
+    };
   } catch (error) {
-    throw new Error("echec", error);
+    throw new Error("failed", { cause: error });
   }
 };

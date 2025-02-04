@@ -4,7 +4,7 @@ import { isUserExist } from "@/lib/utils/validation/generic/isUserExist";
 import { userAlreadyLikeThisPost } from "@/lib/utils/validation/like/userAlreadyLikeThisPost";
 import { prisma } from "@/prisma";
 
-export const unlikePostAction = async (userId, idPost, authorId) => {
+export const unlikePostAction = async (userId: string, idPost: string) => {
   try {
     // on vérifie si l'utilisateur qui veux unlike existe
     const checkUser = await isUserExist(userId);
@@ -12,7 +12,6 @@ export const unlikePostAction = async (userId, idPost, authorId) => {
       console.log(checkUser);
       throw new Error("user doesn't exist");
     }
-
 
     // Un utilisateur ne peux unlike qu'un post qu'il a déjà liké donc on vérifie si il a déjà liké
     const checkAlreadyLikeThisPost = await userAlreadyLikeThisPost(
@@ -45,6 +44,6 @@ export const unlikePostAction = async (userId, idPost, authorId) => {
       },
     };
   } catch (error) {
-    throw new Error(`Failed to unlike post: ${error.message}`);
+    throw new Error(`Failed to unlike post: ${error}`);
   }
 };

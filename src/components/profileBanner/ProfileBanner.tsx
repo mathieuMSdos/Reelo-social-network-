@@ -32,7 +32,6 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
     followingCount: profileFollowingCount,
     id: userFollowedID,
     image: profileImage,
-    name: profileName,
     username: profileUsername,
     alreadyFollowed,
   } = data;
@@ -42,11 +41,7 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
 
   // TANSTACK follow action + optimistic update
 
-  const {
-    mutate: followMutation,
-    isPending: followIsPending,
-    error: followError,
-  } = useMutation({
+  const { mutate: followMutation } = useMutation({
     mutationFn: ({ userId, userFollowedID }: DataFollowType) =>
       followAction(userId, userFollowedID),
     onMutate: async () => {
@@ -110,11 +105,7 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
   });
 
   // TANSTACK Unfollow action
-  const {
-    mutate: unfollowMutation,
-    isPending: unfollowPending,
-    error: unfollowError,
-  } = useMutation({
+  const { mutate: unfollowMutation } = useMutation({
     mutationFn: ({ userId, userFollowedID }: DataFollowType) =>
       unfollowAction(userId, userFollowedID),
     onMutate: async () => {

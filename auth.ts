@@ -75,7 +75,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
     },
 
-    session: async ({ session, token }) => {
+    session: async ({ session, token }:Promise<Session>) => {
       const updatedSession = {
         ...session,
         user: {

@@ -10,7 +10,6 @@ interface BasicAlertRulesProps {
   textForValidation: string;
   textForInvalidation: string;
   isFetching?: boolean;
-  isError?: boolean;
 }
 
 const BasicAlertRules = ({
@@ -18,7 +17,6 @@ const BasicAlertRules = ({
   textForValidation,
   textForInvalidation,
   isFetching: isFetching = false,
-  isError = false,
   textForIsFetching,
 }: BasicAlertRulesProps) => {
   return (

@@ -63,7 +63,7 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
   // Mise à jour du store zustand en fonction de ce qui est tapé
   useEffect(() => {
     setNewDisplayName(inputValue);
-  }, [inputValue]);
+  }, [inputValue, setNewDisplayName]);
 
   // ---------- FUNCTIONS ----------
 
