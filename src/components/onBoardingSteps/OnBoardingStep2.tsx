@@ -32,7 +32,9 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
   const newUserName = useStore((state) => state.newUserName);
   const newDisplayName = useStore((state) => state.newDisplayName);
   const setNewDisplayName = useStore((state) => state.setNewDisplayName);
+  const setNewUserName = useStore((state) => state.setNewUsername);
   const setPreviousStep = useStore((state) => state.setPreviousStep);
+  const setResetStep = useStore((state) => state.setResetStep);
 
   // const state local
   const [inputValue, setInputValue] = useState(newDisplayName || "");
@@ -86,9 +88,12 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
       toast.success("Saved");
       // On déclenche la mise à jour de la session pour récupérer les nouvelles infos qui viennent d'être mis à jour
       await update();
+
       // on refresh hard pour que les composants et l'app se mettent à jour avec les nouvelles données de session. Sans ça certain composant ne se mettrait pas à jour avec les nouvelles données
       router.refresh();
       router.push("/protected/home");
+      
+  
     },
     onError: () => {
       toast.dismiss();

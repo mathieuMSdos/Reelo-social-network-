@@ -10,8 +10,8 @@ export interface UserType {
   username: string | null;
   displayName: string;
   hasCompletedOnboarding: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | null;
+  updatedAt: Date | null;
   posts?: Post[];
   accounts?: Account[];
   sessions?: Session[];

@@ -1,8 +1,8 @@
 import { customAlphabet } from "nanoid";
 
-export const userNameGenerator = async (user) => {
+export const userNameGenerator = async (name: string) => {
   const number = "0123456789";
-  const name = user.user.name
+  const processedName = name
     .replace(/\s+/g, "_") // Remplace un ou plusieurs espaces par un underscore
     .toLowerCase() // Convertir en minuscules pour plus de cohérence
     .slice(0, 6); // Limiter à 6 caractères
@@ -10,5 +10,5 @@ export const userNameGenerator = async (user) => {
 
   // console.log(`@${name}_${uniqueNumbers}`);
 
-  return `@${name}_${uniqueNumbers}`;
+  return `@${processedName}_${uniqueNumbers}`;
 };

@@ -1,11 +1,11 @@
 export interface UserSession  {
-  id: string;
+  id: string | null;
   username: string | null;
   displayName: string | null;
   email: string | null;
   name: string | null;
   image: string | null;
-  hasCompletedOnboarding: boolean;
+  hasCompletedOnboarding: boolean | null;
   followedByCount: number;
   followingCount: number;
 }

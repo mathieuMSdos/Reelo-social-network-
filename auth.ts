@@ -75,12 +75,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
     },
 
-    session: async ({ session, token }:Promise<Session>) => {
+    session: async ({ session, token }) => {
       const updatedSession = {
         ...session,
         user: {
           ...session.user,
-          id: token.id ?? null,
+          id: typeof token.id === "string" ? token.id : undefined,
           username: token.username ?? null,
           displayName: token.displayName ?? null,
           email: token.email ?? null,
@@ -124,7 +124,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   events: {
     createUser: async (user) => {
       try {
-        let generatedUsername = await userNameGenerator(user);
+        let generatedUsername = await userNameGenerator(user.user.name);
 
         let isExistingUserName = await prisma.user.findUnique({
           where: {
@@ -133,7 +133,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         });
 
         while (isExistingUserName) {
-          generatedUsername = await userNameGenerator(user);
+          generatedUsername = await userNameGenerator(user.user.user.name);
           isExistingUserName = await prisma.user.findUnique({
             where: {
               username: generatedUsername,
@@ -141,7 +141,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           });
         }
 
-        const updatedUserName = await prisma.user.update({
+        await prisma.user.update({
           where: {
             id: user.user.id,
           },
@@ -150,9 +150,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           },
         });
 
-        return updatedUserName;
+        // Ne rien retourner ici
       } catch (error) {
-        throw error;
+        console.error("Erreur lors de la création de l'utilisateur:", error);
       }
     },
   },

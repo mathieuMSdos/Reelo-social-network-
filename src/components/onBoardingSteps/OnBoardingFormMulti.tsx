@@ -11,6 +11,7 @@ const OnBoardingFormMulti = () => {
 
   // On récupère la session pour avoir username et display name actuel
   const { data } = useSession();
+  console.log(data)
   const actualUsername = data?.user?.username;
   const userId = data?.user?.id;
 
