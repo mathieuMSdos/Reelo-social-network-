@@ -2,10 +2,12 @@
 import { searchUserInfoProfileAction } from "@/app/actions/searchEngineUser/searchUserInfoProfile.action";
 import { useStore } from "@/lib/store/index.store";
 import FeedProfileColumn from "@/src/components/CRUD components/feedProfile/FeedProfileColumn";
+import SkeletonPost from "@/src/components/CRUD components/feedProfile/postProfileItem/SkeletonPost";
 import RightMenuApp from "@/src/components/leftMenuApp/rightMenuApp/RightMenuApp";
 import ProfileBanner from "@/src/components/profileBanner/ProfileBanner";
 import { useQuery } from "@tanstack/react-query";
 import { use, useEffect, useMemo, useState } from "react";
+import SkeletonProfilBanner from "../../../../../src/components/profileBanner/SkeletonProfilBanner";
 
 interface PageParamsType {
   params: Promise<{
@@ -36,6 +38,7 @@ const Page = ({ params }: PageParamsType) => {
     queryKey: ["userProfile", decodedProfileUsername],
     queryFn: () => searchUserInfoProfileAction(userId, decodedProfileUsername),
     enabled: !!userId, //déclenche le fetch que si userID est true
+    staleTime: 1 * 1000 * 60,
   });
 
   useEffect(() => {
@@ -44,32 +47,32 @@ const Page = ({ params }: PageParamsType) => {
     }
   }, [decodedProfileUsername, myUserName]);
 
-
-
   return (
-    <>
-      {isPending
-        ? "pending"
-        : data && (
-            <div className="w-full flex gap-20 justify-between min-h-screen  ">
-              <div className=" flex flex-col gap-10 w-full min-w-56 max-w-screen-xl ">
-                <ProfileBanner
-                  data={data?.data}
-                  isMyOwnProfile={isMyOwnProfile}
-                />
-                <FeedProfileColumn
-                  profilId={data.data.id}
-                  isMyOwnProfile={isMyOwnProfile}
-                />
-              </div>
-              <div className="sticky top-0 shrink-0 w-full max-w-72 flex flex-col">
-                <div className="w-full sticky top-0">
-                  <RightMenuApp />
-                </div>
-              </div>
-            </div>
-          )}
-    </>
+    <div className="w-full flex gap-20 justify-between min-h-screen  ">
+      <div className=" flex flex-col gap-10 w-full min-w-56 max-w-screen-xl ">
+        {isPending && !data ? (
+          <>
+            <SkeletonProfilBanner />
+            {Array.from({ length: 10 }, (_, index) => {
+              return <SkeletonPost key={index} />;
+            })}
+          </>
+        ) : (
+          <>
+            <ProfileBanner data={data?.data} isMyOwnProfile={isMyOwnProfile} />
+            <FeedProfileColumn
+              profileData={data.data}
+              isMyOwnProfile={isMyOwnProfile}
+            />
+          </>
+        )}
+      </div>
+      <div className="sticky top-0 shrink-0 w-full max-w-72 flex flex-col">
+        <div className="w-full sticky top-0">
+          <RightMenuApp />
+        </div>
+      </div>
+    </div>
   );
 };
 

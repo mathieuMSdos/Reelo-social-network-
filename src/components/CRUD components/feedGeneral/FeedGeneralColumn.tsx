@@ -10,7 +10,7 @@ import GenericIcon from "../../UI/lordIcons/GenericIcon";
 import PostProfileItem from "../feedProfile/postProfileItem/PostProfileItem";
 import SkeletonPost from "../feedProfile/postProfileItem/SkeletonPost";
 
-const FeedGeneraColumn = () => {
+const FeedGeneralColumn = () => {
   // zustand state
   const userId = useStore((state) => state.userId);
 
@@ -61,13 +61,14 @@ const FeedGeneraColumn = () => {
         </div>
         <ul className="w-full min-h-screen flex flex-col gap-3 ">
           {/* afficher autant de skeleton post que ceux qu'on est en trian de fetch */}
-          {isPending || isFetching && (
-            <>
-              {Array.from({ length: 10 }, (_, index) => {
-                return <SkeletonPost key={index} />;
-              })}
-            </>
-          )}
+          {isPending ||
+            (isFetching && (
+              <>
+                {Array.from({ length: 10 }, (_, index) => {
+                  return <SkeletonPost key={index} />;
+                })}
+              </>
+            ))}
           {data &&
             data.pages.map((page, index) => (
               <React.Fragment key={index}>
@@ -98,4 +99,4 @@ const FeedGeneraColumn = () => {
   );
 };
 
-export default FeedGeneraColumn;
+export default FeedGeneralColumn;

@@ -11,22 +11,21 @@ import PostProfileItem from "./postProfileItem/PostProfileItem";
 import SkeletonPost from "./postProfileItem/SkeletonPost";
 
 interface FeedPostColumnProps {
-  profilId: string;
   isMyOwnProfile: boolean;
 }
 
 const FeedProfileColumn = ({
-  profilId,
+  profileData,
   isMyOwnProfile,
 }: FeedPostColumnProps) => {
-  // zustand state
+  // État Zustand
   const userId = useStore((state) => state.userId);
 
-  // CONTEXT : Valeur à passer au context
-  // Ca va nous permettre de rendre la clé dynamique et de la passer au sous composant like button qui doit faire des optimistic update avec le bon nom de clé
-  const queryKey = ["posts", profilId];
+  // CONTEXT : Clé dynamique pour optimistic update
+  const queryKey = ["posts", profileData.username];
 
-  // TANSTACK  query infinite scroll pour le getPost
+  console.log(profileData);
+  // Query infinite scroll
   const {
     data,
     fetchNextPage,
@@ -38,60 +37,84 @@ const FeedProfileColumn = ({
     queryKey: queryKey,
     initialPageParam: 0,
     queryFn: ({ pageParam }) =>
-      getProfilPostsAction(profilId, pageParam, userId),
+      getProfilPostsAction(profileData.id, pageParam, userId),
     enabled: !!userId,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (!lastPage?.hasMore) return null;
       return lastPageParam + 1;
     },
-    staleTime: Infinity // pas besoin de recharger ses propres post sauf qu'en l'user publie un post 
-
+    staleTime: Infinity, // Pas de rechargement sauf nouveau post
   });
 
-  // Utilisation react-intersection-observer pour gérer le déclenchement des fetch post dans l'infinite scroll
+  // Config intersection observer
   const { ref, inView } = useInView({
     threshold: 0,
-    rootMargin: "300px", //permet de déclencher le nextpagefetch  avant d'atteindre l'observer
-    triggerOnce: false, // false car on veut que ça se déclenche plusieurs fois jusqu'à ce qu'il n'y est plus de post
+    rootMargin: "300px", // Déclenche le fetch avant d'atteindre l'observer
+    triggerOnce: false, // Multiple déclenchements jusqu'à fin des posts
   });
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetching) {
       fetchNextPage();
     }
-  }, [inView, hasNextPage, fetchNextPage]);
+    console.log(data);
+  }, [inView, hasNextPage, fetchNextPage, data]);
 
   return (
     <QueryKeyOfFeedContext.Provider value={queryKey}>
       <div className="flex flex-col items-center justify-start w-full h-auto min-h-screen gap-1  ">
-        {/* header */}
+        {/* En-tête */}
         <div className="flex justify-between w-full mb-3">
           <h3 className="text-left text-xl font-bold text-darkLine ">
             {isMyOwnProfile ? "My Posts" : "Posts"}
           </h3>
         </div>
-        <ul className="w-full min-h-screen flex flex-col gap-3 ">
-          {/* afficher autant de skeleton post que ceux qu'on est en trian de fetch */}
-          {isPending || isFetching && (
-            <>
-              {Array.from({ length: 10 }, (_, index) => {
-                return <SkeletonPost key={index} />;
-              })}
-            </>
-          )}
-          {data &&
-            data.pages.map((page, index) => (
-              <React.Fragment key={index}>
-                {page.posts.map((post) => (
-                  <li key={post.id}>
-                    <PostProfileItem postData={post} />
-                  </li>
-                ))}
-              </React.Fragment>
+        <ul className="w-full min-h-screen flex flex-col gap-3">
+          {/* Skeletons pendant le chargement */}
+          {isPending ||
+            (isFetching && (
+              <>
+                {Array.from({ length: 10 }, (_, index) => {
+                  return <SkeletonPost key={index} />;
+                })}
+              </>
             ))}
+
+          {/* États vides */}
+          {!isPending && !isFetching && data?.pages[0]?.posts.length === 0 && (
+            <div className="flex flex-col items-center justify-center w-full mt-10 text-textGrey">
+              {isMyOwnProfile ? (
+                <>
+                  <h2 className="text-xl font-bold mb-2">
+                    You haven't posted anything yet
+                  </h2>
+                  <p className="text-sm">When you post, it'll show up here.</p>
+                </>
+              ) : (
+                <>
+                  <h2 className="text-xl font-bold mb-2">
+                    @{profileData.displayName} hasn't posted
+                  </h2>
+                  <p className="text-sm">
+                    When they do, their posts will show up here.
+                  </p>
+                </>
+              )}
+            </div>
+          )}
+
+          {/* Liste des posts */}
+          {data?.pages.map((page, index) => (
+            <React.Fragment key={index}>
+              {page.posts.map((post) => (
+                <li key={post.id}>
+                  <PostProfileItem postData={post} />
+                </li>
+              ))}
+            </React.Fragment>
+          ))}
         </ul>
-        {/* Obeserver pour délcencher le fetch des nouveaux post et créé l'effet infinite scroll */}
-        {/* <BentoContainer className="w-full mt-3 "> */}
+        {/* Observer infinite scroll */}
         <div
           className="w-full h-20 py-3 px-10 flex justify-center items-center "
           ref={ref}
