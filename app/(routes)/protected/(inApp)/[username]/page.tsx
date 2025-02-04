@@ -5,6 +5,7 @@ import FeedProfileColumn from "@/src/components/CRUD components/feedProfile/Feed
 import SkeletonPost from "@/src/components/CRUD components/feedProfile/postProfileItem/SkeletonPost";
 import RightMenuApp from "@/src/components/leftMenuApp/rightMenuApp/RightMenuApp";
 import ProfileBanner from "@/src/components/profileBanner/ProfileBanner";
+import { UserPublicDataType } from "@/src/types/user.types";
 import { useQuery } from "@tanstack/react-query";
 import { use, useEffect, useMemo, useState } from "react";
 import SkeletonProfilBanner from "../../../../../src/components/profileBanner/SkeletonProfilBanner";
@@ -34,10 +35,14 @@ const Page = ({ params }: PageParamsType) => {
 
   // TANSTACK Récupération du profil de l'utilisateur consulté dans le cache de tanstack
   // on fait une query: si les données sont pas en cache, le fetch aura lieu, si les données ont été prefetch ça récupère le contenu dans le cache pour un affichage rapide
-  const { data, isPending, error } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ["userProfile", decodedProfileUsername],
-    queryFn: () => searchUserInfoProfileAction(userId, decodedProfileUsername),
-    enabled: !!userId, //déclenche le fetch que si userID est true
+    queryFn: () => {
+      if (!userId || !decodedProfileUsername)
+        throw new Error("Required parameters missing");
+      return searchUserInfoProfileAction(userId, decodedProfileUsername);
+    },
+    enabled: !!userId && !!decodedProfileUsername,
     staleTime: 1 * 1000 * 60,
   });
 
@@ -50,7 +55,7 @@ const Page = ({ params }: PageParamsType) => {
   return (
     <div className="w-full flex gap-20 justify-between min-h-screen  ">
       <div className=" flex flex-col gap-10 w-full min-w-56 max-w-screen-xl ">
-        {isPending && !data ? (
+        {isPending ? (
           <>
             <SkeletonProfilBanner />
             {Array.from({ length: 10 }, (_, index) => {
@@ -58,13 +63,22 @@ const Page = ({ params }: PageParamsType) => {
             })}
           </>
         ) : (
-          <>
-            <ProfileBanner data={data?.data} isMyOwnProfile={isMyOwnProfile} />
-            <FeedProfileColumn
-              profileData={data.data}
-              isMyOwnProfile={isMyOwnProfile}
-            />
-          </>
+          data && (
+            <>
+              <ProfileBanner
+                data={
+                  data.data as UserPublicDataType & { alreadyFollowed: boolean }
+                }
+                isMyOwnProfile={isMyOwnProfile}
+              />
+              <FeedProfileColumn
+                profileData={
+                  data.data as UserPublicDataType & { alreadyFollowed: boolean }
+                }
+                isMyOwnProfile={isMyOwnProfile}
+              />
+            </>
+          )
         )}
       </div>
       <div className="sticky top-0 shrink-0 w-full max-w-72 flex flex-col">

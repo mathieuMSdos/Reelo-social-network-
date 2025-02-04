@@ -13,12 +13,12 @@ import BadgeDate from "./BadgeDate";
 
 interface ProfileBannerProps {
   data: UserPublicDataType & { alreadyFollowed: boolean };
+  isMyOwnProfile: boolean;
 }
 
 interface DataFollowType {
   userId: string;
   userFollowedID: string;
-  isMyOwnProfile: boolean;
 }
 
 const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {

@@ -9,8 +9,10 @@ import { getProfilPostsAction } from "../../../../app/actions/crudPostActions/cr
 import GenericIcon from "../../UI/lordIcons/GenericIcon";
 import PostProfileItem from "./postProfileItem/PostProfileItem";
 import SkeletonPost from "./postProfileItem/SkeletonPost";
+import { UserPublicDataType } from "@/src/types/user.types";
 
 interface FeedPostColumnProps {
+  profileData: UserPublicDataType & { alreadyFollowed: boolean };
   isMyOwnProfile: boolean;
 }
 
