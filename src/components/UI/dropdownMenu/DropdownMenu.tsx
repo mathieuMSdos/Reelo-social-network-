@@ -71,7 +71,11 @@ const DropdownMenu = ({ navItems }: DropdownMenuProps) => {
         >
           <motion.ul className="flex flex-col p-4 gap-1 justify-center items-center">
             {navItems.map((item) => (
-              <Link key={item.name} href={item.href} onClick={toggleMenu}>
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => toggleMenu(false)}
+              >
                 <motion.li
                   variants={itemVariants}
                   className="hover:text-purpleLight px-20 py-2 transition-all duration-500"

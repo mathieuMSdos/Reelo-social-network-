@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useDebounce } from "use-debounce";
 import InputGeneric from "../../../UI/inputGeneric/InputGeneric";
 import BentoContainer from "../../../bentoContainer/BentoContainer";
+import { SearchEngineResponse } from "@/src/types/searchEngineResponse";
 
 const InputSearchProfil = () => {
   // TANSTACK init
@@ -26,9 +27,16 @@ const InputSearchProfil = () => {
   const [debouncedValue] = useDebounce(inputValue, 500);
 
   // TANSTACK Moteur de recherche d'utilisateur
-  const { data, isFetching } = useQuery({
+  const { data, isFetching } = useQuery<SearchEngineResponse, Error>({
     queryKey: ["searchUser", debouncedValue],
-    queryFn: () => searchEngineUsersAction(debouncedValue, userId),
+    queryFn: async () => {
+      const result = await searchEngineUsersAction(debouncedValue, userId ?? "");
+      if ('data' in result) {
+        // C'est une erreur
+        throw new Error('Failed to fetch users');
+      }
+      return result;
+    },
     enabled: debouncedValue.length > 0,
   });
 
@@ -36,7 +44,8 @@ const InputSearchProfil = () => {
   const handleResultClick = (data: UserPublicDataType) => {
     queryClient.prefetchQuery({
       queryKey: ["userProfile", data.username],
-      queryFn: () => searchUserInfoProfileAction(userId, data.username),
+      queryFn: () =>
+        searchUserInfoProfileAction(userId ?? "", data.username ?? ""),
     });
   };
 

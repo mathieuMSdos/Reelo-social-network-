@@ -3,9 +3,9 @@
 import { isUsernameAlreadyExistAction } from "@/app/actions/onBoarding.actions";
 import { useStore } from "@/lib/store/index.store";
 import { useQuery } from "@tanstack/react-query";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { motion, AnimatePresence } from "framer-motion";
 import InputGeneric from "../UI/inputGeneric/InputGeneric";
 import PlasticCardContainer from "../UI/plasticCardContainer/PlasticCardContainer";
 import PrimaryButton from "../UI/primaryButton/PrimaryButton";
@@ -20,7 +20,10 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
   const newUserNameStored = useStore((state) => state.newUserName);
   const setNewUsername = useStore((state) => state.setNewUsername);
 
-  const [inputValue, setInputValue] = useState(newUserNameStored || "@");
+  const [inputValue, setInputValue] = useState(
+    newUserNameStored || actualUsername || "@"
+  );
+
   const [displayRules, setDisplayRules] = useState(false);
   const [rules, setRules] = useState({
     isMinAndMaxLength: false,
@@ -39,10 +42,10 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
   };
 
   useEffect(() => {
-    if (newUserNameStored) {
-      setInputValue(newUserNameStored);
-    } else if (actualUsername) {
+    if (actualUsername) {
       setInputValue(actualUsername);
+    } else if (newUserNameStored) {
+      setInputValue(newUserNameStored);
     }
   }, [actualUsername, newUserNameStored]);
 
@@ -62,7 +65,7 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
 
   const [debouncedValue] = useDebounce(inputValue, 500);
 
-  const { data, isFetching, isError } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ["username", debouncedValue],
     queryFn: () => isUsernameAlreadyExistAction(debouncedValue),
     enabled: rules.isMinAndMaxLength === true,
@@ -73,16 +76,25 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
     if (!rules.isNoEmpty) {
       return false;
     }
-  
+
     if (isFetching && rules.isMinAndMaxLength) {
       return true;
     }
-  
+
     if (data) {
-      return (!data.isExist || data.username === actualUsername) && rules.isMinAndMaxLength;
+      return (
+        (!data.isExist || data.username === actualUsername) &&
+        rules.isMinAndMaxLength
+      );
     }
     return rules.isMinAndMaxLength;
-  }, [data, actualUsername, isFetching, rules.isMinAndMaxLength, rules.isNoEmpty]);
+  }, [
+    data,
+    actualUsername,
+    isFetching,
+    rules.isMinAndMaxLength,
+    rules.isNoEmpty,
+  ]);
 
   return (
     <PlasticCardContainer className1="" className2="py-8 px-5">
@@ -106,14 +118,14 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
 
         <AnimatePresence mode="wait">
           {displayRules && (
-            <motion.div 
+            <motion.div
               className="flex flex-col gap-1"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{
                 duration: 0.3,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             >
               <BasicAlertRules
@@ -128,7 +140,6 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
                 textForValidation="Username is available !"
                 textForInvalidation="Change username"
                 isFetching={isFetching}
-                isError={isError}
               />
             </motion.div>
           )}

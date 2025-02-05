@@ -2,7 +2,7 @@
 import { getGeneralFeedPostsAction } from "@/app/actions/crudPostActions/crudGetPost/getGeneralFeedPostsAction";
 import { useStore } from "@/lib/store/index.store";
 import loadingIconLord from "@/src/assets/icons/system-solid-716-spinner-three-dots-hover-trapdoor.json";
-import { QueryKeyOfFeedContext } from "@/src/contexts/QueryKeyOfFeedContext";
+import { QueryKeyOfFeedContext, QueryKeyType } from "@/src/contexts/QueryKeyOfFeedContext";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
@@ -15,7 +15,7 @@ const FeedGeneralColumn = () => {
   const userId = useStore((state) => state.userId);
 
   // Valeur à passer au context
-  const queryKey = ["generalFeed", userId];
+  const queryKey: QueryKeyType = ["generalFeed", userId || '']
 
   // TANSTACK  query infinite scroll pour le getPost
   const {
@@ -91,7 +91,7 @@ const FeedGeneralColumn = () => {
           {isFetchingNextPage && (
             <GenericIcon icon={loadingIconLord} loop={true} />
           )}
-          {!hasNextPage && data?.pages[0]?.posts.length > 0 && (
+          {!hasNextPage && data && data?.pages[0]?.posts.length > 0 && (
             <p className="text-left font-bold text-textGrey">
               That`&apos;`s all for now!
             </p>

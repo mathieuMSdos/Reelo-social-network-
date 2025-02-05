@@ -11,27 +11,25 @@ const OnBoardingFormMulti = () => {
 
   // On récupère la session pour avoir username et display name actuel
   const { data } = useSession();
-  console.log(data)
-  const actualUsername = data?.user?.username;
-  const userId = data?.user?.id;
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
       <div className="w-full justify-items-center -translate-y-14">
-      <Image className=" drop-shadow-lg text-textBlack mb-10"
-        src="/logo/Logo_no_text.png"
-        width={70}
-        height={70}
-        alt="logo"
-      />
-      <div className="w-full flex justify-center">
-      {step === 1 && <OnBoardingStep1 actualUsername={actualUsername} />}
-      {step === 2 && <OnBoardingStep2 userId={userId} />}
+        <Image
+          className="drop-shadow-lg text-textBlack mb-10"
+          src="/logo/Logo_no_text.png"
+          width={70}
+          height={70}
+          alt="logo"
+        />
+        <div className="w-full flex justify-center">
+          {step === 1 && (
+            <OnBoardingStep1 actualUsername={data?.user?.username ?? ""} />
+          )}
+          {step === 2 && <OnBoardingStep2 userId={data?.user?.id ?? ""} />}
+        </div>
       </div>
-    
     </div>
-      </div>
-      
   );
 };
 

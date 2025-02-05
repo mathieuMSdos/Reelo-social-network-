@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import styles from "./backGroundOnboarding.module.css";
 
 const BackgroundOnboarding = () => {
-  const interBubbleRef = useRef(null);
+  const interBubbleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let curX = 0;
@@ -24,7 +24,7 @@ const BackgroundOnboarding = () => {
       requestAnimationFrame(move);
     };
 
-    const handleMouseMove = (event) => {
+    const handleMouseMove = (event: MouseEvent) => {
       tgX = event.clientX;
       tgY = event.clientY;
     };
@@ -54,7 +54,7 @@ const BackgroundOnboarding = () => {
                 values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8"
                 result="goo"
               />
-      
+
               <feBlend in="SourceGraphic" in2="goo" />
             </filter>
           </defs>

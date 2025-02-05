@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-const {KadawaFont} = require
 
 export default {
   content: [

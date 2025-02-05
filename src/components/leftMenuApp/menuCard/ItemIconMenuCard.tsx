@@ -1,8 +1,16 @@
 import GenericIcon from '../../UI/lordIcons/GenericIcon';
 import Link from 'next/link';
- 
 
-const ItemIconMenuCard = ({ href, icon, text, size, isHovered, onHover }) => {
+interface ItemIconMenuCardProps {
+  href: string;
+  icon: unknown;
+  text: string;
+  size: number;
+  isHovered: boolean;
+  onHover: () => void;
+}
+
+const ItemIconMenuCard = ({ href, icon, text, size, isHovered, onHover }: ItemIconMenuCardProps) => {
   return (
     <div 
       className="h-10 w-full" 

@@ -14,7 +14,7 @@ const WhoToFollow = () => {
   // TANSTACK pour récupérer suggestion de personnes à suivre
   const { data, isPending } = useQuery({
     queryKey: ["whoToFollow"],
-    queryFn: async () => suggestUsersAction(userId),
+    queryFn: async () => suggestUsersAction(userId ?? ""),
     enabled: !!userId,
     staleTime: 1 * 60 * 1000, // 1 minute
   });
@@ -33,7 +33,7 @@ const WhoToFollow = () => {
             </div>
           ) : (
             data &&
-            data.suggestions.map((profileSuggested) => (
+            data?.suggestions?.map((profileSuggested) => (
               <li
                 className="w-full flex justify-between hover:bg-greyPurple py-2 px-2 rounded-lg  transition-all duration-150"
                 key={profileSuggested.id}

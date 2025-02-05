@@ -1,5 +1,5 @@
 import { NotebookPen } from "lucide-react";
-import WrapperToggleModal from "../CRUD components/createPostModal/wrapperOpenModalButton/WrapperOpenModalButton";
+import WrapperToggleModal from "../CRUD components/createPostModal/wrapperOpenModalButton/WrapperToggleModal";
 import PrimaryButton from "../UI/primaryButton/PrimaryButton";
 import MenuCard from "./menuCard/MenuCard";
 import ProfilCard from "./profilCard/ProfilCard";

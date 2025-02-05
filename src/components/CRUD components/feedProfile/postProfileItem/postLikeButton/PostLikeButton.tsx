@@ -17,6 +17,17 @@ interface PostLikeButtonProps {
   userAlreadyLikeThisPost: boolean;
 }
 
+interface QueryData {
+  pages: Array<{
+    posts: Array<{
+      id: string;
+      likeCount: number;
+      likedBy: Array<{ id: string }>;
+      userAlreadyLikeThisPost: boolean;
+    }>;
+  }>;
+}
+
 const PostLikeButton = ({
   authorId,
   idPost,
@@ -30,13 +41,13 @@ const PostLikeButton = ({
   const userId = useStore((state) => state.userId);
 
   // context react
-  const queryKeyContext = useContext(QueryKeyOfFeedContext)
+  const queryKeyContext = useContext(QueryKeyOfFeedContext);
 
   // TANSTAK initiatialisation du queryclient
   const queryClient = useQueryClient();
   const { mutate: likeMutation } = useMutation({
     // Fonction qui effectue la mutation côté serveur
-    mutationFn: () => likePostAction(userId, idPost, authorId),
+    mutationFn: () => likePostAction(userId ?? "", idPost, authorId),
 
     // Gestion de l'optimistic update
     onMutate: async () => {
@@ -47,7 +58,7 @@ const PostLikeButton = ({
       const previousData = queryClient.getQueryData(queryKeyContext);
 
       // Mettre à jour le cache de manière optimiste
-      queryClient.setQueryData(queryKeyContext, (oldData) => {
+      queryClient.setQueryData(queryKeyContext, (oldData: QueryData) => {
         if (!oldData?.pages) return oldData;
 
         return {
@@ -79,13 +90,11 @@ const PostLikeButton = ({
       console.log(error);
       queryClient.setQueryData(queryKeyContext, context?.previousData);
     },
-
-  
   });
 
   const { mutate: unlikeMutation } = useMutation({
     // Fonction qui effectue la mutation côté serveur
-    mutationFn: () => unlikePostAction(userId, idPost, authorId),
+    mutationFn: () => unlikePostAction(userId ?? "", idPost),
 
     // Gestion de l'optimistic update
     onMutate: async () => {
@@ -96,7 +105,7 @@ const PostLikeButton = ({
       const previousData = queryClient.getQueryData(queryKeyContext);
 
       // Mettre à jour le cache de manière optimiste
-      queryClient.setQueryData(queryKeyContext, (oldData) => {
+      queryClient.setQueryData(queryKeyContext, (oldData: QueryData) => {
         if (!oldData?.pages) return oldData;
 
         return {
@@ -130,13 +139,9 @@ const PostLikeButton = ({
       console.log(error);
       queryClient.setQueryData(queryKeyContext, context?.previousData);
     },
-
-
   });
 
   const handleClickLikeButton = () => {
-
-
     if (authorId === userId) {
       // si userid est l'auteur du post on l'empêche de liker (en front ici mais dans le server action il y a une protection aussi)
       return;

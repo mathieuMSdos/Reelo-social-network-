@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 
 interface GenericIconProps {
   className?: string
-  icon: string;
+  icon: unknown;
   size?: number;
   colorize?: string;
   loop?: boolean;

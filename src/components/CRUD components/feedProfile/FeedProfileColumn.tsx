@@ -1,7 +1,10 @@
 "use client";
 import { useStore } from "@/lib/store/index.store";
 import loadingIconLord from "@/src/assets/icons/system-solid-716-spinner-three-dots-hover-trapdoor.json";
-import { QueryKeyOfFeedContext } from "@/src/contexts/QueryKeyOfFeedContext";
+import {
+  QueryKeyOfFeedContext,
+  QueryKeyType,
+} from "@/src/contexts/QueryKeyOfFeedContext";
 import { UserPublicDataType } from "@/src/types/user.types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
@@ -24,9 +27,8 @@ const FeedProfileColumn = ({
   const userId = useStore((state) => state.userId);
 
   // CONTEXT : Clé dynamique pour optimistic update
-  const queryKey = ["posts", profileData.username];
+  const queryKey: QueryKeyType = ["posts", profileData.username || ""];
 
-  console.log(profileData);
   // Query infinite scroll
   const {
     data,
@@ -39,7 +41,7 @@ const FeedProfileColumn = ({
     queryKey: queryKey,
     initialPageParam: 0,
     queryFn: ({ pageParam }) =>
-      getProfilPostsAction(profileData.id, pageParam, userId),
+      getProfilPostsAction(profileData.id, pageParam, userId ?? ""),
     enabled: !!userId,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       if (!lastPage?.hasMore) return null;

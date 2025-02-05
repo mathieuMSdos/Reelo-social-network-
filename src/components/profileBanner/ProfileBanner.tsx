@@ -232,7 +232,10 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
       <div className="w-full h-auto  flex justify-start items-center gap-3">
         <BadgeCounter text={"Followers"} counter={profileFollowedByCount} />
         <BadgeCounter text={"Following"} counter={profileFollowingCount} />
-        <BadgeDate text="Joined Retwitter in" date={profileCreatedAt} />
+        <BadgeDate
+          text="Joined Retwitter in"
+          date={profileCreatedAt ?? new Date()}
+        />
       </div>
     </div>
   );

@@ -7,14 +7,36 @@ import { useMemo, useState } from "react";
 import BentoContainer from "../../../bentoContainer/BentoContainer";
 import PostLikeButton from "./postLikeButton/PostLikeButton";
 
-const PostProfileItem = ({ postData }) => {
+interface PostData {
+  author: {
+    id: string;
+    image: string | null;
+    displayName: string;
+    username: string | null;
+  };
+  id: string;
+  content: string;
+  imageUrl?: string | null;
+  createdAt: Date;
+  likeCount: number;
+  userAlreadyLikeThisPost: boolean;
+}
+
+const PostProfileItem = ({ postData }: { postData: PostData }) => {
   const [showMore, setShowMore] = useState(false);
 
   // infos sur l'autheur du post
   const { id: authorId, image, displayName, username } = postData.author;
 
   // infos contenu du post
-  const { id, content, imageUrl, createdAt, likeCount,userAlreadyLikeThisPost } = postData;
+  const {
+    id,
+    content,
+    imageUrl,
+    createdAt,
+    likeCount,
+    userAlreadyLikeThisPost,
+  } = postData;
 
   const truncatedContent = useMemo(() => {
     if (content.length > 120) {
@@ -32,7 +54,6 @@ const PostProfileItem = ({ postData }) => {
     return dateFormat(createdAt);
   }, [createdAt]);
 
-
   return (
     <BentoContainer className="w-full h-fit rounded-xl py-8 px-10  ">
       {/* post header */}
@@ -42,7 +63,7 @@ const PostProfileItem = ({ postData }) => {
           <div className=" flex-shrink-0  ">
             <Image
               className=" rounded-full object-cover"
-              src={image}
+              src={image ?? "/default-avatar.png"}
               width={50}
               height={50}
               alt="profil-picture"

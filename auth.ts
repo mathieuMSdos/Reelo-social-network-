@@ -151,7 +151,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             username: generatedUsername,
           },
         });
-
         // Ne rien retourner ici
       } catch (error) {
         console.error("Erreur lors de la création de l'utilisateur:", error);

@@ -12,7 +12,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
 const MenuCard = () => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const username = useStore((state) => state.username);
 
   // {`/protected/${item.username}`}

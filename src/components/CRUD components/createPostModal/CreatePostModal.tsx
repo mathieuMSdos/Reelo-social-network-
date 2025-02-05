@@ -23,6 +23,7 @@ import UploadImageButton from "../uploadImageButton/UploadImageButton";
 const CreatePostModal = () => {
   // STORE ZUSTAND
   const userId = useStore((state) => state.userId);
+  const username = useStore((state) => state.username); // Ajoutez cette ligne
   const profilImage = useStore((state) => state.image);
   const setIsCreatePostModalOpen = useStore(
     (state) => state.setIsCreatePostModalOpen
@@ -63,7 +64,7 @@ const CreatePostModal = () => {
       setImageData({ imageUrl: "", imageId: "" });
 
       // déclenché un refetch du feed post de l'utilisateur dans sa sectino profil
-      queryClient.invalidateQueries({ queryKey: ["posts", userId] });
+      queryClient.invalidateQueries({ queryKey: ["posts", username] });
     },
     onError: () => {
       toast.dismiss();
@@ -102,7 +103,7 @@ const CreatePostModal = () => {
           imageId: response.imageId,
         });
         // on invalide les data post du profil pour déclencher un nouveau fetch
-        queryClient.invalidateQueries({ queryKey: ["posts", userId] });
+        queryClient.invalidateQueries({ queryKey: ["posts", username] });
       },
     });
 
