@@ -47,7 +47,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("test CI/CI github action");
 
   return (
     <html lang="en">
