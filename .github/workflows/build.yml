@@ -2,33 +2,34 @@ name: Build Check
 
 on:
   push:
-    branches: ['*']
+    branches: ["*"]
   pull_request:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          
-      # utilisation du cache pour accélérer les builds
+
+      # utiliser le système de cache pour les dépences afin de réduire le temps de build
       - uses: actions/cache@v3
         with:
           path: |
             ${{ github.workspace }}/.next/cache
-            ${{ github.workspace }}/node_modules
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}
-      
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-
+
       - name: Install pnpm
         run: npm install -g pnpm
-      
+
       - name: Install dependencies
         run: pnpm install
-      
+
       - name: Build
         run: pnpm next build
