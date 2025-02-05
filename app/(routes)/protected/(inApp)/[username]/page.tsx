@@ -52,6 +52,7 @@ const Page = ({ params }: PageParamsType) => {
     }
   }, [decodedProfileUsername, myUserName]);
 
+  
   return (
     <div className="w-full flex gap-20 justify-between min-h-screen  ">
       <div className=" flex flex-col gap-10 w-full min-w-56 max-w-screen-xl ">
