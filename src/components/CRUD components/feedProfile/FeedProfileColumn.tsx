@@ -47,8 +47,12 @@ const FeedProfileColumn = ({
       if (!lastPage?.hasMore) return null;
       return lastPageParam + 1;
     },
-    staleTime: Infinity, // Pas de rechargement sauf nouveau post
+    staleTime: 1 * 1000 * 60, // Pas de rechargement sauf nouveau post
   });
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   // Config intersection observer
   const { ref, inView } = useInView({

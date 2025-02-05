@@ -93,7 +93,7 @@ const FeedGeneralColumn = () => {
           )}
           {!hasNextPage && data && data?.pages[0]?.posts.length > 0 && (
             <p className="text-left font-bold text-textGrey">
-              That`&apos;`s all for now!
+              That&apos;s all for now!
             </p>
           )}
         </div>

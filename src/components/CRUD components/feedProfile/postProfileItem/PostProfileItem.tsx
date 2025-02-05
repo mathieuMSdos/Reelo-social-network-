@@ -3,6 +3,7 @@ import { upperFirstLetterOfAString } from "@/lib/utils/scriptJS/upperCaseFirstLe
 import TertiaryButton from "@/src/components/UI/tertiaryButton/TertiaryButton";
 import ThreeDots from "@/src/components/UI/threeDot/ThreeDots";
 import Image from "next/image";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import BentoContainer from "../../../bentoContainer/BentoContainer";
 import PostLikeButton from "./postLikeButton/PostLikeButton";
@@ -73,14 +74,16 @@ const PostProfileItem = ({ postData }: { postData: PostData }) => {
             {/* header du post */}
             <div className=" h-auto w-full flex justify-between items-start">
               <div className="h-auto">
-                <div className="flex justify-start items-center gap-2   ">
-                  <p className="text font-bold">
-                    {upperFirstLetterOfAString(displayName)}
-                  </p>
-                  <span className=" my-1 w-px self-stretch bg-skeletonGrey"></span>
+                <Link key={username} href={`/protected/${username}`}>
+                  <div className="flex justify-start items-center gap-2   ">
+                    <p className="text font-bold">
+                      {upperFirstLetterOfAString(displayName)}
+                    </p>
+                    <span className=" my-1 w-px self-stretch bg-skeletonGrey"></span>
 
-                  <p className="text-xs text-textGrey">{username}</p>
-                </div>
+                    <p className="text-xs text-textGrey">{username}</p>
+                  </div>
+                </Link>
                 <p className="text-xs text-textGrey">{dateOfPost}</p>
               </div>
               <ThreeDots />

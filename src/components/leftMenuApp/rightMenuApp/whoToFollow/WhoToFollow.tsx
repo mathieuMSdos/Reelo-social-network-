@@ -34,27 +34,27 @@ const WhoToFollow = () => {
           ) : (
             data &&
             data?.suggestions?.map((profileSuggested) => (
-              <li
-                className="w-full flex justify-between hover:bg-greyPurple py-2 px-2 rounded-lg  transition-all duration-150"
-                key={profileSuggested.id}
+              <Link
+                key={profileSuggested.username}
+                href={`/protected/${profileSuggested.username}`}
               >
-                <div className="flex gap-2">
-                  <Image
-                    className="rounded-full"
-                    src={
-                      profileSuggested.image ||
-                      "/default_avatar/default_avatar.png"
-                    }
-                    width={38}
-                    height={38}
-                    alt="profil-picture"
-                  />
+                <li
+                  className="w-full flex justify-between hover:bg-greyPurple py-2 px-2 rounded-lg  transition-all duration-150"
+                  key={profileSuggested.id}
+                >
+                  <div className="flex gap-2">
+                    <Image
+                      className="rounded-full"
+                      src={
+                        profileSuggested.image ||
+                        "/default_avatar/default_avatar.png"
+                      }
+                      width={38}
+                      height={38}
+                      alt="profil-picture"
+                    />
 
-                  <div className="hidden md:flex justify-center flex-col cursor-pointer">
-                    <Link
-                      key={profileSuggested.username}
-                      href={`/protected/${profileSuggested.username}`}
-                    >
+                    <div className="hidden md:flex justify-center flex-col cursor-pointer">
                       <p className="text-sm font-bold">
                         {profileSuggested.displayName}
                       </p>
@@ -62,10 +62,10 @@ const WhoToFollow = () => {
                       <p className="text-xs text-textGrey">
                         {profileSuggested.username}
                       </p>
-                    </Link>
+                    </div>
                   </div>
-                </div>
-              </li>
+                </li>
+              </Link>
             ))
           )}
         </ul>

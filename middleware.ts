@@ -21,7 +21,6 @@ export async function middleware(request: NextRequest) {
 
   // Étape 2: Gestion des utilisateurs connectés
   if (session?.user) {
-    console.log(session.user)
     // Récupère le statut d'hasCompletedOnboarding depuis la session utilisateur
     const hasCompletedOnboarding = session.user.hasCompletedOnboarding;
     
