@@ -14,7 +14,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
 
       # utiliser le système de cache pour les dépences afin de réduire le temps de build
       - uses: actions/cache@v3

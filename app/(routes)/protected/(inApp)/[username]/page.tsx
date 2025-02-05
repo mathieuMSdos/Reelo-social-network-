@@ -63,7 +63,7 @@ const Page = ({ params }: PageParamsType) => {
             })}
           </>
         ) : (
-          data && (
+          !isPending && data?.data &&(
             <>
               <ProfileBanner
                 data={
