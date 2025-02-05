@@ -18,13 +18,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'pnpm'
-
-      - name: Install pnpm
-        run: npm install -g pnpm  # Cette étape installe pnpm
+          cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm install --legacy-peer-deps  # Utilisation de npm au lieu de pnpm
 
       - name: Build project
-        run: pnpm next build
+        run: npm run build  # Utilisation de npm pour le build
