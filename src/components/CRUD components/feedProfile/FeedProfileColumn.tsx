@@ -57,7 +57,7 @@ const FeedProfileColumn = ({
   // Config intersection observer
   const { ref, inView } = useInView({
     threshold: 0,
-    rootMargin: "300px", // Déclenche le fetch avant d'atteindre l'observer
+    rootMargin: "100px", // Déclenche le fetch avant d'atteindre l'observer
     triggerOnce: false, // Multiple déclenchements jusqu'à fin des posts
   });
 
@@ -73,7 +73,7 @@ const FeedProfileColumn = ({
         {/* En-tête */}
         <div className="flex justify-between w-full mb-3">
           <h3 className="text-left text-xl font-bold text-darkLine ">
-            {isMyOwnProfile ? "My Posts" : "Posts"}
+            {isMyOwnProfile ? "Your Posts" : "Posts"}
           </h3>
         </div>
         <ul className="w-full min-h-screen flex flex-col gap-3">

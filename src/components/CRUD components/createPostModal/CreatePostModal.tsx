@@ -132,7 +132,7 @@ const CreatePostModal = () => {
   return (
     // le background gradient etc sera à mettre ici
     <div
-      className="fixed inset-0 w-full min-h-screen flex justify-center items-center bg-white/30 backdrop-blur-sm text-textBlack "
+      className="fixed inset-0 w-full min-h-screen flex justify-center items-center bg-white/30 backdrop-blur-md text-textBlack "
       onClick={handleClickOutsideCloseModal}
     >
       {/* contour */}
