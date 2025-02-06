@@ -17,11 +17,11 @@ const MenuCard = () => {
 
   // {`/protected/${item.username}`}
   const itemsContentArray = [
-    { icon: lordIconHome, text: "Home", href: "/protected/home" },
-    { icon: lordIconSearch, text: "Explore", href: "" },
-    { icon: lordIconNotifications, text: "Notifications", href: "" },
-    { icon: lordIconMessages, text: "Messages", href: "" },
-    { icon: lordIconProfile, text: "Profiles", href: `/protected/${username}` },
+    { icon: lordIconHome, text: "Home", href: "/protected/home", enableSoon: false },
+    { icon: lordIconSearch, text: "Explore", href: "", enableSoon: true },
+    { icon: lordIconNotifications, text: "Notifications", href: "", enableSoon: true },
+    { icon: lordIconMessages, text: "Messages", href: "", enableSoon: true },
+    { icon: lordIconProfile, text: "Profiles", href: `/protected/${username}`, enableSoon: false },
   ];
 
   return (
@@ -63,6 +63,7 @@ const MenuCard = () => {
               href={item.href}
               icon={item.icon}
               text={item.text}
+              enableSoon={item.enableSoon}
               size={30}
               isHovered={hoveredIndex === index}
               onHover={() => setHoveredIndex(index)}
