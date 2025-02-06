@@ -19,7 +19,7 @@ const MenuCard = () => {
   const itemsContentArray = [
     { icon: lordIconHome, text: "Home", href: "/protected/home", enableSoon: false },
     { icon: lordIconSearch, text: "Explore", href: "", enableSoon: true },
-    { icon: lordIconNotifications, text: "Notifications", href: "", enableSoon: true },
+    { icon: lordIconNotifications, text: "Alerts", href: "", enableSoon: true },
     { icon: lordIconMessages, text: "Messages", href: "", enableSoon: true },
     { icon: lordIconProfile, text: "Profiles", href: `/protected/${username}`, enableSoon: false },
   ];

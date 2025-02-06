@@ -62,7 +62,7 @@ const ItemIconMenuCard = ({
       ) : (
         <>
           <div
-            className={`w-full h-full flex justify-start items-center text-textGrey font-semibold gap-1.5 px-4 rounded-lg z-10 relative`}
+            className={`w-full h-full flex justify-start items-center text-textGrey font-semibold gap-1.5 px-4 rounded-lg z-10 relative cursor-default`}
           >
             <GenericIcon
               icon={icon}
