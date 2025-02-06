@@ -35,6 +35,7 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
   const setNewUserName = useStore((state) => state.setNewUsername);
   const setPreviousStep = useStore((state) => state.setPreviousStep);
   const setResetStep = useStore((state) => state.setResetStep);
+  const setNextStep = useStore((state) => state.setNextStep);
 
   // const state local
   const [inputValue, setInputValue] = useState(newDisplayName || "");
@@ -78,10 +79,13 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
 
   // TANSTACK MUTATION
   const { mutate: updateUserMutation, error } = useMutation({
-    mutationFn: (data: UpdateUserData) => updateUserAction(data),
+    mutationFn: async (data: UpdateUserData) => {
+      await updateUserAction(data);
+    },
     onMutate: () => {
       toast.dismiss();
       toast.loading("Saving...");
+      setNextStep();
     },
     onSuccess: async () => {
       toast.dismiss();
@@ -92,14 +96,14 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
       // on refresh hard pour que les composants et l'app se mettent à jour avec les nouvelles données de session. Sans ça certain composant ne se mettrait pas à jour avec les nouvelles données
       router.refresh();
       router.push("/protected/home");
-      // reset du store
+      //ZUSTAND reset
       setNewUserName("");
       setNewDisplayName("");
-      setResetStep();
     },
     onError: () => {
       toast.dismiss();
       toast.error("Failed");
+      setResetStep();
     },
   });
 

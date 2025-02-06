@@ -3,6 +3,7 @@ import { useStore } from "@/lib/store/index.store";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import OnBoardingStep1 from "./OnBoardingStep1";
+import OnboardingStepFinal from "./OnboardingStepFinal";
 import OnBoardingStep2 from "./OnBoardingStep2";
 
 const OnBoardingFormMulti = () => {
@@ -14,19 +15,27 @@ const OnBoardingFormMulti = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
-      <div className="w-full justify-items-center -translate-y-14">
+      <div
+        className={`w-full justify-items-center -translate-y-14 ${
+          step === 3 && "-translate-y-0"
+        }`}
+      >
         <Image
-          className="drop-shadow-lg text-textBlack mb-10"
+          className={`drop-shadow-lg text-textBlack mb-10 ${
+            step === 3 && "mb-4"
+          }`}
           src="/logo/Logo_no_text.png"
           width={70}
           height={70}
           alt="logo"
         />
+
         <div className="w-full flex justify-center">
           {step === 1 && (
             <OnBoardingStep1 actualUsername={data?.user?.username ?? ""} />
           )}
           {step === 2 && <OnBoardingStep2 userId={data?.user?.id ?? ""} />}
+          {step === 3 && <OnboardingStepFinal />}
         </div>
       </div>
     </div>

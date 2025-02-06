@@ -3,6 +3,7 @@ import RightMenuApp from "@/src/components/leftMenuApp/rightMenuApp/RightMenuApp
 
 export default async function Home() {
   // ZUSTAND : on récupère l'username de l'utilisateur connecté
+  
 
   return (
     <div className="relative w-full flex gap-20 justify-between min-h-screen ">
