@@ -42,10 +42,10 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
   };
 
   useEffect(() => {
-    if (actualUsername) {
-      setInputValue(actualUsername);
-    } else if (newUserNameStored) {
+    if (newUserNameStored) {
       setInputValue(newUserNameStored);
+    } else if (actualUsername) {
+      setInputValue(actualUsername);
     }
   }, [actualUsername, newUserNameStored]);
 

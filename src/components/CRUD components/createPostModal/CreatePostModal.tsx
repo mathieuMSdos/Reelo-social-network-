@@ -209,7 +209,7 @@ const CreatePostModal = () => {
             <PrimaryButton
               className=" font-semibold"
               text="Post"
-              disabled={isPending || !controlRules.isContent}
+              disabled={isPending || isPendingUploadImage || !controlRules.isContent}
               onClick={() => handleClickPost()}
             >
               <NotebookPen size={15} strokeWidth={2.5} />

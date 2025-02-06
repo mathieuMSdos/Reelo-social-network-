@@ -92,16 +92,14 @@ const OnBoardingStep2 = ({ userId }: OnBoardingStep2Props) => {
       // on refresh hard pour que les composants et l'app se mettent à jour avec les nouvelles données de session. Sans ça certain composant ne se mettrait pas à jour avec les nouvelles données
       router.refresh();
       router.push("/protected/home");
+      // reset du store
+      setNewUserName("");
+      setNewDisplayName("");
+      setResetStep();
     },
     onError: () => {
       toast.dismiss();
       toast.error("Failed");
-    },
-    onSettled: () => {
-      // reset du store
-      setResetStep();
-      setNewUserName("");
-      setNewDisplayName("");
     },
   });
 
