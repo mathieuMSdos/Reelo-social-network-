@@ -22,7 +22,7 @@ const WelcomePageNavBar = () => {
   ];
 
   //USE EFFECT
-  // Fermer le menu dropdown automatiquement si la fenêtre s'alargie au delà de md
+  // Fermer le menu dropdown automatiquement si l²fenêtre s'alargie au delà de md
   useEffect(() => {
     const closeDropDownFunction = () => {
       const currentWidth = window.innerWidth;
@@ -66,9 +66,9 @@ const WelcomePageNavBar = () => {
     <header className="relative flex justify-center items-center px-2  ">
       {/* TRICKS DESIGN cette div ne sert qu'à faire le contour animé qui s'agrandit quand on ouvre le menu mais ne contient rien */}
       <motion.div
-        className="fixed top-2 left-2 right-2 flex w-auto justify-between py-1 px-4 h-12  backdrop-blur-xl border border-darkLine rounded-2xl overflow-hidden bg-gradient-to-b from-backGroundDark/100 to-backGroundDark/70 bgred"
-        initial={{ height: "3rem" }}
-        animate={{ height: isOpen ? "20rem" : "3rem" }}
+        className="fixed top-2 left-2 right-2 flex w-auto justify-between py-1 px-4 h-16  backdrop-blur-xl border border-darkLine rounded-2xl overflow-hidden bg-gradient-to-b from-backGroundDark/100 to-backGroundDark/70"
+        initial={{ height: "4rem" }}
+        animate={{ height: isOpen ? "20rem" : "4rem" }}
         transition={
           isOpen
             ? {
@@ -86,14 +86,14 @@ const WelcomePageNavBar = () => {
         }
       ></motion.div>
       <motion.nav
-        className={` z-40 fixed top-2 left-2 right-2 flex w-auto justify-between items-center py-1 px-4 rounded-2xl overflow-hidden ${
+        className={` h-16 z-40 fixed top-2 left-2 right-2 flex w-auto justify-between items-center py-1 px-4 rounded-2xl overflow-hidden ${
           isOpen ? "overflow-visible" : ""
         } `}
       >
         <Link href="/">
           <Image
-            src="/logo/Logo_Reello_black.png"
-            width={170}
+            src="/logo/reello_white_logo.png"
+            width={120}
             height={50}
             alt="logo"
           />
