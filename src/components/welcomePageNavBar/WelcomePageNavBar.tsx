@@ -92,7 +92,7 @@ const WelcomePageNavBar = () => {
       >
         <Link href="/">
           <Image
-            src="/logo/Logo_Retwitter.png"
+            src="/logo/Logo_Reello_black.png"
             width={170}
             height={50}
             alt="logo"

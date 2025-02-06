@@ -233,7 +233,7 @@ const ProfileBanner = ({ data, isMyOwnProfile }: ProfileBannerProps) => {
         <BadgeCounter text={"Followers"} counter={profileFollowedByCount} />
         <BadgeCounter text={"Following"} counter={profileFollowingCount} />
         <BadgeDate
-          text="Joined Retwitter in"
+          text="Joined reello in"
           date={profileCreatedAt ?? new Date()}
         />
       </div>

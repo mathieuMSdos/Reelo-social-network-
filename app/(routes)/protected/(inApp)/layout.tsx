@@ -3,7 +3,7 @@
 import { auth } from "@/auth";
 import WrapperShowModal from "@/src/components/CRUD components/createPostModal/wrapperShowModal/WrapperShowModal";
 import LeftMenuApp from "@/src/components/leftMenuApp/LeftMenuApp";
-import ProtectedHeaderWrapper from "@/src/components/protectedHeader/ProtectedHeaderWrapper";
+import ProtectedHeader from "@/src/components/protectedHeader/ProtectedHeader";
 import BackgroundInApp from "@/src/components/UI/background/backgroundInApp/BackgroundInApp";
 import ProfileInitializer from "@/src/components/welcomePageNavBar/ProfileInitializer/ProfileInitializer";
 import { redirect } from "next/navigation";
@@ -23,7 +23,7 @@ const layoutProtected = async ({
   return (
     <>
       <div className="flex flex-col gap-5 w-full min-h-screen max-w-screen-xl mx-auto pb-6 text-textBlack mt-3">
-        <ProtectedHeaderWrapper />
+        <ProtectedHeader />
 
         <div className=" flex gap-20 w-full    ">
           <ProfileInitializer session={session} />

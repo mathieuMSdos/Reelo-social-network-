@@ -60,21 +60,26 @@ const PostProfileItem = ({ postData }: { postData: PostData }) => {
       {/* post header */}
       <div className="flex flex-col justify-start gap-10 ">
         {/* profile photo */}
-        <div className="flex gap-3 items-center">
-          <div className=" flex-shrink-0  ">
-            <Image
-              className=" rounded-full object-cover"
-              src={image ?? "/default-avatar.png"}
-              width={50}
-              height={50}
-              alt="profil-picture"
-            />
-          </div>
-          <div className=" h-auto w-full flex flex-col gap-3  ">
-            {/* header du post */}
-            <div className=" h-auto w-full flex justify-between items-start">
-              <div className="h-auto">
-                <Link key={username} href={`/protected/${username}`}>
+          <div className="flex gap-3 items-center">
+              <Link key={username} href={`/protected/${username}`}>
+            <div className=" flex-shrink-0  ">
+              <Image
+                className=" rounded-full object-cover"
+                src={image ?? "/default-avatar.png"}
+                width={50}
+                height={50}
+                alt="profil-picture"
+              />
+
+            </div>
+                      </Link>
+
+            <div className=" h-auto w-full flex flex-col gap-3  ">
+              {/* header du post */}
+
+              <div className=" h-auto w-full flex justify-between items-start">
+                <div className="h-auto">
+                    <Link key={username} href={`/protected/${username}`}>
                   <div className="flex justify-start items-center gap-2   ">
                     <p className="text font-bold">
                       {upperFirstLetterOfAString(displayName)}
@@ -83,13 +88,14 @@ const PostProfileItem = ({ postData }: { postData: PostData }) => {
 
                     <p className="text-xs text-textGrey">{username}</p>
                   </div>
-                </Link>
-                <p className="text-xs text-textGrey">{dateOfPost}</p>
+                  </Link>
+                  <p className="text-xs text-textGrey">{dateOfPost}</p>
+                </div>
+                <ThreeDots />
               </div>
-              <ThreeDots />
             </div>
           </div>
-        </div>
+
         {/* contenu du post */}
         <div>
           <div className="h-auto w-full bgyel">

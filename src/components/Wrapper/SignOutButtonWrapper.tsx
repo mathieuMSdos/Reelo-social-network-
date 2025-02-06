@@ -1,4 +1,3 @@
-"use client";
 import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 import SecondaryButtonInApp from '../UI/secondaryButtonInApp/SecondaryButtonInApp';
