@@ -19,7 +19,7 @@ interface Hero7Props {
 }
 
 const Hero7 = ({
-  heading = "Share Authentic Moments in a World of Filters",
+  heading = "Transform Your Social Presence into a Connection Magnet",
   description = "Jump into a beautifully designed social experience where sharing feels natural, connecting is instant, and every interaction flows seamlessly through our lightning-fast, minimalist interface",
 
   reviews = {
@@ -49,21 +49,21 @@ const Hero7 = ({
   },
 }: Hero7Props) => {
   return (
-    <section className=" mt-14 py-32">
+    <section className="w-full mt-14 py-32">
       <div className="container text-center">
-        <div className="mx-auto flex max-w-screen-lg flex-col gap-6">
+        <div className="mx-auto flex max-w-screen-lg flex-col gap-10">
           <h1 className="text-3xl font-extrabold lg:text-6xl">{heading}</h1>
           <p className="text-balance text-muted-foreground lg:text-lg">
             {description}
           </p>
         </div>
-        <div className="mt-6">
+        <div className="mt-10">
           <WrapperButtonSpecial
             text="Join Reello Now"
             className="font-semibold text-xl px-6 py-3"
           ></WrapperButtonSpecial>
         </div>
-        <div className="mx-auto mt-10 flex w-fit flex-col items-center gap-4 sm:flex-row">
+        <div className="mx-auto mt-16 flex w-fit flex-col items-center gap-4 sm:flex-row">
           <span className="mx-4 inline-flex items-center -space-x-4">
             {reviews.avatars.map((avatar, index) => (
               <AvatarLp key={index} imgSrc={avatar.src} imgAlt={avatar.alt} />

@@ -13,8 +13,8 @@ const ProtectedHeader = () => {
           <Link className="flex" href="/protected/profil">
             <Image
               className="object-contain bgblu"
-              src="/logo/logo_white_mode.png"
-              width={130}
+              src="/logo/Logo_Reello_black.png"
+              width={120}
               height={50}
               alt="logo-icon"
             />
