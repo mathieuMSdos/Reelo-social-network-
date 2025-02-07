@@ -1,14 +1,9 @@
-import OnBoardingFormMulti from "@/src/components/onBoardingSteps/OnBoardingFormMulti";
-
+import OnBoardingFormMulti from "@/src/myComponents/onBoardingSteps/OnBoardingFormMulti";
 
 const unboardingPage = () => {
-
-  
-
   return (
     <>
-    <OnBoardingFormMulti/>
-
+      <OnBoardingFormMulti />
     </>
   );
 };

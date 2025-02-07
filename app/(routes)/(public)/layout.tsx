@@ -1,4 +1,4 @@
-import WelcomePageNavBar from "@/src/components/welcomePageNavBar/WelcomePageNavBar";
+import WelcomePageNavBar from "@/src/myComponents/welcomePageNavBar/WelcomePageNavBar";
 
 interface layoutProps {
   children: React.ReactNode;

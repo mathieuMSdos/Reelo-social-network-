@@ -4,7 +4,8 @@ import { searchEngineUsersAction } from "@/app/actions/searchEngineUser/searchEn
 import { searchUserInfoProfileAction } from "@/app/actions/searchEngineUser/searchUserInfoProfile.action";
 import { useStore } from "@/lib/store/index.store";
 import loadingIconLord from "@/src/assets/icons/system-solid-716-spinner-three-dots-hover-trapdoor.json";
-import GenericIcon from "@/src/components/UI/lordIcons/GenericIcon";
+import GenericIcon from "@/src/myComponents/UI/lordIcons/GenericIcon";
+import { SearchEngineResponse } from "@/src/types/searchEngineResponse";
 import { UserPublicDataType } from "@/src/types/user.types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
@@ -14,7 +15,6 @@ import { useState } from "react";
 import { useDebounce } from "use-debounce";
 import InputGeneric from "../../../UI/inputGeneric/InputGeneric";
 import BentoContainer from "../../../bentoContainer/BentoContainer";
-import { SearchEngineResponse } from "@/src/types/searchEngineResponse";
 
 const InputSearchProfil = () => {
   // TANSTACK init
@@ -30,10 +30,13 @@ const InputSearchProfil = () => {
   const { data, isFetching } = useQuery<SearchEngineResponse, Error>({
     queryKey: ["searchUser", debouncedValue],
     queryFn: async () => {
-      const result = await searchEngineUsersAction(debouncedValue, userId ?? "");
-      if ('data' in result) {
+      const result = await searchEngineUsersAction(
+        debouncedValue,
+        userId ?? ""
+      );
+      if ("data" in result) {
         // C'est une erreur
-        throw new Error('Failed to fetch users');
+        throw new Error("Failed to fetch users");
       }
       return result;
     },

@@ -1,4 +1,4 @@
-import BentoContainer from "@/src/components/bentoContainer/BentoContainer";
+import BentoContainer from "@/src/myComponents/bentoContainer/BentoContainer";
 import { Ellipsis } from "lucide-react";
 
 const WathsHappen = () => {

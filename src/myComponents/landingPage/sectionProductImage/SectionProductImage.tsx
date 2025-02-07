@@ -9,14 +9,14 @@ const SectionProductImage = () => {
   // Effet horizontal : de gauche à droite
   const xPos = useTransform(
     scrollYProgress,
-    [0, 5],
+    [0, 3],
     ["-10%", "0%"]
   );
 
   // Effet vertical : de haut en bas
   const yPos = useTransform(
     scrollYProgress,
-    [0, 3],
+    [0, 2],
     ["-5%", "5%"]
   );
 

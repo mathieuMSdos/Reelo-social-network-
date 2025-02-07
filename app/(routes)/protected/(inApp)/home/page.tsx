@@ -1,5 +1,5 @@
-import FeedGeneralColumn from "@/src/components/CRUDComponents/feedGeneral/FeedGeneralColumn";
-import RightMenuApp from "@/src/components/leftMenuApp/rightMenuApp/RightMenuApp";
+import FeedGeneralColumn from "@/src/myComponents/CRUDComponents/feedGeneral/FeedGeneralColumn";
+import RightMenuApp from "@/src/myComponents/leftMenuApp/rightMenuApp/RightMenuApp";
 
 export default async function Home() {
   // ZUSTAND : on récupère l'username de l'utilisateur connecté

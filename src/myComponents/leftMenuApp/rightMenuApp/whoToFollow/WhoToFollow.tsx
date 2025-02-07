@@ -1,7 +1,7 @@
 "use client";
 import { suggestUsersAction } from "@/app/actions/whoToFollow/suggestUsers.action";
 import { useStore } from "@/lib/store/index.store";
-import BentoContainer from "@/src/components/bentoContainer/BentoContainer";
+import BentoContainer from "@/src/myComponents/bentoContainer/BentoContainer";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";

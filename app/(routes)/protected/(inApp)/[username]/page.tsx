@@ -1,14 +1,14 @@
 "use client";
 import { searchUserInfoProfileAction } from "@/app/actions/searchEngineUser/searchUserInfoProfile.action";
 import { useStore } from "@/lib/store/index.store";
-import FeedProfileColumn from "@/src/components/CRUDComponents/feedProfile/FeedProfileColumn";
-import SkeletonPost from "@/src/components/CRUDComponents/feedProfile/postProfileItem/SkeletonPost";
-import RightMenuApp from "@/src/components/leftMenuApp/rightMenuApp/RightMenuApp";
-import ProfileBanner from "@/src/components/profileBanner/ProfileBanner";
+import FeedProfileColumn from "@/src/myComponents/CRUDComponents/feedProfile/FeedProfileColumn";
+import SkeletonPost from "@/src/myComponents/CRUDComponents/feedProfile/postProfileItem/SkeletonPost";
+import RightMenuApp from "@/src/myComponents/leftMenuApp/rightMenuApp/RightMenuApp";
+import ProfileBanner from "@/src/myComponents/profileBanner/ProfileBanner";
 import { UserPublicDataType } from "@/src/types/user.types";
 import { useQuery } from "@tanstack/react-query";
 import { use, useEffect, useMemo, useState } from "react";
-import SkeletonProfilBanner from "../../../../../src/components/profileBanner/SkeletonProfilBanner";
+import SkeletonProfilBanner from "../../../../../src/myComponents/profileBanner/SkeletonProfilBanner";
 
 interface PageParamsType {
   params: Promise<{

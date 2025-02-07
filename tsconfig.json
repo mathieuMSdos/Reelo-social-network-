@@ -27,7 +27,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/leftMenuApp/rightMenuApp/inputSearchPorfile"
-, "src/components/profileBanner/BadgeCounter.tsx"  ],
+    "src/myComponents/leftMenuApp/rightMenuApp/inputSearchPorfile",
+    "src/myComponents/profileBanner/BadgeCounter.tsx",
+    "src/myComponents/UI/ProgressScrollEffect"
+  ],
   "exclude": ["node_modules"]
 }

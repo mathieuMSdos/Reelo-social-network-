@@ -1,11 +1,11 @@
 // layoutProtected.tsx
 
 import { auth } from "@/auth";
-import WrapperShowModal from "@/src/components/CRUDComponents/createPostModal/wrapperShowModal/WrapperShowModal";
-import LeftMenuApp from "@/src/components/leftMenuApp/LeftMenuApp";
-import ProtectedHeader from "@/src/components/protectedHeader/ProtectedHeader";
-import BackgroundInApp from "@/src/components/UI/background/backgroundInApp/BackgroundInApp";
-import ProfileInitializer from "@/src/components/welcomePageNavBar/ProfileInitializer/ProfileInitializer";
+import WrapperShowModal from "@/src/myComponents/CRUDComponents/createPostModal/wrapperShowModal/WrapperShowModal";
+import LeftMenuApp from "@/src/myComponents/leftMenuApp/LeftMenuApp";
+import ProtectedHeader from "@/src/myComponents/protectedHeader/ProtectedHeader";
+import BackgroundInApp from "@/src/myComponents/UI/background/backgroundInApp/BackgroundInApp";
+import ProfileInitializer from "@/src/myComponents/welcomePageNavBar/ProfileInitializer/ProfileInitializer";
 import { redirect } from "next/navigation";
 
 const layoutProtected = async ({

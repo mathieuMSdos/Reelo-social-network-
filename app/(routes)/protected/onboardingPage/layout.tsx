@@ -1,6 +1,6 @@
 // layoutProtected.tsx
 
-import BackgroundOnboarding from "@/src/components/UI/background/backGroundOnboarding/BackGroundOnboarding";
+import BackgroundOnboarding from "@/src/myComponents/UI/background/backGroundOnboarding/BackGroundOnboarding";
 
 const layoutOnboarding = async ({
   children,
