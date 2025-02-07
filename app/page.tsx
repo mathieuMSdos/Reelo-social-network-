@@ -7,21 +7,27 @@ import WelcomePageNavBar from "@/src/myComponents/welcomePageNavBar/WelcomePageN
 
 export default function Home() {
   return (
-      <div className="w-full overflow-x-hidden">
-        <WelcomePageNavBar />
-        {/* section hero */}
-        <main className="mx-auto">
-          <div className="flex flex-col">
-            <AuroraBackground>
-              <Hero7 />
-            </AuroraBackground>
-            {/* section image produit */}
-            <div className="w-full px-2"></div>
+    <div className="w-full overflow-x-hidden">
+      <WelcomePageNavBar />
+      {/* section hero */}
+      <main className="mx-auto">
+        <div className="flex flex-col">
+          <AuroraBackground>
+            <Hero7 />
+          </AuroraBackground>
+          {/* section image produit */}
+          <section className="w-full px-2">
             <SectionProductImage />
+          </section>
+
+          <section>
             <LogoBlock />
+          </section>
+          <section className="relative w-full">
             <FeatureCard />
-          </div>
-        </main>
-      </div>
+          </section>
+        </div>
+      </main>
+    </div>
   );
 }

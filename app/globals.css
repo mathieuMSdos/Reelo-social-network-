@@ -12,7 +12,8 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-    --textGrey: "#64748B"
+    --textGrey: #64748B;
+    --backgroundLight: #FAFAFA;
   }
 }
 
