@@ -1,28 +1,41 @@
 "use client";
+
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
 const SectionProductImage = () => {
   const { scrollYProgress } = useScroll();
 
-  // L'image se déplacera plus lentement que le scroll
+  // Effet horizontal : de gauche à droite
+  const xPos = useTransform(
+    scrollYProgress,
+    [0, 5],
+    ["-10%", "0%"]
+  );
+
+  // Effet vertical : de haut en bas
   const yPos = useTransform(
     scrollYProgress,
-    [0, 1],
-    ["0%", "-20%"] // L'image se déplacera de 50% de sa hauteur pendant le scroll
+    [0, 3],
+    ["-5%", "5%"]
   );
 
   return (
-    <div className="min-h-screen">
-      {/* Section avec l'image en parallax */}
-      <div className="relative h-screen overflow-hidden">
-        <motion.div className="absolute inset-0" style={{ y: yPos }}>
+    <div className="relative w-full">
+      <div className="w-full h-[80vh] relative overflow-hidden md:h-screen">
+        <motion.div 
+          className="absolute inset-0 w-[120%]"
+          style={{ 
+            x: xPos,
+            y: yPos,
+          }}
+        >
           <Image
             className="object-cover"
             src="/assetLp/reello_asset_dashboard.webp"
             alt="dashboard"
             fill
-            priority
+            sizes="100vw"
           />
         </motion.div>
       </div>

@@ -49,7 +49,7 @@ const Hero7 = ({
   },
 }: Hero7Props) => {
   return (
-    <section className=" relative w-full py-32 px-2 md:mt-14">
+    <section className=" relative w-full py-32 px-2 md:mt-14 ">
 
 
       <div className=" relative container text-center z-10">
