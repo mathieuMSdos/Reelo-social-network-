@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --background: #ffffff;
   --foreground: #000000;
   --purpleBtn: #8952E0;
-}
+} */
 
 @media (prefers-color-scheme: dark) {
   :root {

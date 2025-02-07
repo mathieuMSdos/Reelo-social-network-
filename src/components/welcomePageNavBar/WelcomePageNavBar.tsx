@@ -63,10 +63,10 @@ const WelcomePageNavBar = () => {
   };
 
   return (
-    <header className="relative flex justify-center items-center px-2 text-darkLine  ">
+    <header className="w-full relative z-40 flex justify-center items-center px-2 md:w-2/3   ">
       {/* TRICKS DESIGN cette div ne sert qu'à faire le contour animé qui s'agrandit quand on ouvre le menu mais ne contient rien */}
       <motion.div
-        className="fixed top-2 left-2 right-2 flex w-auto justify-between py-1 px-4 h-16  backdrop-blur-xl border border-darkLine rounded-2xl overflow-hidden bg-gradient-to-b from-backGroundDark/100 to-backGroundDark/70"
+        className="w-full mx-auto fixed top-2 left-2 right-2 flex justify-between py-1 px-4 h-16 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden bg-gradient-to-br from-transparent to-slate-100/80 shadow-sm md:w-2/3  "
         initial={{ height: "4rem" }}
         animate={{ height: isOpen ? "20rem" : "4rem" }}
         transition={
@@ -86,7 +86,7 @@ const WelcomePageNavBar = () => {
         }
       ></motion.div>
       <motion.nav
-        className={` h-16 z-40 fixed top-2 left-2 right-2 flex w-auto justify-between items-center py-1 px-4 rounded-2xl overflow-hidden ${
+        className={`w-full h-16 mx-auto z-50 fixed top-2 left-2 right-2 flex justify-between items-center py-1 px-4 rounded-2xl overflow-hidden bg-transparent md:w-2/3  ${
           isOpen ? "overflow-visible" : ""
         } `}
       >
@@ -101,7 +101,7 @@ const WelcomePageNavBar = () => {
 
         {/* Mobile menu items */}
         <motion.ul
-          className="md:hidden absolute px-4 flex flex-col -translate-x-4 w-full top-14 gap-5"
+          className="md:hidden absolute px-4 flex flex-col -translate-x-4 w-full top-14 gap-5 font-semibold"
           variants={menuVariants}
           initial="closed"
           animate={isOpen ? "open" : "closed"}
@@ -109,7 +109,7 @@ const WelcomePageNavBar = () => {
           {navItems.map((item) => (
             <Link key={item.name} href={item.href}>
               <motion.li
-                className="relative py-4  transition-all duration-500 border-b border-slate-100/10  "
+                className="relative py-4  transition-all duration-500 border-b border-slate-300 last:border-b-0 text-darkLine/90  "
                 variants={itemVariants}
               >
                 {item.name}
@@ -119,7 +119,7 @@ const WelcomePageNavBar = () => {
         </motion.ul>
 
         {/* desktop menu items */}
-        <ul className="hidden md:flex gap-5 font-semibold  ">
+        <ul className="hidden md:flex gap-5 font-semibold text-darkLine/90  ">
           {navItems.map((item) => (
             <Link key={item.name} href={item.href}>
               <li
@@ -134,11 +134,13 @@ const WelcomePageNavBar = () => {
 
         <div className="flex items-center gap-3 md:gap-4">
           <SecondaryButton
+          className="px-3 py-0 "
             text="Login"
             onClick={async () => await signIn("google")}
           />
 
           <PrimaryButtonSpecial
+          
             text="Sign up"
             onClick={async () => await signIn("google")}
           />

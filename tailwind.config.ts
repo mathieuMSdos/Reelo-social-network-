@@ -43,7 +43,7 @@ const config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         backGroundDark: "#151219",
-        backgrounfLight: "#f8f7fc",
+        backgrounfLight: "#FAFAFA",
         inputLightBG: "#EDECF6",
         purpleLight: "#9E6CEE",
         purpleBtn: "#8952E0",

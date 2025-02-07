@@ -51,7 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` bg-backGroundDark text-slate-100 flex justify-center ${geistSans.variable} ${geistMono.variable} ${interRegular.variable} antialiased`}
+        className={` bg-backgrounfLight text-slate-100 flex justify-center ${geistSans.variable} ${geistMono.variable} ${interRegular.variable} antialiased`}
       >
         <ToastProvider>
           <TanstackProvider>

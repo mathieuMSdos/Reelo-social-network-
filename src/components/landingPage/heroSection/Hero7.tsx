@@ -26,31 +26,33 @@ const Hero7 = ({
     count: 200,
     avatars: [
       {
-        src: "/avatarLp/avatarLp (1).avif",
+        src: "/assetLp/avatarLp/avatarLp (1).avif",
         alt: "Avatar 1",
       },
       {
-        src: "/avatarLp/avatarLp (2).avif",
+        src: "/assetLp/avatarLp/avatarLp (2).avif",
         alt: "Avatar 2",
       },
       {
-        src: "/avatarLp/avatarLp (3).avif",
+        src: "/assetLp/avatarLp/avatarLp (3).avif",
         alt: "Avatar 3",
       },
       {
-        src: "/avatarLp/avatarLp (4).avif",
+        src: "/assetLp/avatarLp/avatarLp (4).avif",
         alt: "Avatar 4",
       },
       {
-        src: "/avatarLp/avatarLp (5).avif",
+        src: "/assetLp/avatarLp/avatarLp (5).avif",
         alt: "Avatar 5",
       },
     ],
   },
 }: Hero7Props) => {
   return (
-    <section className="w-full mt-14 py-32">
-      <div className="container text-center">
+    <section className=" relative w-full py-32 px-2 md:mt-14">
+
+
+      <div className=" relative container text-center z-10">
         <div className="mx-auto flex max-w-screen-lg flex-col gap-10">
           <h1 className="text-3xl font-extrabold lg:text-6xl">{heading}</h1>
           <p className="text-balance text-muted-foreground lg:text-lg">
