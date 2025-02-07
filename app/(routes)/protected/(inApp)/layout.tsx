@@ -1,7 +1,7 @@
 // layoutProtected.tsx
 
 import { auth } from "@/auth";
-import WrapperShowModal from "@/src/components/CRUD components/createPostModal/wrapperShowModal/WrapperShowModal";
+import WrapperShowModal from "@/src/components/CRUDComponents/createPostModal/wrapperShowModal/WrapperShowModal";
 import LeftMenuApp from "@/src/components/leftMenuApp/LeftMenuApp";
 import ProtectedHeader from "@/src/components/protectedHeader/ProtectedHeader";
 import BackgroundInApp from "@/src/components/UI/background/backgroundInApp/BackgroundInApp";
@@ -27,15 +27,13 @@ const layoutProtected = async ({
 
         <div className=" flex gap-20 w-full    ">
           <ProfileInitializer session={session} />
-          <BackgroundInApp/>
+          <BackgroundInApp />
           {/* Menu */}
           <aside className="sticky top-0 shrink-0 h-screen max-w-52">
             <LeftMenuApp />
           </aside>
           {/* Contenu dynamique */}
-          <div className="flex-1 min-h-screen ">
-            {children}
-          </div>
+          <div className="flex-1 min-h-screen ">{children}</div>
         </div>
         <WrapperShowModal />
       </div>

@@ -1,8 +1,8 @@
 "use client";
 import { searchUserInfoProfileAction } from "@/app/actions/searchEngineUser/searchUserInfoProfile.action";
 import { useStore } from "@/lib/store/index.store";
-import FeedProfileColumn from "@/src/components/CRUD components/feedProfile/FeedProfileColumn";
-import SkeletonPost from "@/src/components/CRUD components/feedProfile/postProfileItem/SkeletonPost";
+import FeedProfileColumn from "@/src/components/CRUDComponents/feedProfile/FeedProfileColumn";
+import SkeletonPost from "@/src/components/CRUDComponents/feedProfile/postProfileItem/SkeletonPost";
 import RightMenuApp from "@/src/components/leftMenuApp/rightMenuApp/RightMenuApp";
 import ProfileBanner from "@/src/components/profileBanner/ProfileBanner";
 import { UserPublicDataType } from "@/src/types/user.types";
@@ -52,7 +52,6 @@ const Page = ({ params }: PageParamsType) => {
     }
   }, [decodedProfileUsername, myUserName]);
 
-  
   return (
     <div className="w-full flex gap-20 justify-between min-h-screen  ">
       <div className=" flex flex-col gap-10 w-full min-w-56 max-w-screen-xl ">
@@ -64,7 +63,8 @@ const Page = ({ params }: PageParamsType) => {
             })}
           </>
         ) : (
-          !isPending && data?.data &&(
+          !isPending &&
+          data?.data && (
             <>
               <ProfileBanner
                 data={
