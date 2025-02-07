@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
+import styles from "./SectionProductImage.module.css";
 
 const SectionProductImage = () => {
   const { scrollYProgress } = useScroll();
@@ -9,15 +10,15 @@ const SectionProductImage = () => {
   // Effet horizontal : de gauche à droite
   const xPos = useTransform(
     scrollYProgress,
-    [0, 3],
+    [0, 2],
     ["-10%", "0%"]
   );
 
   // Effet vertical : de haut en bas
   const yPos = useTransform(
     scrollYProgress,
-    [0, 2],
-    ["-5%", "5%"]
+    [0, 1],
+    ["-30%", "5%"]
   );
 
   return (
@@ -37,6 +38,8 @@ const SectionProductImage = () => {
             fill
             sizes="100vw"
           />
+          {/* div filtre  */}
+          <div className={`absolute inset-0 w-[120%] ${styles.gradient}`}></div>
         </motion.div>
       </div>
     </div>

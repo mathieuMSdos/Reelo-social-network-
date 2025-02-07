@@ -1,3 +1,4 @@
+import SmoothScroll from "@/src/myComponents/UI/smoothScroll/SmoothScroll";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import localFont from "next/font/local";
@@ -47,7 +48,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
       <body
@@ -55,7 +55,9 @@ export default function RootLayout({
       >
         <ToastProvider>
           <TanstackProvider>
-            <SessionProvider>{children}</SessionProvider>
+            <SmoothScroll>
+              <SessionProvider>{children}</SessionProvider>
+            </SmoothScroll>
           </TanstackProvider>
         </ToastProvider>
       </body>
