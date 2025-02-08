@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { CardBody, CardContainer, CardItem } from "../../UI/3d-card";
-import FlickeringWrapper from "../../UI/background/Flickering-grid/FlickeringWrapper";
+import BgFlickering from "../../UI/background/bgFlickering/BgFlickering";
 
 const FeatureCard = () => {
   const contentArray = [
@@ -30,8 +30,7 @@ const FeatureCard = () => {
   return (
     <>
       <div className="relative w-full h-fit flex flex-col gap-4 md:flex-row overflow-hidden">
-        <FlickeringWrapper className="opacity-80" />
-
+        <BgFlickering />
         {contentArray.map((card, index) => (
           <div key={index} className="w-full">
             <CardContainer containerClassName="py-20 h-full">

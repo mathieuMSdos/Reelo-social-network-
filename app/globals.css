@@ -86,3 +86,11 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* perso */
+
+.pattern-background {
+  background-image: url('/assetLp/background/flickeringBG.svg');
+  background-repeat: repeat;
+  background-size: auto;
+}
