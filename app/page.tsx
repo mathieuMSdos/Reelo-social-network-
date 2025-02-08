@@ -1,6 +1,7 @@
 import FeatureCard from "@/src/myComponents/landingPage/FeatureCard/FeatureCard";
 import { Hero7 } from "@/src/myComponents/landingPage/heroSection/Hero7";
 import { LogoBlock } from "@/src/myComponents/landingPage/logoClient/LogoBlock";
+import CustomPricing from "@/src/myComponents/landingPage/pricing/CustomPricing";
 import SectionProductImage from "@/src/myComponents/landingPage/sectionProductImage/SectionProductImage";
 import { AuroraBackground } from "@/src/myComponents/UI/aurora-background";
 import WelcomePageNavBar from "@/src/myComponents/welcomePageNavBar/WelcomePageNavBar";
@@ -29,7 +30,7 @@ export default function Home() {
           </section>
           {/* Princing */}
           <section>
-            
+            <CustomPricing />
           </section>
         </div>
       </main>
