@@ -22,8 +22,8 @@ const SectionProductImage = () => {
   );
 
   return (
-    <div className="relative w-full">
-      <div className="w-full h-[80vh] relative overflow-hidden md:h-screen">
+    <div className="relative h-[60vh] w-full">
+      <div className="w-full h-[80vh] relative overflow-hidden md:h-screen bg-gradient-to-bl from-greyPurple/60 to-slate-white">
         <motion.div 
           className="absolute inset-0 w-[120%]"
           style={{ 
