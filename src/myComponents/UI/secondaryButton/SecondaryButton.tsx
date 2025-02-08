@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 interface SecondaryButtonProps {
   text: string;
   disabled?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   children?: ReactNode;
   className?:string
 }

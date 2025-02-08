@@ -5,14 +5,14 @@ const GridLinesBackground = () => {
   const numRows = 24;
 
   return (
-    <div className="absolute inset-0 -z-10">
+    <div className="absolute inset-0 -z-10 overflow-hidden">
       <div className="relative w-full h-full">
         {/* Lignes verticales */}
         <div className="absolute inset-0 flex">
           {Array.from({ length: numColumns - 1 }).map((_, index) => (
             <div
               key={`vertical-${index}`}
-              className="border-r border-gray-200/40 h-full"
+              className="border-r border-gray-200/60 h-full rotate-45 translate-1/2"
               style={{ width: `${100 / numColumns}%` }}
             />
           ))}
@@ -23,7 +23,7 @@ const GridLinesBackground = () => {
           {Array.from({ length: numRows - 1 }).map((_, index) => (
             <div
               key={`horizontal-${index}`}
-              className="border-b border-gray-200/40 w-full"
+              className="border-b border-gray-200/60 w-full rotate-45 -translate-1/2"
               style={{ height: `${100 / numRows}%` }}
             />
           ))}
