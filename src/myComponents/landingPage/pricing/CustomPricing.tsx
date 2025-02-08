@@ -25,9 +25,11 @@ const CustomPricing: React.FC<CustomPricingProps> = ({
       <div className="container mx-auto px-4 py-2 text-darkLine">
         <div className="max-w-5xl mx-auto flex flex-col items-center gap-10 text-center">
           {/* Header */}
-          <div>
-            <h2 className="text-4xl lg:text-6xl font-bold">{heading}</h2>
-            <p className="lg:text-xl">{description}</p>
+          <div className="w-full text-darkLine/90 flex flex-col gap-8 text-center">
+            <h2 className="text-3xl font-extrabold lg:text-6xl">{heading}</h2>
+            <p className="text-balance text-muted-foreground lg:text-lg">
+              {description}
+            </p>
           </div>
 
           {/* Toggle */}

@@ -22,7 +22,7 @@ const SectionProductImage = () => {
   );
 
   return (
-    <div className="relative h-[60vh] md:h-fit w-full">
+    <div className="relative h-[60vh] md:h-[70vh] w-full">
       <div className="w-full h-[80vh] relative overflow-hidden md:h-screen">
         <motion.div 
           className="absolute inset-0 w-[120%]"
