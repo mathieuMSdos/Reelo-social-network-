@@ -75,7 +75,7 @@ const LogoBlock = ({
   ],
 }: Logos3Props) => {
   return (
-    <section className="py-20 text-darkLine/90 bg-backgrounfLight">
+    <section className="py-20 text-darkLine/90  bg-backgrounfLight">
       <div className="container flex flex-col items-center text-center">
         <h1 className="my-6 text-pretty text-2xl font-bold lg:text-4xl">
           {heading}
