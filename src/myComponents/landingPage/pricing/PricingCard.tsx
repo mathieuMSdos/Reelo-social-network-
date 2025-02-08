@@ -22,7 +22,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
 
   return (
     <div
-      className={`relative bg-gradient-to-tr from-greyPurple/40 to-slate-white rounded-lg shadow-lg p-8 w-80 flex flex-col gap-2 text-darkLine ${className}`}
+      className={`relative  rounded-lg shadow-lg p-8 w-80 flex flex-col gap-2 text-darkLine ${className}`}
     >
       {/* Header */}
       <div className="mb-6">

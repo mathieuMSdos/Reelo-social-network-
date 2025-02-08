@@ -2,6 +2,7 @@
 import { PricingPlan } from "@/src/types/pricingTypes";
 import React, { useState } from "react";
 import { AuroraBackground } from "../../UI/aurora-background";
+import GridLinesBackground from "../../UI/background/gridBG/GridLinesBackground";
 import { defaultPlans } from "./dataPricing";
 import PricingCard from "./PricingCard";
 
@@ -19,12 +20,15 @@ const CustomPricing: React.FC<CustomPricingProps> = ({
   const [isYearly, setIsYearly] = useState<boolean>(false);
 
   return (
-    <section className="py-32">
+    <section className="relative py-32">
+      <GridLinesBackground />
       <div className="container mx-auto px-4 py-2 text-darkLine">
-        <div className="max-w-5xl mx-auto flex flex-col items-center gap-6 text-center">
+        <div className="max-w-5xl mx-auto flex flex-col items-center gap-10 text-center">
           {/* Header */}
-          <h2 className="text-4xl lg:text-6xl font-bold">{heading}</h2>
-          <p className="lg:text-xl">{description}</p>
+          <div>
+            <h2 className="text-4xl lg:text-6xl font-bold">{heading}</h2>
+            <p className="lg:text-xl">{description}</p>
+          </div>
 
           {/* Toggle */}
           <div className="flex items-center gap-3 text-lg">
@@ -46,14 +50,29 @@ const CustomPricing: React.FC<CustomPricingProps> = ({
           </div>
 
           {/* Cards */}
-          <div className="flex flex-col md:flex-row items-stretch gap-6">
+          <div className="flex flex-col  items-stretch gap-10 md:flex-row md:gap-6">
             {plans.map((plan: PricingPlan) =>
               plan.id === "pro" ? (
-                <AuroraBackground key={plan.id}>
-                  <PricingCard key={plan.id} plan={plan} isYearly={isYearly} />
-                </AuroraBackground>
+                <div key={plan.id} className="relative">
+                  <div className="absolute -top-1 -left-1 -right-1 -bottom-1 bg-darkPurpleBtn blur-lg opacity-20"></div>
+
+                  {/* Conteneur pour maintenir Aurora et PricingCard au-dessus */}
+                  <AuroraBackground className="rounded-lg">
+                    <PricingCard
+                      key={plan.id}
+                      plan={plan}
+                      isYearly={isYearly}
+                      className="border border-purpleLight "
+                    />
+                  </AuroraBackground>
+                </div>
               ) : (
-                <PricingCard key={plan.id} plan={plan} isYearly={isYearly} />
+                <PricingCard
+                  key={plan.id}
+                  plan={plan}
+                  isYearly={isYearly}
+                  className="bg-white"
+                />
               )
             )}
           </div>

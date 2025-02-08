@@ -14,7 +14,7 @@ export const defaultPlans: PricingPlan[] = [
       { text: "1GB storage space" },
     ],
     button: {
-      text: "Purchase",
+      text: "Start free trial",
       url: "https://example.com",
     },
   },
@@ -31,7 +31,7 @@ export const defaultPlans: PricingPlan[] = [
       { text: "Unlimited storage" },
     ],
     button: {
-      text: "Purchase",
+      text: "Start free trial",
       url: "https://example.com",
     },
   },
