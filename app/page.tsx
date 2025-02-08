@@ -15,16 +15,21 @@ export default function Home() {
           <AuroraBackground>
             <Hero7 />
           </AuroraBackground>
-          {/* section image produit */}
+          {/* section product iamge */}
           <section className="w-full px-2">
             <SectionProductImage />
           </section>
-
-          <section>
+          {/* trsut logo */}
+          <section className="py-20">
             <LogoBlock />
           </section>
+          {/* features sections */}
           <section className="relative w-full">
             <FeatureCard />
+          </section>
+          {/* Princing */}
+          <section>
+            
           </section>
         </div>
       </main>
