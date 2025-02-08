@@ -30,7 +30,7 @@ const FeatureCard = () => {
 
   return (
     <>
-      <div className="relative w-full h-fit overflow-hidden py-7">
+      <div className="relative w-full h-fit overflow-hidden py-7 px-2">
         <BgFlickering />
         <div className="w-full px-2 flex flex-col gap-10">
           {/* title section */}
