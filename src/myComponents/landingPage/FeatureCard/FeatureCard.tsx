@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { CardBody, CardContainer, CardItem } from "../../UI/3d-card";
 import BgFlickering from "../../UI/background/bgFlickering/BgFlickering";
-import PrimaryButton from "../../UI/primaryButton/PrimaryButton";
 import SecondaryButton from "../../UI/secondaryButton/SecondaryButton";
 
 const FeatureCard = () => {

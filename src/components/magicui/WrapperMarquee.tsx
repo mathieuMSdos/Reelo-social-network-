@@ -53,7 +53,7 @@ export function WrapperMarquee() {
           Join 1M+ happy users
         </h2>
         <p className="text-balance text-muted-foreground lg:text-lg">
-          See why people can't stop talking about reello
+          See why people can&apos;t stop talking about reello
         </p>
       </div>
       {/* background */}
@@ -65,7 +65,11 @@ export function WrapperMarquee() {
         ))}
       </Marquee>
 
-      <Marquee reverse pauseOnHover className="[--duration:20s] text-darkLine bgred">
+      <Marquee
+        reverse
+        pauseOnHover
+        className="[--duration:20s] text-darkLine bgred"
+      >
         {secondRow.map((review) => (
           <ReviewCard key={review.username} {...review} />
         ))}
