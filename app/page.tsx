@@ -20,7 +20,7 @@ export default function Home() {
           </AuroraBackground>
           {/* section product image */}
           <section className="w-full px-2">
-            <SectionProductImage />
+            {/* <SectionProductImage /> */}
           </section>
           {/* trsut logo */}
           <section className="py-20">
