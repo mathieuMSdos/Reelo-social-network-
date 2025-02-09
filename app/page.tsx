@@ -1,4 +1,5 @@
 import { WrapperMarquee } from "@/src/components/magicui/WrapperMarquee";
+import FaqComponent from "@/src/myComponents/landingPage/FAQComponent/FaqComponent";
 import FeatureCard from "@/src/myComponents/landingPage/FeatureCard/FeatureCard";
 import { Hero7 } from "@/src/myComponents/landingPage/heroSection/Hero7";
 import { LogoBlock } from "@/src/myComponents/landingPage/logoClient/LogoBlock";
@@ -34,8 +35,12 @@ export default function Home() {
             <CustomPricing />
           </section>
           {/* Testimonials */}
-
-          <WrapperMarquee />
+          <section>
+            <WrapperMarquee />
+          </section>
+          <section>
+            <FaqComponent />
+          </section>
         </div>
       </main>
     </div>

@@ -47,7 +47,7 @@ const secondRow = reviews.slice(reviews.length / 2);
 
 export function WrapperMarquee() {
   return (
-    <div className="relative flex h-[700px] w-full flex-col gap-8 items-center justify-center overflow-hidden rounded-lg bg-backgrounfLight md:shadow-xl">
+    <div className="relative flex py-32 w-full flex-col gap-8 items-center justify-center overflow-hidden rounded-lg bg-backgrounfLight shadow-xl">
       <div className="w-full text-darkLine/90 flex flex-col gap-8 text-center">
         <h2 className="text-3xl font-extrabold lg:text-6xl">
           Join 1M+ happy users
