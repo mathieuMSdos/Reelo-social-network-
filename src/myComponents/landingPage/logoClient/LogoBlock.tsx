@@ -7,6 +7,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import Image from "next/image";
 
 interface Logo {
   id: string;
@@ -27,49 +28,49 @@ const LogoBlock = ({
     {
       id: "logo-1",
       description: "Logo 1",
-      image: "https://shadcnblocks.com/images/block/logos/astro.svg",
+      image: "/assetLp/logoPartner/astro.svg",
       className: "h-7 w-auto",
     },
     {
       id: "logo-2",
       description: "Logo 2",
-      image: "https://shadcnblocks.com/images/block/logos/figma.svg",
+      image: "/assetLp/logoPartner/figma.svg",
       className: "h-7 w-auto",
     },
     {
       id: "logo-3",
       description: "Logo 3",
-      image: "https://shadcnblocks.com/images/block/logos/nextjs.svg",
+      image: "/assetLp/logoPartner/nextjs.svg",
       className: "h-7 w-auto",
     },
     {
       id: "logo-4",
       description: "Logo 4",
-      image: "https://shadcnblocks.com/images/block/logos/react.png",
+      image: "/assetLp/logoPartner/react.png",
       className: "h-7 w-auto",
     },
     {
       id: "logo-5",
       description: "Logo 5",
-      image: "https://shadcnblocks.com/images/block/logos/shadcn-ui.svg",
+      image: "/assetLp/logoPartner/shadcn-ui.svg",
       className: "h-7 w-auto",
     },
     {
       id: "logo-6",
       description: "Logo 6",
-      image: "https://shadcnblocks.com/images/block/logos/supabase.svg",
+      image: "/assetLp/logoPartner/supabase.svg",
       className: "h-7 w-auto",
     },
     {
       id: "logo-7",
       description: "Logo 7",
-      image: "https://shadcnblocks.com/images/block/logos/tailwind.svg",
+      image: "/assetLp/logoPartner/tailwind.svg",
       className: "h-4 w-auto",
     },
     {
       id: "logo-8",
       description: "Logo 8",
-      image: "https://shadcnblocks.com/images/block/logos/vercel.svg",
+      image: "/assetLp/logoPartner/vercel.svg",
       className: "h-7 w-auto",
     },
   ],
@@ -95,10 +96,14 @@ const LogoBlock = ({
                 >
                   <div className="mx-10 flex shrink-0 items-center justify-center">
                     <div>
-                      <img
+                      <Image
                         src={logo.image}
                         alt={logo.description}
                         className={logo.className}
+                        width={100}
+                        height={100}
+                  
+                        
                       />
                     </div>
                   </div>

@@ -47,7 +47,7 @@ const secondRow = reviews.slice(reviews.length / 2);
 
 export function WrapperMarquee() {
   return (
-    <div className="relative flex h-[600px] w-full flex-col gap-8 items-center justify-center overflow-hidden rounded-lg bg-backgrounfLight md:shadow-xl">
+    <div className="relative flex h-[700px] w-full flex-col gap-8 items-center justify-center overflow-hidden rounded-lg bg-backgrounfLight md:shadow-xl">
       <div className="w-full text-darkLine/90 flex flex-col gap-8 text-center">
         <h2 className="text-3xl font-extrabold lg:text-6xl">
           Join 1M+ happy users
@@ -76,8 +76,8 @@ export function WrapperMarquee() {
       </Marquee>
 
       {/* Les gradients latéraux  */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white dark:from-background"></div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-background"></div>
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/5 bg-gradient-to-r from-white dark:from-background"></div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/5 bg-gradient-to-l from-white dark:from-background"></div>
     </div>
   );
 }
