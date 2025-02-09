@@ -3,9 +3,9 @@
 import { Star } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import WrapperButtonSpecial from "../../UI/primaryButton/WrapperButtonSpecial";
 import AvatarLp from "./AvatarLp";
 import styles from "./gradientFader.module.css";
-import PrimaryButton from "../../UI/primaryButton/PrimaryButton";
 
 interface Hero7Props {
   heading?: string;
@@ -95,12 +95,8 @@ const Hero7 = ({
               {description}
             </p>
           </div>
-          <div className="mt-10 w-full flex justify-center ">
-            {/* <WrapperButtonSpecial
-              text="Join Reello Now"
-              className="font-semibold text-xl px-6 py-3"
-            /> */}
-            <PrimaryButton
+          <div className="mt-10">
+            <WrapperButtonSpecial
               text="Join Reello Now"
               className="font-semibold text-xl px-6 py-3"
             />
@@ -137,12 +133,10 @@ const Hero7 = ({
             alt="dashboard"
             fill
             sizes="100vw"
-            priority
+            loading="lazy"
           />
           {/* div filtre  */}
-          <div
-            className={`absolute inset-0 w-[120%] ${styles.gradientFader}`}
-          ></div>
+          <div className={`absolute inset-0 w-[120%] ${styles.gradientFader}`}></div>
         </div>
       </div>
     </div>
