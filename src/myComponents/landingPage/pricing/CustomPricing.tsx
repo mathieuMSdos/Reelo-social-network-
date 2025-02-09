@@ -55,16 +55,17 @@ const CustomPricing: React.FC<CustomPricingProps> = ({
           <div className="flex flex-col  items-stretch gap-10 md:flex-row md:gap-6">
             {plans.map((plan: PricingPlan) =>
               plan.id === "pro" ? (
-                <div key={plan.id} className="relative">
-                  <div className="absolute -top-1 -left-1 -right-1 -bottom-1 bg-darkPurpleBtn blur-lg opacity-20"></div>
 
-                  {/* Conteneur pour maintenir Aurora et PricingCard au-dessus */}
+                // card de prix qu'on veut mettre en avant
+                <div key={plan.id} className="relative">
+                  <div className="absolute -top-1 -left-1 -right-1 -bottom-1 bg-purpleLight/20 blur-lg "></div>
+
                   <AuroraBackground className="rounded-lg">
                     <PricingCard
                       key={plan.id}
                       plan={plan}
                       isYearly={isYearly}
-                      className="border border-purpleLight "
+                      className="border-4 border-purpleLight "
                     />
                   </AuroraBackground>
                 </div>

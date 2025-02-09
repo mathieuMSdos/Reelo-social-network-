@@ -46,7 +46,7 @@ const FeatureCard = () => {
           <div className="flex flex-col md:gap-4 md:flex-row">
             {contentArray.map((card, index) => (
               <div key={index} className="w-full">
-                <CardContainer containerClassName=" py-8 md:py-20 h-full ">
+                <CardContainer containerClassName=" py-8 md:py-20 h-full mx-2 ">
                   <CardBody className="bg-white relative group/card rounded-xl border border-black/[0.1] hover:border-black/[0.2] px-8 py-14 flex flex-col h-full bg-gradient-to-bl from-greyPurple/60 to-slate-white  ">
                     <CardItem
                       translateZ={50}
