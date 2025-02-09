@@ -102,8 +102,7 @@ const LogoBlock = ({
                         className={logo.className}
                         width={100}
                         height={100}
-                  
-                        
+                        loading="lazy"
                       />
                     </div>
                   </div>

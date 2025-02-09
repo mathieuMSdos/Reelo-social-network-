@@ -62,20 +62,24 @@ const FeatureCard = () => {
                     {card.textButton}
                   </button> */}
                       {/* <PrimaryButton text={card.textButton} className="mt-4" /> */}
-                      <SecondaryButton text={card.textButton} className="mt-4 group-hover/card:shadow-md" />
-                    </CardItem>
-                    <div className="flex justify-center">
-                    <CardItem translateZ={100} className="mt-6">
-                      <Image
-                        src={`/assetLp/features/${card.imageHref}`}
-                        height="400"
-                        width="400"
-                        className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-                        alt="thumbnail"
+                      <SecondaryButton
+                        text={card.textButton}
+                        className="mt-4 group-hover/card:shadow-md"
                       />
                     </CardItem>
+                    <div className="flex justify-center">
+                      <CardItem translateZ={100} className="mt-6">
+                        <Image
+                          src={`/assetLp/features/${card.imageHref}`}
+                          height={100}
+                          width={100}
+                          priority={index === 0}
+                          className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
+                          alt="thumbnail"
+                          loading={index === 0 ? "eager" : "lazy"}
+                          />
+                      </CardItem>
                     </div>
-                    
                   </CardBody>
                 </CardContainer>
               </div>
