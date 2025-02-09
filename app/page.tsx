@@ -18,7 +18,7 @@ export default function Home() {
           <AuroraBackground>
             <Hero7 />
           </AuroraBackground>
-          {/* section product iamge */}
+          {/* section product image */}
           <section className="w-full px-2">
             <SectionProductImage />
           </section>
@@ -27,11 +27,11 @@ export default function Home() {
             <LogoBlock />
           </section>
           {/* features sections */}
-          <section className="relative w-full">
+          <section className="relative w-full" id="features">
             <FeatureCard />
           </section>
           {/* Princing */}
-          <section>
+          <section id="pricing">
             <CustomPricing />
           </section>
           {/* Testimonials */}

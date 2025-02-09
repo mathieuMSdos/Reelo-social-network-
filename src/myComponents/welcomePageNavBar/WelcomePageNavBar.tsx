@@ -4,25 +4,83 @@ import { motion } from "framer-motion";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useCallback, useState } from "react";
+import { usePathname, useRouter } from 'next/navigation';
+import Lenis from '@studio-freight/lenis';
 import BurgerMenuIcon from "../UI/BurgerMenuIcon/BurgerMenuIcon";
 import PrimaryButtonSpecial from "../UI/primaryButton/PrimaryButtonSpecial";
 import SecondaryButton from "../UI/secondaryButton/SecondaryButton";
 
 const WelcomePageNavBar = () => {
+  const [lenis, setLenis] = useState(null);
+  const pathname = usePathname();
+  const router = useRouter();
+  
   // ZUSTAND
   const isOpen = useStore((state) => state.isOpen);
   const setIsOpen = useStore((state) => state.setIsOpen);
 
   // Menu items
   const navItems = [
-    { name: "Pricing", href: "/pricing" },
+    { name: "Pricing", href: "#pricing" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
 
-  //USE EFFECT
-  // Fermer le menu dropdown automatiquement si l²fenêtre s'alargie au delà de md
+  // Initialiser Lenis une seule fois
+  useEffect(() => {
+    const lenisInstance = new Lenis({
+      duration: 1.5,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      smoothWheel: true,
+    });
+
+    function raf(time) {
+      lenisInstance.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+    setLenis(lenisInstance);
+
+    return () => {
+      lenisInstance.destroy();
+    };
+  }, []);
+
+  // Fonction de navigation et scroll
+  const handleNavigation = useCallback((href) => {
+    if (href.startsWith('#')) {
+      // Si on n'est pas sur la page d'accueil, rediriger d'abord
+      if (pathname !== '/') {
+        router.push(`/${href}`);
+        return;
+      }
+
+      // Si on est sur la page d'accueil, scroll
+      if (lenis) {
+        const targetId = href.replace('#', '');
+        const element = document.getElementById(targetId);
+        if (element) {
+          lenis.scrollTo(element, {
+            offset: 100
+          });
+        }
+      }
+    } else {
+      // Navigation normale pour les autres pages
+      router.push(href);
+    }
+  }, [lenis, pathname, router]);
+
+  // Pour le menu mobile
+  const handleMobileClick = (href) => {
+    handleNavigation(href);
+    setIsOpen(false); // Ferme le menu
+  };
+
+  // Fermer le menu dropdown automatiquement si la fenêtre s'alargie au delà de md
   useEffect(() => {
     const closeDropDownFunction = () => {
       const currentWidth = window.innerWidth;
@@ -63,10 +121,9 @@ const WelcomePageNavBar = () => {
   };
 
   return (
-    <header className="w-full relative z-40 flex justify-center items-center px-2 md:w-2/3   ">
-      {/* TRICKS DESIGN cette div ne sert qu'à faire le contour animé qui s'agrandit quand on ouvre le menu mais ne contient rien */}
+    <header className="w-full relative z-40 flex justify-center items-center px-2 md:w-2/3">
       <motion.div
-        className="w-full mx-auto fixed top-2 left-2 right-2 flex justify-between py-1 px-4 h-16 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden bg-gradient-to-br from-transparent to-slate-100/80 shadow-sm md:w-2/3  "
+        className="w-full mx-auto fixed top-2 left-2 right-2 flex justify-between py-1 px-4 h-16 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden bg-gradient-to-br from-transparent to-slate-100/80 shadow-sm md:w-2/3"
         initial={{ height: "4rem" }}
         animate={{ height: isOpen ? "20rem" : "4rem" }}
         transition={
@@ -107,44 +164,40 @@ const WelcomePageNavBar = () => {
           animate={isOpen ? "open" : "closed"}
         >
           {navItems.map((item) => (
-            <Link key={item.name} href={item.href}>
-              <motion.li
-                className="relative py-4  transition-all duration-500 border-b border-slate-300 last:border-b-0 text-darkLine/90  "
-                variants={itemVariants}
-              >
-                {item.name}
-              </motion.li>
-            </Link>
+            <motion.li
+              key={item.name}
+              className="relative py-4 transition-all duration-500 border-b border-slate-300 last:border-b-0 text-darkLine/90 cursor-pointer"
+              variants={itemVariants}
+              onClick={() => handleMobileClick(item.href)}
+            >
+              {item.name}
+            </motion.li>
           ))}
         </motion.ul>
 
-        {/* desktop menu items */}
-        <ul className="hidden md:flex gap-5 font-semibold text-darkLine/90  ">
+        {/* Desktop menu items */}
+        <ul className="hidden md:flex gap-5 font-semibold text-darkLine/90">
           {navItems.map((item) => (
-            <Link key={item.name} href={item.href}>
-              <li
-                className="hover:text-purpleLight transition-all duration-300 group"
-                key={item.name}
-              >
-                {item.name}
-              </li>
-            </Link>
+            <li
+              key={item.name}
+              className="hover:text-purpleLight transition-all duration-300 group cursor-pointer"
+              onClick={() => handleNavigation(item.href)}
+            >
+              {item.name}
+            </li>
           ))}
         </ul>
 
         <div className="flex items-center gap-3 md:gap-4">
           <SecondaryButton
-          className="px-3 py-0 "
+            className="px-3 py-0"
             text="Login"
             onClick={async () => await signIn("google")}
           />
-
           <PrimaryButtonSpecial
-          
             text="Sign up"
             onClick={async () => await signIn("google")}
           />
-          {/* burger menu */}
           <div className="w-8 h- md:hidden">
             <BurgerMenuIcon />
           </div>

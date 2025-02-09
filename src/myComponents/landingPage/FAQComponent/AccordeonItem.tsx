@@ -17,15 +17,15 @@ export const AccordeonItem = ({
   onToggle,
 }: AccordeonItemProps) => {
   return (
-    <div className="border rounded-lg mb-4 ">
+    <div className="border rounded-lg mb-4 shadow-sm  ">
       <button
         onClick={onToggle}
-        className={`w-full p-4 flex justify-between items-center bg-white hover:bg-purpleLight/10 rounded-lg transition-colors duration-200 ease-in-out ${
+        className={`w-full p-4 flex justify-between items-start gap-6 bg-white hover:bg-purpleLight/10 rounded-lg transition-colors duration-200 ease-in-out ${
           isOpen &&
           "bg-purpleLight/10 rounded-b-none border border-purpleLight/50"
         }`}
       >
-        <span className="font-medium text-gray-900">{question}</span>
+        <p className="font-medium text-gray-900 text-left">{question}</p>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{
@@ -35,7 +35,7 @@ export const AccordeonItem = ({
             mass: 0.8,
           }}
         >
-          <ChevronDown className="h-5 w-5 text-gray-500" />
+          <ChevronDown className="mt-1 h-5 w-5 text-gray-500" />
         </motion.div>
       </button>
 

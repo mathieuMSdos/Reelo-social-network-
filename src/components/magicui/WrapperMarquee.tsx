@@ -35,8 +35,8 @@ const reviews = [
     img: "/assetLp/reviews/reviews_(5).jpeg",
   },
   {
-    name: "James",
-    username: "@james",
+    name: "Aurora",
+    username: "@aurora",
     body: "I'm at a loss for words. This is amazing. I love it.",
     img: "/assetLp/reviews/reviews_(6).jpeg",
   },
