@@ -4,7 +4,6 @@ import FeatureCard from "@/src/myComponents/landingPage/FeatureCard/FeatureCard"
 import { Hero7 } from "@/src/myComponents/landingPage/heroSection/Hero7";
 import { LogoBlock } from "@/src/myComponents/landingPage/logoClient/LogoBlock";
 import CustomPricing from "@/src/myComponents/landingPage/pricing/CustomPricing";
-import SectionProductImage from "@/src/myComponents/landingPage/sectionProductImage/SectionProductImage";
 import { AuroraBackground } from "@/src/myComponents/UI/aurora-background";
 import WelcomePageNavBar from "@/src/myComponents/welcomePageNavBar/WelcomePageNavBar";
 
@@ -15,9 +14,12 @@ export default function Home() {
       {/* section hero */}
       <main className="mx-auto">
         <div className="flex flex-col">
+          <section id="hero">
           <AuroraBackground>
             <Hero7 />
           </AuroraBackground>
+          </section>
+        
           {/* section product image */}
           <section className="w-full px-2">
             {/* <SectionProductImage /> */}

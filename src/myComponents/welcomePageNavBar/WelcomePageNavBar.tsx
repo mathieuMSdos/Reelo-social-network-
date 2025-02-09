@@ -1,42 +1,55 @@
 "use client";
 import { useStore } from "@/lib/store/index.store";
-import { motion } from "framer-motion";
+import Lenis from "@studio-freight/lenis";
+import { motion, Variants } from "framer-motion";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useCallback, useState } from "react";
-import { usePathname, useRouter } from 'next/navigation';
-import Lenis from '@studio-freight/lenis';
+import { usePathname, useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import BurgerMenuIcon from "../UI/BurgerMenuIcon/BurgerMenuIcon";
 import PrimaryButtonSpecial from "../UI/primaryButton/PrimaryButtonSpecial";
 import SecondaryButton from "../UI/secondaryButton/SecondaryButton";
 
-const WelcomePageNavBar = () => {
-  const [lenis, setLenis] = useState(null);
+interface NavItem {
+  name: string;
+  href: string;
+}
+
+interface LenisInstance {
+  raf: (time: number) => void;
+  destroy: () => void;
+  scrollTo: (element: HTMLElement, options?: { offset: number }) => void;
+}
+
+const WelcomePageNavBar: React.FC = () => {
+  const [lenis, setLenis] = useState<LenisInstance | null>(null);
   const pathname = usePathname();
   const router = useRouter();
-  
+
   // ZUSTAND
-  const isOpen = useStore((state) => state.isOpen);
-  const setIsOpen = useStore((state) => state.setIsOpen);
+  const isOpen = useStore((state: { isOpen: boolean }) => state.isOpen);
+  const setIsOpen = useStore(
+    (state: { setIsOpen: (isOpen: boolean) => void }) => state.setIsOpen
+  );
 
   // Menu items
-  const navItems = [
+  const navItems: NavItem[] = [
+    { name: "Features", href: "#features" }, 
     { name: "Pricing", href: "#pricing" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
+    // { name: "About", href: "/about" },
+    // { name: "Contact", href: "/contact" },
   ];
-
+  // hero
   // Initialiser Lenis une seule fois
   useEffect(() => {
     const lenisInstance = new Lenis({
       duration: 1.5,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
+      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
       smoothWheel: true,
     });
 
-    function raf(time) {
+    function raf(time: number) {
       lenisInstance.raf(time);
       requestAnimationFrame(raf);
     }
@@ -50,32 +63,35 @@ const WelcomePageNavBar = () => {
   }, []);
 
   // Fonction de navigation et scroll
-  const handleNavigation = useCallback((href) => {
-    if (href.startsWith('#')) {
-      // Si on n'est pas sur la page d'accueil, rediriger d'abord
-      if (pathname !== '/') {
-        router.push(`/${href}`);
-        return;
-      }
-
-      // Si on est sur la page d'accueil, scroll
-      if (lenis) {
-        const targetId = href.replace('#', '');
-        const element = document.getElementById(targetId);
-        if (element) {
-          lenis.scrollTo(element, {
-            offset: 100
-          });
+  const handleNavigation = useCallback(
+    (href: string) => {
+      if (href.startsWith("#")) {
+        // Si on n'est pas sur la page d'accueil, rediriger d'abord
+        if (pathname !== "/") {
+          router.push(`/${href}`);
+          return;
         }
+
+        // Si on est sur la page d'accueil, scroll
+        if (lenis) {
+          const targetId = href.replace("#", "");
+          const element = document.getElementById(targetId);
+          if (element) {
+            lenis.scrollTo(element, {
+              offset: 50, // régler pour ajuster l'aterrisage du scroll automatique qui enmène vers la section #
+            });
+          }
+        }
+      } else {
+        // Navigation normale pour les autres pages
+        router.push(href);
       }
-    } else {
-      // Navigation normale pour les autres pages
-      router.push(href);
-    }
-  }, [lenis, pathname, router]);
+    },
+    [lenis, pathname, router]
+  );
 
   // Pour le menu mobile
-  const handleMobileClick = (href) => {
+  const handleMobileClick = (href: string) => {
     handleNavigation(href);
     setIsOpen(false); // Ferme le menu
   };
@@ -93,7 +109,7 @@ const WelcomePageNavBar = () => {
   }, [setIsOpen]);
 
   // FRAMER MOTION
-  const menuVariants = {
+  const menuVariants: Variants = {
     open: {
       opacity: 1,
       transition: {
@@ -105,7 +121,7 @@ const WelcomePageNavBar = () => {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     open: {
       opacity: 1,
       y: 5,
@@ -125,7 +141,7 @@ const WelcomePageNavBar = () => {
       <motion.div
         className="w-full mx-auto fixed top-2 left-2 right-2 flex justify-between py-1 px-4 h-16 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden bg-gradient-to-br from-transparent to-slate-100/80 shadow-sm md:w-2/3"
         initial={{ height: "4rem" }}
-        animate={{ height: isOpen ? "20rem" : "4rem" }}
+        animate={{ height: isOpen ? "2rem" : "4rem" }} // définir la hauteur du menu déroulant
         transition={
           isOpen
             ? {
@@ -141,20 +157,20 @@ const WelcomePageNavBar = () => {
                 mass: 0.8,
               }
         }
-      ></motion.div>
+      />
       <motion.nav
         className={`w-full h-16 mx-auto z-50 fixed top-2 left-2 right-2 flex justify-between items-center py-1 px-4 rounded-2xl overflow-hidden bg-transparent md:w-2/3  ${
           isOpen ? "overflow-visible" : ""
         } `}
       >
-        <Link href="/">
+        <button onClick={() => handleMobileClick("#hero")}>
           <Image
             src="/logo/Logo_Reello_black.png"
             width={120}
             height={50}
             alt="logo"
           />
-        </Link>
+        </button>
 
         {/* Mobile menu items */}
         <motion.ul
@@ -198,7 +214,7 @@ const WelcomePageNavBar = () => {
             text="Sign up"
             onClick={async () => await signIn("google")}
           />
-          <div className="w-8 h- md:hidden">
+          <div className="w-8 h-8 md:hidden">
             <BurgerMenuIcon />
           </div>
         </div>
