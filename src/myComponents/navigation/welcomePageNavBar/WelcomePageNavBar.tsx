@@ -6,14 +6,12 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import BurgerMenuIcon from "../UI/BurgerMenuIcon/BurgerMenuIcon";
-import PrimaryButtonSpecial from "../UI/primaryButton/PrimaryButtonSpecial";
-import SecondaryButton from "../UI/secondaryButton/SecondaryButton";
+import BurgerMenuIcon from "../../UI/BurgerMenuIcon/BurgerMenuIcon";
+import PrimaryButtonSpecial from "../../UI/primaryButton/PrimaryButtonSpecial";
+import SecondaryButton from "../../UI/secondaryButton/SecondaryButton";
+import { navItems } from "../navItems";
 
-interface NavItem {
-  name: string;
-  href: string;
-}
+
 
 interface LenisInstance {
   raf: (time: number) => void;
@@ -32,13 +30,7 @@ const WelcomePageNavBar: React.FC = () => {
     (state: { setIsOpen: (isOpen: boolean) => void }) => state.setIsOpen
   );
 
-  // Menu items
-  const navItems: NavItem[] = [
-    { name: "Features", href: "#features" }, 
-    { name: "Pricing", href: "#pricing" },
-    // { name: "About", href: "/about" },
-    // { name: "Contact", href: "/contact" },
-  ];
+
   // hero
   // Initialiser Lenis une seule fois
   useEffect(() => {

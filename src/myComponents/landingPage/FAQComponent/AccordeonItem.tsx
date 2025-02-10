@@ -22,7 +22,7 @@ export const AccordeonItem = ({
         onClick={onToggle}
         className={`w-full p-4 flex justify-between items-start gap-6 bg-white hover:bg-purpleLight/10 rounded-lg transition-colors duration-200 ease-in-out ${
           isOpen &&
-          "bg-purpleLight/10 rounded-b-none border border-purpleLight/50"
+          "bg-purple-100 rounded-b-none border border-purpleLight/50"
         }`}
       >
         <p className="font-medium text-gray-900 text-left">{question}</p>

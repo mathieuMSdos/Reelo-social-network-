@@ -3,9 +3,9 @@
 import { auth } from "@/auth";
 import WrapperShowModal from "@/src/myComponents/CRUDComponents/createPostModal/wrapperShowModal/WrapperShowModal";
 import LeftMenuApp from "@/src/myComponents/leftMenuApp/LeftMenuApp";
+import ProfileInitializer from "@/src/myComponents/navigation/welcomePageNavBar/ProfileInitializer/ProfileInitializer";
 import ProtectedHeader from "@/src/myComponents/protectedHeader/ProtectedHeader";
 import BackgroundInApp from "@/src/myComponents/UI/background/backgroundInApp/BackgroundInApp";
-import ProfileInitializer from "@/src/myComponents/welcomePageNavBar/ProfileInitializer/ProfileInitializer";
 import { redirect } from "next/navigation";
 
 const layoutProtected = async ({

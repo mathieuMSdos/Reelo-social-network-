@@ -1,7 +1,7 @@
 // layoutProtected.tsx
 
 import { auth } from "@/auth";
-import ProfileInitializer from "@/src/myComponents/welcomePageNavBar/ProfileInitializer/ProfileInitializer";
+import ProfileInitializer from "@/src/myComponents/navigation/welcomePageNavBar/ProfileInitializer/ProfileInitializer";
 import { redirect } from "next/navigation";
 
 const layoutProtected = async ({

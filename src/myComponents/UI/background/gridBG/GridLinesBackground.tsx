@@ -1,57 +1,78 @@
-import React from 'react';
+interface GridLinesBackgroundProps {
+  lineColor?: string;
+  backgroundColor?: string;
+  gridSize?: number;
+  lineThickness?: number;
+  fadeTop?: boolean;
+  fadeBottom?: boolean;
+  fadeRadius?: boolean;
+  topFadeHeight?: number;
+  bottomFadeHeight?: number;
+  opacity?: number;
+}
 
-const GridLinesBackground = () => {
-  const numColumns = 80;
-  const numRows = 50;
-
+const GridLinesBackground = ({
+  lineColor = "#f0f0f0",
+  backgroundColor = "#FAFAFA",
+  gridSize = 60,
+  lineThickness = 1,
+  fadeTop = true,
+  fadeBottom = true,
+  fadeRadius = true,
+  topFadeHeight = 100,
+  bottomFadeHeight = 200,
+  opacity = 1,
+}: GridLinesBackgroundProps) => {
   return (
     <div className="absolute inset-0 -z-10 overflow-hidden">
-      <div className="relative w-full h-full">
-        {/* Container pour les lignes avec overflow pour gérer la rotation */}
-        <div className="absolute inset-0 scale-150"> {/* scale-150 pour compenser la rotation */}
-          {/* Lignes verticales */}
-          <div className="absolute inset-0 flex origin-center -rotate-45">
-            {Array.from({ length: numColumns - 1 }).map((_, index) => (
-              <div
-                key={`vertical-${index}`}
-                className="border-r border-gray-200/60 h-full"
-                style={{ width: `${100 / numColumns}%` }}
-              />
-            ))}
-          </div>
-          
-          {/* Lignes horizontales */}
-          <div className="absolute inset-0 flex flex-col origin-center -rotate-45">
-            {Array.from({ length: numRows - 1 }).map((_, index) => (
-              <div
-                key={`horizontal-${index}`}
-                className="border-b border-gray-200/60 w-full"
-                style={{ height: `${100 / numRows}%` }}
-              />
-            ))}
-          </div>
-        </div>
+      <div
+        className="relative w-full h-full"
+        style={{
+          backgroundImage: `
+            linear-gradient(45deg, transparent 0%, transparent ${
+              25 - lineThickness / 2
+            }%, ${lineColor} ${25 - lineThickness / 2}%, ${lineColor} ${
+            25 + lineThickness / 2
+          }%, transparent ${25 + lineThickness / 2}%, transparent 100%),
+            linear-gradient(-45deg, transparent 0%, transparent ${
+              25 - lineThickness / 2
+            }%, ${lineColor} ${25 - lineThickness / 2}%, ${lineColor} ${
+            25 + lineThickness / 2
+          }%, transparent ${25 + lineThickness / 2}%, transparent 100%)
+          `,
+          backgroundSize: `${gridSize}px ${gridSize}px`,
+          backgroundPosition: "center center",
+          opacity: opacity,
+        }}
+      >
+        {fadeTop && (
+          <div
+            className="absolute top-0 left-0 right-0 pointer-events-none"
+            style={{
+              height: `${topFadeHeight}px`,
+              background: `linear-gradient(to bottom, ${backgroundColor} 0%, transparent 100%)`,
+            }}
+          />
+        )}
 
-        {/* Overlay supérieur */}
-        <div 
-          className="absolute top-0 left-0 right-0 h-80 pointer-events-none bg-gradient-to-b from-[#FAFAFA] to-transparent"
-        />
+        {fadeRadius && (
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: `radial-gradient(circle at center, transparent 0%, transparent 25%, ${backgroundColor} 100%)`,
+            }}
+          />
+        )}
 
-<div 
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: `radial-gradient(circle at center, 
-              transparent 0%, 
-              transparent 25%, 
-              #FAFAFA 100%
-            )`
-          }}
-        />
-
-        {/* Overlay inférieur */}
-        <div 
-          className="absolute bottom-0 left-0 right-0 h-56 pointer-events-none bg-gradient-to-t from-[#FAFAFA] to-transparent"
-        />
+        {fadeBottom && (
+          <div
+            className="absolute bottom-0 left-0 right-0 pointer-events-none"
+            style={{
+              height: `${bottomFadeHeight}px`,
+              background: `linear-gradient(to top, ${backgroundColor} 0%, transparent 100%)`,
+            }}
+          />
+        )}
       </div>
     </div>
   );

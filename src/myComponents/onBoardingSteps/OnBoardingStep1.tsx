@@ -4,7 +4,7 @@ import { isUsernameAlreadyExistAction } from "@/app/actions/onBoarding.actions";
 import { useStore } from "@/lib/store/index.store";
 import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import {useEffect, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
 import InputGeneric from "../UI/inputGeneric/InputGeneric";
 import PlasticCardContainer from "../UI/plasticCardContainer/PlasticCardContainer";
@@ -71,6 +71,12 @@ const OnBoardingStep1 = ({ actualUsername }: OnBoardingStep1Props) => {
     enabled: rules.isMinAndMaxLength === true,
     refetchOnWindowFocus: false,
   });
+
+  useEffect(() => {
+    if (isFetching) {
+      console.log("en train de fetch !")
+    }
+  },[isFetching])
 
   const isChosenUsernameValid = useMemo(() => {
     if (!rules.isNoEmpty) {

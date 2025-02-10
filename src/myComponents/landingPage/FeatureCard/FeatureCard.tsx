@@ -6,23 +6,23 @@ import SecondaryButton from "../../UI/secondaryButton/SecondaryButton";
 const FeatureCard = () => {
   const contentArray = [
     {
-      title: "AI-Powered Reality Check",
+      title: "AI-Powered Smart Threads",
       description:
-        "Leverage our cutting-edge AI technology to instantly verify and authenticate real estate listings. Reello's smart algorithms analyze thousands of data points to ensure you're getting genuine, high-quality property opportunities.",
+        "Turn your ideas into engaging, structured threads in seconds. Our AI refines your thoughts, suggests impactful hooks, and optimizes readability to maximize engagement.",
       textButton: "Learn more →",
       imageHref: "abstract_(1).png",
     },
     {
-      title: "Smart Portfolio Tracking",
+      title: "Voice-to-Post",
       description:
-        "Keep your real estate investments organized and optimized with our intelligent portfolio management system. Track performance metrics, receive market insights, and get personalized recommendations all in one seamless dashboard.",
+        "Share your thoughts effortlessly by speaking. Our AI transcribes, reformulates, and structures your ideas to ensure they are clear, engaging, and impactful.",
       textButton: "Learn more →",
       imageHref: "abstract_(2).png",
     },
     {
-      title: "Instant Market Analysis",
+      title: "Hype Score",
       description:
-        "Make data-driven decisions with our real-time market analysis tool. Get comprehensive reports on property values, neighborhood trends, and investment potential within seconds. Stay ahead of the market with Reello's predictive insights.",
+        "Track your post’s impact in real time with our Hype Score. Using advanced AI, predict engagement potential and optimize your content for maximum reach.",
       textButton: "Learn more →",
       imageHref: "abstract_(3).png",
     },
@@ -77,7 +77,7 @@ const FeatureCard = () => {
                           className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
                           alt="thumbnail"
                           loading={index === 0 ? "eager" : "lazy"}
-                          />
+                        />
                       </CardItem>
                     </div>
                   </CardBody>
