@@ -6,7 +6,7 @@ interface layoutProps {
 
 const layout = ({ children }: layoutProps) => {
   return (
-    <div>
+    <div className="w-full h-min-screen ">
       <WelcomePageNavBar />
       {children}
     </div>

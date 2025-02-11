@@ -4,7 +4,7 @@ import styles from "./PrimaryButtonSpecial.module.css";
 
 interface PrimaryButtonSpecialProps {
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   className?: string
 }

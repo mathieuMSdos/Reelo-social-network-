@@ -2,16 +2,14 @@
 import { useStore } from "@/lib/store/index.store";
 import Lenis from "@studio-freight/lenis";
 import { motion, Variants } from "framer-motion";
-import { signIn } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import BurgerMenuIcon from "../../UI/BurgerMenuIcon/BurgerMenuIcon";
 import PrimaryButtonSpecial from "../../UI/primaryButton/PrimaryButtonSpecial";
 import SecondaryButton from "../../UI/secondaryButton/SecondaryButton";
 import { navItems } from "../navItems";
-
-
 
 interface LenisInstance {
   raf: (time: number) => void;
@@ -29,7 +27,6 @@ const WelcomePageNavBar: React.FC = () => {
   const setIsOpen = useStore(
     (state: { setIsOpen: (isOpen: boolean) => void }) => state.setIsOpen
   );
-
 
   // hero
   // Initialiser Lenis une seule fois
@@ -197,15 +194,14 @@ const WelcomePageNavBar: React.FC = () => {
         </ul>
 
         <div className="flex items-center gap-3 md:gap-4">
-          <SecondaryButton
-            className="px-3 py-0"
-            text="Login"
-            onClick={async () => await signIn("google")}
-          />
-          <PrimaryButtonSpecial
-            text="Sign up"
-            onClick={async () => await signIn("google")}
-          />
+          <Link href="/login">
+            <SecondaryButton className="px-3 py-0" text="Log in" />
+          </Link>
+
+          <Link href="/signup">
+            <PrimaryButtonSpecial text="Sign up" />
+          </Link>
+
           <div className="w-8 h-8 md:hidden">
             <BurgerMenuIcon />
           </div>
