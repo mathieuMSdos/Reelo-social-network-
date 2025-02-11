@@ -48,7 +48,7 @@ export const AccordeonItem = ({
               transition: {
                 type: "spring",
                 stiffness: 400,
-                damping: 15,
+                damping: 19,
                 mass: 0.8,
               },
             }}

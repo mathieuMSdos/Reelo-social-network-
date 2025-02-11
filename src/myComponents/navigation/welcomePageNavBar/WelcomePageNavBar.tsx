@@ -129,11 +129,11 @@ const WelcomePageNavBar: React.FC = () => {
   };
 
   return (
-    <header className="w-full relative z-40 flex justify-center items-center px-2 md:w-2/3">
+    <header className="w-full relative z-40 flex justify-center items-center px-2 md:w-2/3  ">
       <motion.div
-        className="w-full mx-auto fixed top-2 left-2 right-2 flex justify-between py-1 px-4 h-16 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden bg-gradient-to-br from-transparent to-slate-100/80 shadow-sm md:w-2/3"
+        className="w-full mx-auto fixed top-2  flex justify-between py-1 px-4 h-16 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden bg-gradient-to-br from-transparent to-slate-100/80 shadow-sm md:w-2/3 "
         initial={{ height: "4rem" }}
-        animate={{ height: isOpen ? "2rem" : "4rem" }} // définir la hauteur du menu déroulant
+        animate={{ height: isOpen ? "18rem" : "4rem" }} // définir la hauteur du menu déroulant
         transition={
           isOpen
             ? {
@@ -166,7 +166,7 @@ const WelcomePageNavBar: React.FC = () => {
 
         {/* Mobile menu items */}
         <motion.ul
-          className="md:hidden absolute px-4 flex flex-col -translate-x-4 w-full top-14 gap-5 font-semibold"
+          className="md:hidden absolute mt-4 px-4 flex flex-col -translate-x-4 w-full top-14 gap-2 font-semibold"
           variants={menuVariants}
           initial="closed"
           animate={isOpen ? "open" : "closed"}

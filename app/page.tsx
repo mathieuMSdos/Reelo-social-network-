@@ -41,7 +41,7 @@ export default function Home() {
           <section>
             <WrapperMarquee />
           </section>
-          <section>
+          <section id="faq">
             <FaqComponent />
           </section>
           <section>
