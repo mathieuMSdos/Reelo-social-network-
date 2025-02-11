@@ -131,7 +131,7 @@ const WelcomePageNavBar: React.FC = () => {
   return (
     <header className="w-full relative z-40 flex justify-center items-center px-2 md:w-2/3  ">
       <motion.div
-        className="w-full mx-auto fixed top-2  flex justify-between py-1 px-4 h-16 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden bg-gradient-to-br from-transparent to-slate-100/80 shadow-sm md:w-2/3 "
+        className="w-full mx-auto fixed top-2  flex justify-between py-1 px-4 h-16 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden bg-gradient-to-br from-transparent to-slate-100/80 shadow-sm md:w-2/3 md:right-2 md:left-2 "
         initial={{ height: "4rem" }}
         animate={{ height: isOpen ? "18rem" : "4rem" }} // définir la hauteur du menu déroulant
         transition={

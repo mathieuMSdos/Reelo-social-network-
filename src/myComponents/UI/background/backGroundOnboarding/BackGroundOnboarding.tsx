@@ -60,7 +60,7 @@ const BackgroundOnboarding = () => {
           </defs>
         </svg>
 
-        <div className={styles.gradientsContainer}>
+        <div className={`${styles.gradientsContainer}`}>
           <div className={styles.g0} />
           <div className={styles.g1} />
           <div className={styles.g2} />
