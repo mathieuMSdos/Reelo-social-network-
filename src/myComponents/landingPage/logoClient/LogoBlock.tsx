@@ -76,11 +76,9 @@ const LogoBlock = ({
   ],
 }: Logos3Props) => {
   return (
-    <section className="pb-20 text-darkLine/90  bg-backgrounfLight ">
-      <div className="container flex flex-col items-center text-center">
-        <h1 className="my-6 text-pretty text-2xl font-bold lg:text-4xl">
-          {heading}
-        </h1>
+    <section className="pb-20 text-darkLine/90  bg-backgrounfLight flex flex-col gap-10 ">
+      <div className="w-full text-darkLine/90 flex flex-col gap-8 text-center ">
+        <h2 className="text-3xl font-extrabold lg:text-6xl">{heading}</h2>
       </div>
       <div className="pt-10 md:pt-16 lg:pt-20">
         <div className="relative mx-auto flex items-center justify-center lg:max-w-5xl">
@@ -94,14 +92,14 @@ const LogoBlock = ({
                   key={logo.id}
                   className="flex basis-1/3 justify-center pl-0 sm:basis-1/4 md:basis-1/5 lg:basis-1/6"
                 >
-                  <div className="mx-10 flex shrink-0 items-center justify-center">
+                  <div className="mx-8 flex shrink-0 items-center justify-center">
                     <div>
                       <Image
                         src={logo.image}
                         alt={logo.description}
                         className={logo.className}
-                        width={100}
-                        height={100}
+                        width={150}
+                        height={150}
                         loading="lazy"
                       />
                     </div>
