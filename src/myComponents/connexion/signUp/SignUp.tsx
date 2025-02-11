@@ -19,7 +19,7 @@ const SignUp = ({
   googleText = "Sign up with Google",
   // signupText = "Create an account",
   loginText = "Already have an account?",
-  loginUrl = "#",
+  loginUrl = "/login",
 }: Signup2Props) => {
   return (
     <div className="container">
@@ -67,7 +67,7 @@ const SignUp = ({
             </div>
             <div className="mx-auto mt-8 flex justify-center gap-1 text-sm text-muted-foreground">
               <p>{loginText}</p>
-              <Link href="/login" className="font-bold text-darkLine">Log in</Link>
+              <Link href={loginUrl} className="font-bold text-darkLine">Log in</Link>
             </div>
           </div>
         </div>
