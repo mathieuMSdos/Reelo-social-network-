@@ -17,12 +17,7 @@ const nextConfig: NextConfig = {
     ],
   },
   /* Ajout de la config pour ignorer les tests */
-  typescript: {
-    ignoreBuildErrors: true, // Ignore les erreurs TS au build
-  },
-  eslint: {
-    ignoreDuringBuilds: true, // Ignore les erreurs ESLint au build
-  },
+
   webpack: (config) => {
     // Ajout de la règle pour ignorer les fichiers de test
     config.module.rules.push({
