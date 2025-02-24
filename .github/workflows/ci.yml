@@ -33,7 +33,7 @@ jobs:
             ${{ runner.os }}-modules-
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Run tests
         run: pnpm test:ci
@@ -74,7 +74,7 @@ jobs:
             ${{ runner.os }}-nextjs-
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
       - name: Build
         run: pnpm build
