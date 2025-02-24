@@ -31,9 +31,13 @@ jest.mock("next/link", () => ({
 
 // Mock Button de shadcnUi
 jest.mock("@/components/ui/button", () => ({
-  Button: ({ children, onClick }: any) => (
-    <button onClick={onClick}>{children}</button>
-  ),
+  Button: ({
+    children,
+    onClick,
+  }: {
+    children: ReactNode;
+    onClick: () => void;
+  }) => <button onClick={onClick}>{children}</button>,
 }));
 
 //Tests
@@ -68,10 +72,23 @@ describe("Login component", () => {
     expect(screen.getByText(customProps.subheading)).toBeInTheDocument();
     expect(screen.getByText(customProps.googleText)).toBeInTheDocument();
     expect(screen.getByText(customProps.signUpText)).toBeInTheDocument();
+  });
 
+  // test affichage du lien
+
+  it("Should render signup link", () => {
+    render(<Login {...customProps} />);
+
+    //Assertions
     //test affichage lien
     const link = screen.getByRole("link", { name: "Sign up" });
+
     expect(link).toHaveAttribute("href", customProps.signUpUrl);
+  });
+
+  // Test affichage du button
+  it("Should render button continue with Google", () => {
+    render(<Login {...customProps} />);
 
     // Test affichage button
     const signInButton = screen.getByRole("button", {
