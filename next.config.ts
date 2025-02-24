@@ -16,17 +16,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  /* Ajout de la config pour ignorer les tests */
-
-  webpack: (config) => {
-    // Ajout de la règle pour ignorer les fichiers de test
-    config.module.rules.push({
-      test: /\.(spec|test)\.(js|jsx|ts|tsx)$/,
-      exclude: /node_modules/,
-      loader: "ignore-loader",
-    });
-    return config;
-  },
 };
 
 export default nextConfig;

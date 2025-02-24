@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { signIn } from "next-auth/react";
 import { ReactNode } from "react";
-import { Login } from "./Login";
+import { Login } from "../../src/myComponents/connexion/login/Login";
 
 // Mock nextauth
 jest.mock("next-auth/react", () => ({
@@ -30,7 +30,7 @@ jest.mock("next/link", () => ({
 }));
 
 // Mock Button de shadcnUi
-jest.mock("../../../../components/ui/button.tsx", () => ({
+jest.mock("@/components/ui/button", () => ({
   Button: ({ children, onClick }: any) => (
     <button onClick={onClick}>{children}</button>
   ),
