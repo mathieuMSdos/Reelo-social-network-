@@ -13,10 +13,9 @@ interface LoginProps {
 }
 
 const Login = ({
-  heading = "Sign up",
-  subheading = "Sign up for free.",
-  googleText = "Sign up with Google",
-  // signupText = "Create an account",
+  heading = "Log in",
+  subheading = "Log in to your account",
+  googleText = "Continue with Google",
   signUpText = "Already have an account?",
   signUpUrl = "#",
 }: LoginProps) => {
@@ -41,14 +40,17 @@ const Login = ({
                 variant="outline"
                 className="w-full flex gap-2 justify-center items-center"
                 onClick={async () => await signIn("google")}
+                 aria-label="Continue with Google"
               >
-                <Image
-                  src="/icons/google96.png"
-                  alt="google"
-                  className="h-5 w-auto"
-                  width={18}
-                  height={18}
-                />
+                <span>
+                  <Image
+                    src="/icons/google96.png"
+                    alt="google_icon"
+                    className="h-5 w-auto"
+                    width={18}
+                    height={18}
+                  />
+                </span>
                 {googleText}
               </Button>
               {/* <Input type="email" placeholder="Enter your email" required disabled />
