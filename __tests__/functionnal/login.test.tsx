@@ -91,23 +91,23 @@ describe("Login component", () => {
     render(<Login {...customProps} />);
 
     // Test affichage button
-    const signInButton = screen.getByRole("button", {
+    const loginButton = screen.getByRole("button", {
       name: /Continue with Google/i,
     });
-    expect(signInButton).toBeInTheDocument();
+    expect(loginButton).toBeInTheDocument();
   });
 
   // test intéraction avec le bouton
   it("sould call signin when Google Button is clicked", async () => {
     render(<Login {...customProps} />);
 
-    const signInButton = screen.getByRole("button", {
+    const loginButton = screen.getByRole("button", {
       name: /Continue with Google/i,
     });
-    expect(signInButton).toBeInTheDocument();
+    expect(loginButton).toBeInTheDocument();
 
     // test du click
-    await user.click(signInButton);
+    await user.click(loginButton);
 
     // Vérifier que signin est appelé avec le provider google
     expect(signIn).toHaveBeenCalledWith("google");
