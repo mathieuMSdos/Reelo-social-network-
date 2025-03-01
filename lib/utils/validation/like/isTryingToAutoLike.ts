@@ -1,7 +1,7 @@
 export const isTryingToAutoLike = async (userId: string, authorId: string) => {
   if (userId !== authorId) {
     return {
-      message: "user don't tying to auto like post",
+      message: "user don't trying to auto like post",
       data: { isTryingToAutoLike: false },
     };
   } else {
