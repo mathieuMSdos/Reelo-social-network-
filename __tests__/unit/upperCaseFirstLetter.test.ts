@@ -2,7 +2,7 @@ import { upperFirstLetterOfAString } from "@/lib/utils/scriptJS/upperCaseFirstLe
 
 describe("Unit Test upperFirstLetterOfAString function", () => {
   // Arrange
-  const stringTest1 = "Hello world";
+  const stringTest1 = "hello world";
   const stringTest2 = "HELLO WORLD";
   const stringTest3 = "Hello World";
 
